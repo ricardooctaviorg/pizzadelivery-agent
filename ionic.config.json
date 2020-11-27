@@ -1,0 +1,7 @@
+{
+  "name": "pizzadelivery-agent",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
