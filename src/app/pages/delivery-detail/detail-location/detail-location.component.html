@@ -1,0 +1,35 @@
+<ion-content>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Ubicación de Entrega</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-icon name="pin" slot="start"></ion-icon>
+      {{addressCurrent.street | titlecase}}
+    </ion-card-content>
+  </ion-card>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Referencias</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-icon name="information-circle" slot="start"></ion-icon>
+      {{addressCurrent.references | titlecase}}
+    </ion-card-content>
+  </ion-card>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Entre Calles</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-icon name="trail-sign" slot="start"></ion-icon>
+      {{addressCurrent.betweenStreets | titlecase}}
+    </ion-card-content>
+  </ion-card>
+  <ion-content class="ion-padding">
+    <ion-button (click)="onClick()" expand="block">
+      <ion-icon slot="start" name="location"></ion-icon>
+      <span>Abrir ubicación</span>
+    </ion-button>
+  </ion-content>
+</ion-content>

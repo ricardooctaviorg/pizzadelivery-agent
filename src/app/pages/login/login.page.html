@@ -1,0 +1,92 @@
+<ion-content #loginPage>
+  <ion-slides class="mainSlide" #mSlides>
+    <ion-slide>
+      <form (ngSubmit)="login(formLogin)" #formLogin="ngForm">
+        <ion-grid fixed>
+          <ion-row class="paddingt_100">
+            <ion-col>
+              <img [src]="myAgentDelivery.avatar">
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-list>
+                <ion-item>
+                  <ion-icon slot="start" color="success" name="person-circle"></ion-icon>
+                  <ion-input [(ngModel)]="loginAgentDelivery.agentId" name="agentId" required placeholder="Usuario">
+                  </ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-icon slot="start" color="success" name="key"></ion-icon>
+                  <ion-input [(ngModel)]="loginAgentDelivery.password" name="password" required
+                    placeholder="Constraseña" type="password"></ion-input>
+                </ion-item>
+              </ion-list>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-button type="submit" color="tertiary" shape="round">
+                <ion-icon slot="start" name="finger-print"></ion-icon>
+                <span>Ingresar</span>
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </form>
+    </ion-slide>
+    <ion-slide>
+      <ion-grid fixed>
+        <ion-card-header>
+          <ion-card-subtitle>Selecciona tu avatar</ion-card-subtitle>
+          <ion-card-title>{{avatarIdCurrent}}</ion-card-title>
+        </ion-card-header>
+        <ion-row class="ion-margin">
+          <ion-col>
+            <ion-slides [options]="avatarSlide" #aSlides>
+              <ion-slide *ngFor="let avatar of avatartCatalogList">
+                <ion-img class="pick-avatar" [src]="avatar.avatarUrl" [ngClass]="{'pick-avatar-seleccionado': avatar.selected
+                , 'animate__bounceIn':avatar.selected}" (click)="selectAvatar(avatar)"></ion-img>
+              </ion-slide>
+            </ion-slides>
+          </ion-col>
+        </ion-row>
+        <form (ngSubmit)="agentRegister(formAgentRegister)" #formAgentRegister="ngForm">
+          <ion-item class="ion-padding">
+            <ion-label position="stacked"></ion-label>
+            <ion-input [(ngModel)]="myAgentDelivery.agentId" name="agentId" required placeholder="Usuario"></ion-input>
+            <ion-input [(ngModel)]="myAgentDelivery.password" name="password" required placeholder="Constraseña"
+              type="password">
+            </ion-input>
+            <ion-input [(ngModel)]="passwordTmp" name="passwordTmp" required placeholder="Repetir Constraseña"
+              type="password">
+            </ion-input>
+            <ion-input [(ngModel)]="myAgentDelivery.name" name="name" required placeholder="Nombre"></ion-input>
+            <ion-input [(ngModel)]="myAgentDelivery.phone" name="phone" required placeholder="Telefono" type="number">
+            </ion-input>
+          </ion-item>
+          <ion-button type="submit" color="tertiary" shape="round" class="ion-margin">
+            <ion-icon slot="start" name="person-add"></ion-icon>
+            <span>Registrar</span>
+          </ion-button>
+        </form>
+      </ion-grid>
+    </ion-slide>
+  </ion-slides>
+</ion-content>
+<ion-footer no-border>
+  <ion-toolbar>
+    <ion-row>
+      <ion-col>
+        <ion-button shape="round" expand="full" size="small" color="tertiary" (click)="showLogin()">
+          Ingresar
+        </ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button shape="round" expand="full" size="small" color="tertiary" (click)="showReg()">
+          Registrarme
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-toolbar>
+</ion-footer>

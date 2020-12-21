@@ -1,0 +1,18 @@
+img {
+    width: max-content;
+    height: max-content;
+}
+
+.pick-avatar {
+    width: max-content;
+    opacity: 0.3;
+}
+
+.pick-avatar-seleccionado {
+    transition: opacity 0.5s linear;
+    opacity: 1 !important;
+}
+
+.paddingt_100{
+    padding-top: 100px !important;
+}

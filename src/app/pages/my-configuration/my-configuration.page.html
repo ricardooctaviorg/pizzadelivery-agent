@@ -1,0 +1,36 @@
+<app-header-menu titleMain="MI CONFIGURACIÓN"></app-header-menu>
+<ion-content>
+  <ion-list>
+    <ion-item>
+      <ion-icon slot="start" name="logo-android"></ion-icon>
+      <ion-label>Modo Obscuro Android</ion-label>
+      <ion-toggle disabled slot="end" [(ngModel)]="darkModeSystem"></ion-toggle>
+    </ion-item>
+    <ion-item>
+      <ion-icon slot="start" name="moon"></ion-icon>
+      <ion-label>Modo Obscuro </ion-label>
+      <ion-toggle id="themeToggle" slot="end" [(ngModel)]="darkMode" (ionChange)="switch()"></ion-toggle>
+    </ion-item>
+  </ion-list>
+  <ion-grid fixed>
+    <ion-row class="ion-align-items-center ion-justify-content-center">
+      <ion-col size="12">
+        <form (ngSubmit)="agentUpdate(formAgentUpdate)" #formAgentUpdate="ngForm">
+          <ion-item class="ion-padding">
+            <ion-label position="stacked"></ion-label>
+            <ion-input [(ngModel)]="agentDeliveryCurrent.name" name="name" placeholder="Nombre" required></ion-input>
+            <ion-input [(ngModel)]="agentDeliveryCurrent.phone" name="phone" placeholder="Telefono" type="number" required>
+            </ion-input>
+          </ion-item>
+          <ion-row class="ion-justify-content-center">
+            <ion-button type="submit" color="tertiary" shape="round" class="ion-margin">
+              <ion-icon slot="start" name="pencil"></ion-icon>
+              <span>Actualizar</span>
+            </ion-button>
+          </ion-row>
+        </form>
+      </ion-col>
+    </ion-row>
+
+  </ion-grid>
+</ion-content>

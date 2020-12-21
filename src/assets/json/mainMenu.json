@@ -1,0 +1,12 @@
+[
+    {
+        "name": "Mis entregas",
+        "icon": "pizza",
+        "redirectTo": "/myDelivery/deliveryList/d,e"
+    },
+    {
+        "name": "Mi Configuración",
+        "icon": "settings",
+        "redirectTo": "/my-configuration"
+    }
+]

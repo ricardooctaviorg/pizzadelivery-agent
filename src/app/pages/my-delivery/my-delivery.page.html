@@ -1,0 +1,16 @@
+<app-header-menu titleMain="MIS ENTREGAS"></app-header-menu>
+<ion-content>
+  <ion-tabs>
+    <ion-tab-bar slot="bottom">
+      <ion-tab-button [tab]="['deliveryList/d,e']">
+        <ion-icon name="bag-handle"></ion-icon>
+        <ion-label>Pendientes</ion-label>
+        <ion-badge color="tertiary">{{countPending}}</ion-badge>
+      </ion-tab-button>
+      <ion-tab-button [tab]="['deliveryList/f']">
+        <ion-icon name="bag-check"></ion-icon>
+        <ion-label>Completadas</ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
+</ion-content>
