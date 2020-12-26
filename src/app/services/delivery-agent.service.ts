@@ -10,7 +10,8 @@ import { NavController } from '@ionic/angular';
 import { StorageService } from './storage.service';
 import { InfoAgentService } from './info-agent.service';
 
-const GATEWAY_VALUE = 'http://localhost:' + '3000';
+//const GATEWAY_VALUE = 'http://localhost:' + '3000';
+const GATEWAY_VALUE   = 'https://pizzadelivery-services.herokuapp.com';
 
 const FINDBYAGENTID = GATEWAY_VALUE
   + '/pizzadelivery'
@@ -105,13 +106,7 @@ export class DeliveryAgentService {
   }
 
   public registerAgent(agentDelivery: AgentDelivery): Observable<any> {
-    const headers = new HttpHeaders()
-      .set('x-token', this.storageService.getToken());
-    const httpOptionsX =
-    {
-      headers
-    };
-    return this.httpClient.post<AgentDelivery>(`${AGENTREGISTER}`, agentDelivery, httpOptionsX);
+    return this.httpClient.post<AgentDelivery>(`${AGENTREGISTER}`, agentDelivery, httpOptions);
   }
 
   public updateAgentDelivery(agentDelivery: AgentDelivery) {

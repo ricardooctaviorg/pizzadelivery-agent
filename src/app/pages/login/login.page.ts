@@ -9,12 +9,12 @@ import { StorageService } from '../../services/storage.service';
 const AVATAR_DEFAULT = "https://www.gravatar.com/userimage/198148610/3192ad0b4bed9e5ec9aa936cab33674f?size=120";
 
 const AGENTREGISTER_SUCCESS       = "¡ Registro correcto !";
-const AGENTREGISTER_FAIL          = "No se puedo registrar";
+const AGENTREGISTER_FAIL          = "No se pudo registrar";
 const AGENTREGISTER_REQUIRED      = "Favor de completar los datos solicitados";
 const AGENTREGISTER_SAMEPASS      = "Las contraseñas deben coincidir";
 const AGENTREGISTER_AGENTIDEXIST  = "Ya existe el nombre de usuaio";
 
-const LOGIN_ERROR                 = "Usuario o contraseña inalidos";
+const LOGIN_ERROR                 = "Usuario o contraseña invalidos";
 
 const SUCCESS_COLOR_TRUE          = "success";
 const SUCCESS_COLOR_FALSE         = "danger";
@@ -102,6 +102,7 @@ export class LoginPage implements OnInit, AfterViewInit {
             else
               this.showAgentRegisterStatus(AGENTREGISTER_AGENTIDEXIST, SUCCESS_COLOR_FALSE);
           }, err => {
+            console.log("err",err);
             this.showAgentRegisterStatus(AGENTREGISTER_FAIL, SUCCESS_COLOR_FALSE);
           }
         );
