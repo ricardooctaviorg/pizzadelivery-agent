@@ -4,6 +4,7 @@ import { DeliveryListComponent } from './componenets/delivery-list/delivery-list
 import { CountPendingService } from '../../services/count-pending.service';
 import { Router } from '@angular/router';
 import { MenuController } from '@ionic/angular';
+import { CountCompleteService } from '../../services/count-complete.service';
 
 @Component({
   selector: 'app-my-delivery',
@@ -12,9 +13,11 @@ import { MenuController } from '@ionic/angular';
 })
 export class MyDeliveryPage implements OnInit {
 
-  public countPending: number;
+  public countPending : number;
+  public countComplete: number;
 
   constructor(private countPendingService: CountPendingService
+    , private countCompleteService: CountCompleteService
     , private router: Router
     , private menuController: MenuController ) { 
   }
@@ -24,6 +27,11 @@ export class MyDeliveryPage implements OnInit {
     this.countPendingService.change.subscribe(
       count => {
         this.countPending = count;
+      }
+    );
+    this.countCompleteService.change.subscribe(
+      count => {
+        this.countComplete = count;
       }
     );
     this.router.navigate(['myDelivery','deliveryList','d,e']);

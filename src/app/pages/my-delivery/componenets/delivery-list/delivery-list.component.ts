@@ -7,6 +7,7 @@ import { StorageService } from '../../../../services/storage.service';
 import { StatusDelivery } from '../../../../commons/enums/status-delivery.enum';
 import { CountPendingService } from '../../../../services/count-pending.service';
 import { Storage } from '@ionic/storage';
+import { CountCompleteService } from '../../../../services/count-complete.service';
 
 const PAGE_SIZE = 10;
 const ORDERDATE_DESC = "orderDate,-1";
@@ -20,12 +21,13 @@ export class DeliveryListComponent implements OnInit {
 
   pizzaDeliverysCurrent: PizzaDelivery[] = new Array();
   pizzaDeliverys: PizzaDelivery[] = new Array();
-  pizzaDelivery: PizzaDelivery;
-  dataResponse: any;
-  pageData: any;
-  pageCurrent: number = 0;
+  pizzaDelivery : PizzaDelivery;
+  dataResponse  : any;
+  pageData      : any;
+  pageCurrent   : number = 0;
   statusDelivery: string[];
-  countPending: number = 0;
+  countPending  : number = 0;
+  countComplete : number = 0;
   agentIdCurrent: string;
   today = new Date();
   dd = String(this.today.getDate()).padStart(2, '0');;
@@ -39,11 +41,12 @@ export class DeliveryListComponent implements OnInit {
   @ViewChild(IonRefresher) ionRefresher: IonRefresher;
 
   constructor(private deliveryAgentService: DeliveryAgentService
-    , private router: Router
-    , private route: ActivatedRoute
-    , private storageService: StorageService
-    , public toastController: ToastController
-    , private countPendingService: CountPendingService
+    , private router                : Router
+    , private route                 : ActivatedRoute
+    , private storageService        : StorageService
+    , public toastController        : ToastController
+    , private countPendingService   : CountPendingService
+    , private countCompleteService  : CountCompleteService
     , private storage: Storage) { }
 
   async ngOnInit() {
@@ -151,11 +154,17 @@ export class DeliveryListComponent implements OnInit {
             this.pageData = data.page;
             for (let c of statusId)
               if (c == StatusDelivery.DELIVERY_ASSIGNED.toString() || c == StatusDelivery.DELIVERY_ONWAY.toString()) {
-                this.countPending = 0;
+                this.countPending   = 0;
                 for (let a of this.pizzaDeliverys)
                   if (a.status.statusId == StatusDelivery.DELIVERY_ASSIGNED.toString() || a.status.statusId == StatusDelivery.DELIVERY_ONWAY.toString())
                     this.countPending++;
                 this.countPendingService.sendCountPending(this.countPending);
+              }else if( c == StatusDelivery.DELIVERY_COMPLETE.toString() ){
+                this.countComplete  = 0;
+                for (let a of this.pizzaDeliverys)
+                  if (a.status.statusId == StatusDelivery.DELIVERY_COMPLETE.toString() )
+                    this.countComplete++;
+                this.countCompleteService.sendCountComplete(this.countComplete);
               }
           }
         }
