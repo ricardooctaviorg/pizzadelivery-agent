@@ -6,7 +6,7 @@ import { AvatarCatalog } from 'src/app/commons/interfaces/avatar-catalog';
 import { DeliveryAgentService } from '../../services/delivery-agent.service';
 import { StorageService } from '../../services/storage.service';
 
-const AVATAR_DEFAULT = "https://www.gravatar.com/userimage/198148610/3192ad0b4bed9e5ec9aa936cab33674f?size=120";
+const AVATAR_DEFAULT = "https://www.gravatar.com/userimage/198148610/fbbfd805411147d5782a0a4afa972199?size=120";
 
 const AGENTREGISTER_SUCCESS       = "¡ Registro correcto !";
 const AGENTREGISTER_FAIL          = "No se pudo registrar";

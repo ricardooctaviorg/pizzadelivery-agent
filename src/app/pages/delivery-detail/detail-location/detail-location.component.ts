@@ -1,7 +1,7 @@
-import { Component, ComponentFactoryResolver, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { StorageService } from '../../../services/storage.service';
 import { PizzaDelivery } from '../../../commons/interfaces/pizza-delivery';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { ActionSheetController } from '@ionic/angular';
 
 @Component({
@@ -18,7 +18,6 @@ export class DetailLocationComponent implements OnInit {
   toLng         : string;
 
   constructor(private storageService: StorageService
-    , private router: Router
     , private route: ActivatedRoute
     , public actionSheetController: ActionSheetController) { }
 
@@ -28,14 +27,12 @@ export class DetailLocationComponent implements OnInit {
       params => {
         let deliveryIdCurrent: string = String(params.get("deliveryId"));
         deliveryIdCurrent = deliveryIdCurrent.replace(',','');
-        console.log("deliveryIdCurrent ::: " + deliveryIdCurrent);
         for(let a of this.pizzaDeliverys)
           if(a.deliveryId == deliveryIdCurrent)
             this.addressCurrent = a.address;
         this.toLat = this.addressCurrent.lat;
         this.toLng = this.addressCurrent.lng;
-        this.destination = this.toLat + ',' + this.toLng;
-        console.log("this.addressCurrent ::: " + JSON.stringify(this.addressCurrent));  
+        this.destination = this.toLat + ',' + this.toLng; 
       }
     );
   }

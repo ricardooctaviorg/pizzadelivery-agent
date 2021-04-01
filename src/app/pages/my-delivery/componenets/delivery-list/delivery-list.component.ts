@@ -55,7 +55,6 @@ export class DeliveryListComponent implements OnInit {
       params => {
         const statusDelivery: string = String(params.get("statusDelivery"));
         this.statusDelivery = statusDelivery.split(",");
-        console.log("this.statusDelivery  ::: " + this.statusDelivery);
         this.pizzaDeliverys = [];
         this.consumeData(this.agentIdCurrent, this.statusDelivery, this.todayStringInit, this.todayStringEnd, String(this.pageCurrent), String(PAGE_SIZE), ORDERDATE_DESC);
       }
@@ -147,7 +146,6 @@ export class DeliveryListComponent implements OnInit {
       .subscribe(
         data => {
           if (data.success) {
-            console.log("sucesss");
             this.pizzaDeliverysCurrent = data.pizzaDeliveries as PizzaDelivery[];
             this.pizzaDeliverys.push(... this.pizzaDeliverysCurrent);
             this.storageService.setPizzaDeliverys(this.pizzaDeliverys);
@@ -174,10 +172,8 @@ export class DeliveryListComponent implements OnInit {
   loadData(event) {
     setTimeout(() => {
       this.pageCurrent++;
-      console.log("this.pageCurrent ::: " + this.pageCurrent);
       this.consumeData(this.agentIdCurrent, this.statusDelivery, this.todayStringInit, this.todayStringEnd, String(this.pageCurrent), String(PAGE_SIZE), ORDERDATE_DESC);
       this.infiniteScroll.complete();
-      console.log("this.pizzaDeliverys.length ::: " + this.pizzaDeliverys.length);
     }, 500);
   }
 

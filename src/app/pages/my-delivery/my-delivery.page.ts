@@ -1,6 +1,4 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { StorageService } from '../../services/storage.service';
-import { DeliveryListComponent } from './componenets/delivery-list/delivery-list.component';
 import { CountPendingService } from '../../services/count-pending.service';
 import { Router } from '@angular/router';
 import { MenuController } from '@ionic/angular';
