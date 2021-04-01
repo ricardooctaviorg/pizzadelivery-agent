@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild, ViewChildren } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IonInfiniteScroll, IonRefresher, ToastController } from '@ionic/angular';
 import { DeliveryAgentService } from '../../../../services/delivery-agent.service';
@@ -41,7 +41,6 @@ export class DeliveryListComponent implements OnInit {
   @ViewChild(IonRefresher) ionRefresher: IonRefresher;
 
   constructor(private deliveryAgentService: DeliveryAgentService
-    , private router                : Router
     , private route                 : ActivatedRoute
     , private storageService        : StorageService
     , public toastController        : ToastController
@@ -71,36 +70,6 @@ export class DeliveryListComponent implements OnInit {
     var typeAlert: string = "danger";
 
     switch (status) {
-      case StatusDelivery.DELIVERY_PENDING.toString():
-        if (success)
-          messageCurrent = "";
-        else
-          messageCurrent = "";
-        break;
-      case StatusDelivery.DELIVERY_CANCELED.toString():
-        if (success)
-          messageCurrent = "";
-        else
-          messageCurrent = "";
-        break;
-      case StatusDelivery.DELIVERY_CONFIRMED.toString():
-        if (success)
-          messageCurrent = "";
-        else
-          messageCurrent = "";
-        break;
-      case StatusDelivery.DELIVERY_PREPARING.toString():
-        if (success)
-          messageCurrent = "";
-        else
-          messageCurrent = "";
-        break;
-      case StatusDelivery.DELIVERY_ASSIGNED.toString():
-        if (success)
-          messageCurrent = "";
-        else
-          messageCurrent = "";
-        break;
       case StatusDelivery.DELIVERY_ONWAY.toString():
         if (success)
           messageCurrent = "Se ha iniciado la entrega.";
@@ -112,12 +81,6 @@ export class DeliveryListComponent implements OnInit {
           messageCurrent = "Se ha completado la entrega.";
         else
           messageCurrent = "No se pudo completar la entrega";
-        break;
-      case StatusDelivery.DELIVERY_FAIL.toString():
-        if (success)
-          messageCurrent = "";
-        else
-          messageCurrent = "";
         break;
     }
 
