@@ -15,7 +15,6 @@ export class DetailItemsComponent implements OnInit {
   amountCurrent:string;
 
   constructor(private storageService: StorageService
-    , private router: Router
     , private route: ActivatedRoute) { }
 
   ngOnInit() {

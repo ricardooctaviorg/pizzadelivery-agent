@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 
-import { IonMenu, Platform } from '@ionic/angular';
+import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { UtilService } from './services/util.service';
@@ -8,7 +8,6 @@ import { Observable } from 'rxjs';
 import { MenuOpt } from './commons/interfaces/menu-opt';
 import { InfoAgentService } from './services/info-agent.service';
 import { DeliveryAgentService } from './services/delivery-agent.service';
-import { LoginPage } from './pages/login/login.page';
 import { StorageService } from './services/storage.service';
 
 @Component({

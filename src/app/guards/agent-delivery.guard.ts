@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, UrlTree, CanLoad } from '@angular/router';
+import { UrlTree, CanLoad } from '@angular/router';
 import { Observable } from 'rxjs';
 import { DeliveryAgentService } from '../services/delivery-agent.service';
 

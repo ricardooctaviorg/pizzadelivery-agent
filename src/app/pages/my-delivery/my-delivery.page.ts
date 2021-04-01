@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CountPendingService } from '../../services/count-pending.service';
 import { Router } from '@angular/router';
 import { MenuController } from '@ionic/angular';

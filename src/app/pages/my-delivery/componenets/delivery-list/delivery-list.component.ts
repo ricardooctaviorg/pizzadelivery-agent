@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { IonInfiniteScroll, IonRefresher, ToastController } from '@ionic/angular';
 import { DeliveryAgentService } from '../../../../services/delivery-agent.service';
 import { PizzaDelivery } from '../../../../commons/interfaces/pizza-delivery';

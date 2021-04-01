@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { PizzaDelivery } from '../commons/interfaces/pizza-delivery';
-import { Observable, ObservedValueOf, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
