@@ -10,8 +10,8 @@ import { NavController } from '@ionic/angular';
 import { StorageService } from './storage.service';
 import { InfoAgentService } from './info-agent.service';
 
-//const GATEWAY_VALUE = 'http://localhost:' + '3000';
-const GATEWAY_VALUE   = 'https://pizzadelivery-services.herokuapp.com';
+const GATEWAY_VALUE = 'http://localhost:' + '3000';
+//const GATEWAY_VALUE   = 'https://pizzadelivery-services.herokuapp.com';
 
 const FINDBYAGENTID = GATEWAY_VALUE
   + '/pizzadelivery'
@@ -37,7 +37,8 @@ const VERIFYTOKEN = GATEWAY_VALUE
   + '/';
 
 const GETAVATARS = GATEWAY_VALUE
-  + '/avatarCatalog';
+  + '/avatarCatalog'
+  + "/getAllByType";
 
 const headers = new HttpHeaders()
   .set('Contet-Type', 'application/json');
@@ -133,7 +134,14 @@ export class DeliveryAgentService {
   }
 
   public getAvatarCatalog(): Observable<any> {
-    return this.httpClient.get<any>(`${GETAVATARS}`);
+    const params = new HttpParams()
+      .set('avatarType', 'agent')
+
+    const httpOptionsX =
+    {
+      params
+    };
+    return this.httpClient.get<any>(`${GETAVATARS}`,httpOptionsX);
   }
 
   public login(agentId: string, password: string) {
