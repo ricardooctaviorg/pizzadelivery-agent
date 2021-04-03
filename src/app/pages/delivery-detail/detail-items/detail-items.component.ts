@@ -23,14 +23,11 @@ export class DetailItemsComponent implements OnInit {
       params => {
         let deliveryIdCurrent: string = String(params.get("deliveryId"));
         deliveryIdCurrent = deliveryIdCurrent.replace(',','');
-        console.log("deliveryIdCurrent ::: " + deliveryIdCurrent);
         for(let a of this.pizzaDeliverys)
           if(a.deliveryId == deliveryIdCurrent){
             this.itemsCurrent = a.items;
             this.amountCurrent = a.totalAmount;
           }
-         
-        console.log("this.itemsCurrent ::: " + JSON.stringify(this.itemsCurrent)); 
       }
     );
 
