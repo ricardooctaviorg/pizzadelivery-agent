@@ -9,7 +9,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { UtilService } from './services/util.service';
 import { CommonsModule } from './commons/commons.module';
-import { IonicStorageModule } from '@ionic/storage';
+//import { IonicStorageModule } from '@ionic/storage';
 
 @NgModule({
   declarations: [AppComponent],
@@ -19,7 +19,7 @@ import { IonicStorageModule } from '@ionic/storage';
     , AppRoutingModule
     , HttpClientModule
     , CommonsModule
-    , IonicStorageModule.forRoot()],
+    /*, IonicStorageModule.forRoot()*/],
   providers: [
     StatusBar,
     SplashScreen,

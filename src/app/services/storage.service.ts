@@ -26,8 +26,8 @@ export class StorageService {
     this.localStorageService.setItem('darkTheme', darkTheme);
   }
 
-  setAgentId(agentId:string):void{
-    this.localStorageService.setItem('agentId', agentId);
+  setUserId(userId:string):void{
+    this.localStorageService.setItem('userId', userId);
   }
 
   setName(name:string):void{
@@ -46,8 +46,8 @@ export class StorageService {
     return this.localStorageService.getItem('token');
   }
 
-  getAgentId():string{
-    return this.localStorageService.getItem('agentId');
+  getUserId():string{
+    return this.localStorageService.getItem('userId');
   }
 
   getName():string{

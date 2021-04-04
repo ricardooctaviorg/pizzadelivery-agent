@@ -43,7 +43,6 @@ export class AppComponent implements OnInit  {
       this.splashScreen.hide();
     });
      this.menuOpts = this.utilService.getMainMunuOptions();
-      console.log("this.storageService.getDarkTheme() "+ this.storageService.getDarkTheme() );
       if(this.storageService.getDarkTheme() == 'T' 
       || this.storageService.getDarkTheme() == null
       || this.storageService.getDarkTheme() == undefined){

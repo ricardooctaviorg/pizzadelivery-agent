@@ -49,7 +49,7 @@ export class DeliveryListComponent implements OnInit {
     , private storage: Storage) { }
 
   async ngOnInit() {
-    await this.loadToken();
+    await this.loadUserId();
     this.route.paramMap.subscribe(
       params => {
         const statusDelivery: string = String(params.get("statusDelivery"));
@@ -60,8 +60,9 @@ export class DeliveryListComponent implements OnInit {
     );
   }
 
-  async loadToken() {
-    this.agentIdCurrent = await this.storage.get('agentId') || null;
+  async loadUserId() {
+    //this.agentIdCurrent = await this.storage.get('userId') || null;
+    this.agentIdCurrent = await this.storageService.getUserId() || null;
   }
 
   async showStatus(status: string, success: number) {

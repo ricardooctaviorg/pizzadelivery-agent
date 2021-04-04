@@ -5,7 +5,7 @@ import { HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { PizzaDelivery } from '../commons/interfaces/pizza-delivery';
 import { UserDelivery } from '../commons/interfaces/user-delivery';
-import { Storage } from '@ionic/storage';
+//import { Storage } from '@ionic/storage';
 import { NavController } from '@ionic/angular';
 import { StorageService } from './storage.service';
 import { InfoAgentService } from './info-agent.service';
@@ -61,7 +61,7 @@ export class DeliveryAgentService {
   };
 
   constructor(private httpClient: HttpClient
-    , private storage: Storage
+    /*, private storage: Storage*/
     , private navController: NavController
     , private storageService: StorageService
     , private infoAgentService: InfoAgentService) { }
@@ -83,11 +83,11 @@ export class DeliveryAgentService {
         async (data) => {
           if (data.success) {
             this.storageService.setToken(data.token);
-            this.storageService.setAgentId(data.userId);
+            this.storageService.setUserId(data.userId);
             this.storageService.setName(data.name);
             this.storageService.setAvatar(data.avatar);
             await this.saveToken(data.token);
-            await this.saveAgentId(data.userId);
+            await this.saveUserId(data.userId);
             await this.saveName(data.name);
             await this.saveAvatar(data.avatar);
             this.infoAgentService.sendAgentInfo({ name: this.storageService.getName(), avatar: this.storageService.getAvatar() });
@@ -99,7 +99,7 @@ export class DeliveryAgentService {
             this.name = null;
             this.avatar = null;
             this.storageService.clearLocalStorage();
-            this.storage.clear();
+            //this.storage.clear();
             resolve(false);
           }
         }
@@ -140,7 +140,7 @@ export class DeliveryAgentService {
     }
 
     const headers = new HttpHeaders()
-      .set('x-token', this.token);
+      .set('x-token', this.storageService.getToken());
 
     const httpOptions = {
       headers
@@ -222,10 +222,8 @@ export class DeliveryAgentService {
     this.userId = null;
     this.name = null;
     this.avatar = null;
-
     this.storageService.clearLocalStorage();
-    this.storage.clear();
-
+    //this.storage.clear();
     this.navController.navigateRoot('/login', { animated: true });
   }
 
@@ -235,27 +233,29 @@ export class DeliveryAgentService {
 
   async saveToken(token: string) {
     this.token = token;
-    await this.storage.set('token', this.token);
+    this.storageService.setToken(token);
+    //await this.storage.set('token', this.token);
     await this.verifyToken();
   }
 
-  async saveAgentId(agentId: string) {
+  async saveUserId(agentId: string) {
     this.userId = agentId;
-    await this.storage.set('agentId', this.userId);
+    //await this.storage.set('userId', this.userId);
   }
 
   async saveName(name: string) {
     this.name = name;
-    await this.storage.set('name', this.name);
+    //await this.storage.set('name', this.name);
   }
 
   async saveAvatar(avatar: string) {
     this.avatar = avatar;
-    await this.storage.set('avatar', this.avatar);
+    //await this.storage.set('avatar', this.avatar);
   }
 
   async loadToken() {
-    this.token = await this.storage.get('token') || null;
+    //this.token = await this.storage.get('token') || null;
+    this.token = await this.storageService.getToken() || null;
   }
 
   public getTokenInfo(): Observable<any> {
