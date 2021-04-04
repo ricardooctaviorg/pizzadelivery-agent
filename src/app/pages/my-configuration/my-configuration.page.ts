@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { StorageService } from '../../services/storage.service';
-import { AgentDelivery } from '../../commons/interfaces/agent-delivery';
+import { UserDelivery } from '../../commons/interfaces/user-delivery';
 import { DeliveryAgentService } from '../../services/delivery-agent.service';
 import { NgForm } from '@angular/forms';
 import { ToastController } from '@ionic/angular';
@@ -22,7 +22,7 @@ export class MyConfigurationPage implements OnInit {
   darkModeSystem:boolean = true;
   darkMode:boolean = true;
 
-  agentDeliveryCurrent: AgentDelivery={
+  agentDeliveryCurrent: UserDelivery={
     name: ""
     , phone: ""
     , avatar: ""

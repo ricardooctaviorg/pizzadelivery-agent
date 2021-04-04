@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { IonSlides, NavController, ToastController, MenuController } from '@ionic/angular';
-import { AgentDelivery } from 'src/app/commons/interfaces/agent-delivery';
+import { UserDelivery } from 'src/app/commons/interfaces/user-delivery';
 import { AvatarCatalog } from 'src/app/commons/interfaces/avatar-catalog';
 import { DeliveryAgentService } from '../../services/delivery-agent.service';
 import { StorageService } from '../../services/storage.service';
@@ -28,12 +28,13 @@ export class LoginPage implements OnInit, AfterViewInit {
 
   @ViewChild('mSlides') mSlides: IonSlides;
 
-  myAgentDelivery: AgentDelivery = {
+  myAgentDelivery: UserDelivery = {
     avatar: AVATAR_DEFAULT
+    , role: 'agent'
   };
 
   loginAgentDelivery = {
-    agentId: ''
+    userId: ''
     , password: ''
   };
 
@@ -80,7 +81,7 @@ export class LoginPage implements OnInit, AfterViewInit {
     if (formLogin.invalid)
       this.showAgentRegisterStatus(AGENTREGISTER_REQUIRED, SUCCESS_COLOR_FALSE);
 
-    const exist = await this.deliveryAgentService.login(this.loginAgentDelivery.agentId, this.loginAgentDelivery.password);
+    const exist = await this.deliveryAgentService.login(this.loginAgentDelivery.userId, this.loginAgentDelivery.password);
     if(exist)
       this.navController.navigateRoot('myDelivery', {
         animated:true

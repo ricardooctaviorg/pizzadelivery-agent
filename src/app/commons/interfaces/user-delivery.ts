@@ -1,7 +1,8 @@
-export interface AgentDelivery {
+export interface UserDelivery {
     id?:string;
-    agentId?:string
+    userId?:string
     password?:string
+    role?:string
     name?:string;
     phone?:string;
     avatar?:string;

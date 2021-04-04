@@ -4,7 +4,7 @@ import { HttpParams } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { PizzaDelivery } from '../commons/interfaces/pizza-delivery';
-import { AgentDelivery } from '../commons/interfaces/agent-delivery';
+import { UserDelivery } from '../commons/interfaces/user-delivery';
 import { Storage } from '@ionic/storage';
 import { NavController } from '@ionic/angular';
 import { StorageService } from './storage.service';
@@ -13,32 +13,32 @@ import { InfoAgentService } from './info-agent.service';
 //const GATEWAY_VALUE = 'http://localhost:' + '3000';
 const GATEWAY_VALUE   = 'https://pizzadelivery-services.herokuapp.com';
 
+const USERREGISTER = GATEWAY_VALUE
+  + '/UserDelivery'
+  + '/userRegister';
+
+const LOGIN = GATEWAY_VALUE
+  + '/UserDelivery'
+  + '/login';
+
+const USERUPDATE = GATEWAY_VALUE
+  + '/UserDelivery'
+  + '/updateUserDelivery';
+
+const VERIFYTOKEN = GATEWAY_VALUE
+  + '/UserDelivery'
+  + '/';
+
 const FINDBYAGENTID = GATEWAY_VALUE
-  + '/pizzadelivery'
+  + '/Pizzadelivery'
   + '/findByAgentId';
 
 const UPDATEDELIVERY = GATEWAY_VALUE
-  + '/pizzadelivery';
-
-const AGENTREGISTER = GATEWAY_VALUE
-  + '/agentDelivery'
-  + '/agentRegister';
-
-const AGENTUPDATE = GATEWAY_VALUE
-  + '/agentDelivery'
-  + '/updateAgentDelivery';
-
-const LOGIN = GATEWAY_VALUE
-  + '/agentDelivery'
-  + '/login';
-
-const VERIFYTOKEN = GATEWAY_VALUE
-  + '/agentDelivery'
-  + '/';
+  + '/Pizzadelivery';
 
 const GETAVATARS = GATEWAY_VALUE
-  + '/avatarCatalog'
-  + "/getAllByType";
+  + '/AvatarCatalog'
+  + "/getByType";
 
 const headers = new HttpHeaders()
   .set('Contet-Type', 'application/json');
@@ -52,12 +52,11 @@ const httpOptions = {
 })
 export class DeliveryAgentService {
 
-
   token: string = null;
-  agentId: string = null;
+  userId: string = null;
   name: string = null;
   avatar: string = null;
-  agentDelivery: AgentDelivery = {
+  userDelivery: UserDelivery = {
 
   };
 
@@ -66,6 +65,106 @@ export class DeliveryAgentService {
     , private navController: NavController
     , private storageService: StorageService
     , private infoAgentService: InfoAgentService) { }
+
+
+  public registerAgent(userDelivery: UserDelivery): Observable<any> {
+    return this.httpClient.post<UserDelivery>(`${USERREGISTER}`, userDelivery, httpOptions);
+  }
+
+  public login(userId: string, password: string) {
+
+    const data = {
+      userId
+      , password
+    };
+
+    return new Promise(resolve => {
+      this.httpClient.post<any>(`${LOGIN}`, data, httpOptions).subscribe(
+        async (data) => {
+          if (data.success) {
+            this.storageService.setToken(data.token);
+            this.storageService.setAgentId(data.userId);
+            this.storageService.setName(data.name);
+            this.storageService.setAvatar(data.avatar);
+            await this.saveToken(data.token);
+            await this.saveAgentId(data.userId);
+            await this.saveName(data.name);
+            await this.saveAvatar(data.avatar);
+            this.infoAgentService.sendAgentInfo({ name: this.storageService.getName(), avatar: this.storageService.getAvatar() });
+            resolve(true);
+          }
+          else {
+            this.token = null;
+            this.userId = null;
+            this.name = null;
+            this.avatar = null;
+            this.storageService.clearLocalStorage();
+            this.storage.clear();
+            resolve(false);
+          }
+        }
+      );
+    });
+  }
+
+  public updateAgentDelivery(userDelivery: UserDelivery) {
+
+    const headers = new HttpHeaders()
+      .set('x-token', this.storageService.getToken());
+    const httpOptionsX =
+    {
+      headers
+    };
+
+    return new Promise((resolve) => {
+      return this.httpClient.post(`${USERUPDATE}`, userDelivery, httpOptionsX).subscribe(
+        (data) => {
+          if (data['success']) {
+            this.saveToken(data['token']);
+            resolve(true);
+          }
+          else
+            resolve(false);
+        }
+      );
+    });
+  }
+
+  async verifyToken(): Promise<boolean> {
+
+    await this.loadToken();
+
+    if (!this.token) {
+      this.navController.navigateRoot('/login');
+      Promise.resolve(false);
+    }
+
+    const headers = new HttpHeaders()
+      .set('x-token', this.token);
+
+    const httpOptions = {
+      headers
+    };
+
+    return new Promise<boolean>(
+      resolve => {
+        this.httpClient.get<any>(`${VERIFYTOKEN}`, httpOptions).subscribe(
+          data => {
+            if (data.success) {
+              this.userDelivery = data.userDelivery;
+              this.infoAgentService.sendAgentInfo({ name: data.userDelivery.name, avatar: data.userDelivery.avatar });
+              resolve(true);
+            }
+            else {
+              this.navController.navigateRoot('/login');
+              resolve(false);
+            }
+
+          }
+        );
+      }
+    );
+  }
 
   public findByAgentId(agentId: string
     , statusId: string[]
@@ -105,33 +204,6 @@ export class DeliveryAgentService {
     return this.httpClient.post<any>(`${UPDATEDELIVERY}/`, delivery, httpOptionsX)
   }
 
-  public registerAgent(agentDelivery: AgentDelivery): Observable<any> {
-    return this.httpClient.post<AgentDelivery>(`${AGENTREGISTER}`, agentDelivery, httpOptions);
-  }
-
-  public updateAgentDelivery(agentDelivery: AgentDelivery) {
-
-    const headers = new HttpHeaders()
-      .set('x-token', this.storageService.getToken());
-    const httpOptionsX =
-    {
-      headers
-    };
-
-    return new Promise((resolve) => {
-      return this.httpClient.post(`${AGENTUPDATE}`, agentDelivery, httpOptionsX).subscribe(
-        (data) => {
-          if (data['success']){
-            this.saveToken(data['token']);
-            resolve(true);
-          }
-          else
-            resolve(false);
-        }
-      );
-    });
-  }
-
   public getAvatarCatalog(): Observable<any> {
     const params = new HttpParams()
       .set('avatarType', 'agent')
@@ -140,49 +212,14 @@ export class DeliveryAgentService {
     {
       params
     };
-    return this.httpClient.get<any>(`${GETAVATARS}`,httpOptionsX);
+    return this.httpClient.get<any>(`${GETAVATARS}`, httpOptionsX);
   }
 
-  public login(agentId: string, password: string) {
 
-    const data = {
-      agentId
-      , password
-    };
-
-    return new Promise(resolve => {
-      this.httpClient.post<any>(`${LOGIN}`, data, httpOptions).subscribe(
-        async (data) => {
-          if (data.success) {
-            this.storageService.setToken(data.token);
-            this.storageService.setAgentId(data.agentId);
-            this.storageService.setName(data.name);
-            this.storageService.setAvatar(data.avatar);
-            await this.saveToken(data.token);
-            await this.saveAgentId(data.agentId);
-            await this.saveName(data.name);
-            await this.saveAvatar(data.avatar);
-            this.infoAgentService.sendAgentInfo({ name: this.storageService.getName(), avatar: this.storageService.getAvatar() });
-            resolve(true);
-          }
-          else {
-            this.token = null;
-            this.agentId = null;
-            this.name = null;
-            this.avatar = null;
-            this.storageService.clearLocalStorage();
-            this.storage.clear();
-            resolve(false);
-          }
-        }
-      );
-    });
-
-  }
 
   logOut() {
     this.token = null;
-    this.agentId = null;
+    this.userId = null;
     this.name = null;
     this.avatar = null;
 
@@ -192,8 +229,8 @@ export class DeliveryAgentService {
     this.navController.navigateRoot('/login', { animated: true });
   }
 
-  getAgentDeliveryCurrent(){
-    return { ... this.agentDelivery }
+  getAgentDeliveryCurrent() {
+    return { ... this.userDelivery }
   }
 
   async saveToken(token: string) {
@@ -203,8 +240,8 @@ export class DeliveryAgentService {
   }
 
   async saveAgentId(agentId: string) {
-    this.agentId = agentId;
-    await this.storage.set('agentId', this.agentId);
+    this.userId = agentId;
+    await this.storage.set('agentId', this.userId);
   }
 
   async saveName(name: string) {
@@ -219,42 +256,6 @@ export class DeliveryAgentService {
 
   async loadToken() {
     this.token = await this.storage.get('token') || null;
-  }
-
-  async verifyToken(): Promise<boolean> {
-
-    await this.loadToken();
-
-    if (!this.token) {
-      this.navController.navigateRoot('/login');
-      Promise.resolve(false);
-    }
-
-    const headers = new HttpHeaders()
-      .set('x-token', this.token);
-
-    const httpOptions = {
-      headers
-    };
-
-    return new Promise<boolean>(
-      resolve => {
-        this.httpClient.get<any>(`${VERIFYTOKEN}`, httpOptions).subscribe(
-          data => {
-            if (data.success) {
-              this.agentDelivery = data.agentDelivery;
-              this.infoAgentService.sendAgentInfo({ name: data.agentDelivery.name, avatar: data.agentDelivery.avatar });
-              resolve(true);
-            }
-            else {
-              this.navController.navigateRoot('/login');
-              resolve(false);
-            }
-
-          }
-        );
-      }
-    );
   }
 
   public getTokenInfo(): Observable<any> {
