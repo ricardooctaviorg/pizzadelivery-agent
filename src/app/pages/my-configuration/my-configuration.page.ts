@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { StorageService } from '../../services/storage.service';
 import { UserDelivery } from '../../commons/interfaces/user-delivery';
 import { NgForm } from '@angular/forms';
-import { ToastController } from '@ionic/angular';
+import { ToastController, IonSlides } from '@ionic/angular';
 import { SecurityService } from '../../services/security.service';
 import { AvatarCatalog } from '../../commons/interfaces/avatar-catalog';
 import { UtilService } from '../../commons/services/util.service';
@@ -37,6 +37,8 @@ export class MyConfigurationPage implements OnInit {
     slidesPerView: 4
     , centeredSlides: true
   };
+
+  @ViewChild('aSlides') aSlides: IonSlides;
 
   constructor(private storageService  : StorageService
     , private securityService         : SecurityService
@@ -93,8 +95,7 @@ export class MyConfigurationPage implements OnInit {
       if( updateStatus )
         this.showAgentUpdateStatus(AGENTUPDATE_SUCCESS, SUCCESS_COLOR_TRUE);
       else
-        this.showAgentUpdateStatus(AGENTUPDATE_FAIL, SUCCESS_COLOR_FALSE);
-        
+        this.showAgentUpdateStatus(AGENTUPDATE_FAIL, SUCCESS_COLOR_FALSE);       
   }
 
   async showAgentUpdateStatus(notice: string, success: string) {
@@ -117,11 +118,17 @@ export class MyConfigurationPage implements OnInit {
   }
 
   selectAvatarBySource(avatarSrc: string) {
+    let a = 0;
     this.avatartCatalogList.forEach(
       av => {
+        a++;
         av.selected = false;
-        if( av.avatarUrl === avatarSrc)
+        if( av.avatarUrl === avatarSrc){
           av.selected = true;
+          this.aSlides.slideTo(a-1, 1500);
+          this.agentDeliveryCurrent.avatar = av.avatarUrl;
+          this.avatarIdCurrent = av.avatarId;
+        } 
       });
   }
 }

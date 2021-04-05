@@ -2,12 +2,11 @@
   <ion-menu side="start" menuId="firstMunu" contentId="main">
     <ion-header>
       <ion-toolbar color="tertiary">
-        <ion-chip color="dark" [disabled]="false" [outline]="false" slot="start">
-          <ion-avatar>
-            <img [src]="agentInfoCurrent.avatar">
-          </ion-avatar>
-          <ion-label>{{agentInfoCurrent.name}}</ion-label>
-        </ion-chip>
+        <ion-avatar class="ion-margin-end" slot="end">
+          <img [src]="agentInfoCurrent.avatar">
+        </ion-avatar>
+        <ion-title slot="start">{{agentInfoCurrent.name | uppercase }}
+        </ion-title>
       </ion-toolbar>
     </ion-header>
     <ion-content>
