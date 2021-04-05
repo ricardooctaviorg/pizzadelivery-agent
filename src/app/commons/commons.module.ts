@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HeaderComponent } from './header/header.component';
 import { IonicModule } from '@ionic/angular';
-import { HeaderMenuComponent } from './header-menu/header-menu.component';
+import { HeaderComponent } from './components/header/header.component';
+import { HeaderMenuComponent } from './components/header-menu/header-menu.component';
+
 
 @NgModule({
   declarations: [

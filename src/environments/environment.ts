@@ -4,6 +4,7 @@
 
 export const environment = {
   production: false
+  , gateway: "https://pizzadelivery-services.herokuapp.com"
 };
 
 /*

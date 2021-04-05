@@ -5,9 +5,9 @@ import { HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { PizzaDelivery } from '../commons/interfaces/pizza-delivery';
 import { StorageService } from './storage.service';
+import { environment } from '../../environments/environment';
 
-//const GATEWAY_VALUE = 'http://localhost:' + '3000';
-const GATEWAY_VALUE   = 'https://pizzadelivery-services.herokuapp.com';
+const GATEWAY_VALUE = environment.gateway;
 
 const FINDBYAGENTID = GATEWAY_VALUE
   + '/Pizzadelivery'

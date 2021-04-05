@@ -6,9 +6,9 @@ import { Observable } from 'rxjs';
 import { StorageService } from './storage.service';
 import { NavController } from '@ionic/angular';
 import { InfoAgentService } from './info-agent.service';
+import { environment } from '../../environments/environment';
 
-//const GATEWAY_VALUE = 'http://localhost:' + '3000';
-const GATEWAY_VALUE = 'https://pizzadelivery-services.herokuapp.com';
+const GATEWAY_VALUE = environment.gateway;
 
 const USERREGISTER = GATEWAY_VALUE
   + '/UserDelivery'
