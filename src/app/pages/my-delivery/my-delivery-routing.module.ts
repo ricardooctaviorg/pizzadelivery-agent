@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { MyDeliveryPage } from './my-delivery.page';
 
-import { DeliveryListComponent } from './componenets/delivery-list/delivery-list.component';
+import { DeliveryListComponent } from './components/delivery-list/delivery-list.component';
 
 const routes: Routes = [
   {

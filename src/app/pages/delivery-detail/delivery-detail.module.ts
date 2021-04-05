@@ -8,8 +8,8 @@ import { DeliveryDetailPageRoutingModule } from './delivery-detail-routing.modul
 
 import { DeliveryDetailPage } from './delivery-detail.page';
 import { CommonsModule } from '../../commons/commons.module';
-import { DetailLocationComponent } from './detail-location/detail-location.component';
-import { DetailItemsComponent } from './detail-items/detail-items.component';
+import { DetailItemsComponent } from './components/detail-items/detail-items.component';
+import { DetailLocationComponent } from './components/detail-location/detail-location.component';
 
 @NgModule({
   imports: [

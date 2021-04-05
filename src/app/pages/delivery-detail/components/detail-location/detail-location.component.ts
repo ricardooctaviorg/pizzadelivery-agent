@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { StorageService } from '../../../services/storage.service';
-import { PizzaDelivery } from '../../../commons/interfaces/pizza-delivery';
 import { ActivatedRoute } from '@angular/router';
 import { ActionSheetController } from '@ionic/angular';
+import { PizzaDelivery } from '../../../../commons/interfaces/pizza-delivery';
+import { StorageService } from '../../../../services/storage.service';
 
 @Component({
   selector: 'app-detail-location',

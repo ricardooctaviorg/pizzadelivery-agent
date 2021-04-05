@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { StorageService } from '../../../services/storage.service';
-import { PizzaDelivery } from '../../../commons/interfaces/pizza-delivery';
+import { ActivatedRoute } from '@angular/router';
+import { StorageService } from '../../../../services/storage.service';
+import { PizzaDelivery } from '../../../../commons/interfaces/pizza-delivery';
 
 @Component({
   selector: 'app-detail-items',

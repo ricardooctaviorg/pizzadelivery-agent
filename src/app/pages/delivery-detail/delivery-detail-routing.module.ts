@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { DeliveryDetailPage } from './delivery-detail.page';
-import { DetailItemsComponent } from './detail-items/detail-items.component';
-import { DetailLocationComponent } from './detail-location/detail-location.component';
+import { DetailItemsComponent } from './components/detail-items/detail-items.component';
+import { DetailLocationComponent } from './components/detail-location/detail-location.component';
 
 const routes: Routes = [
   {
