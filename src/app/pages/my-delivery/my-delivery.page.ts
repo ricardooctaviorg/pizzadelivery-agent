@@ -10,9 +10,11 @@ import { CountStatusService } from '../../commons/services/count-status.service'
 })
 export class MyDeliveryPage implements OnInit {
 
-  countPending      : number;
-  countFinish       : number;
-  countStatusArray  : string[];
+  titleMain           : string = " MIS ORDENES ";
+  countPending        : number;
+  countFinish         : number;
+  statusTitleCurrent  : string;
+  countStatusArray    : string[];
 
   constructor(private countStatusService  : CountStatusService
     , private router                      : Router
@@ -23,9 +25,10 @@ export class MyDeliveryPage implements OnInit {
     this.eneableMenu();
     this.countStatusService.change.subscribe(
       countStatus => {
-        this.countStatusArray = countStatus.split(",");
-        this.countPending     = Number(this.countStatusArray[0]);
-        this.countFinish      = Number(this.countStatusArray[1]);
+        this.countStatusArray   = countStatus.split(",");
+        this.countPending       = Number(this.countStatusArray[0]);
+        this.countFinish        = Number(this.countStatusArray[1]);
+        this.statusTitleCurrent = this.countStatusArray[2]
       }
     );
     this.router.navigate(['myDelivery','deliveryList','d,e']);

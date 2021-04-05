@@ -10,6 +10,7 @@ import { StorageService } from '../../../../commons/services/storage.service';
 import { StatusDelivery } from '../../../../commons/enums/status-delivery.enum';
 import { UtilService } from '../../../../commons/services/util.service';
 import { CountStatusService } from '../../../../commons/services/count-status.service';
+import { GroupStatusAgent } from '../../../../commons/enums/group-status-agent.enum';
 
 const PAGE_SIZE = 10;
 const ORDERDATE_DESC = "orderDate,-1";
@@ -26,11 +27,12 @@ export class DeliveryListComponent implements OnInit {
   pizzaDelivery         : PizzaDelivery;
   dataResponse          : any;
   pageData              : any;
-  pageCurrent           : number = 0;
+  pageCurrent           : number  = 0;
   statusDelivery        : string[];
   agentIdCurrent        : string;
-  countPendingOrders    : number = 0;
-  countFinalyOrders     : number = 0;
+  countPendingOrders    : number  = 0;
+  countFinalyOrders     : number  = 0;
+  showStatusTitle       : string  = "";
 
   today = new Date();
   dd = String(this.today.getDate()).padStart(2, '0');;
@@ -84,13 +86,18 @@ export class DeliveryListComponent implements OnInit {
             this.countPendingOrders   = 0;
             this.countFinalyOrders    = 0;
 
+            if( statusId.includes(StatusDelivery.DELIVERY_ASSIGNED.toString()) || statusId.includes(StatusDelivery.DELIVERY_ONWAY.toString()) )
+              this.showStatusTitle  = GroupStatusAgent.PENDING_ORDERS.toString();
+            else if( statusId.includes(StatusDelivery.DELIVERY_COMPLETE.toString()) || statusId.includes(StatusDelivery.DELIVERY_FAIL.toString()) )
+              this.showStatusTitle  = GroupStatusAgent.FINISH_ORDERS.toString();
+
             for (let a of this.pizzaDeliverys)
               if( a.status.statusId == StatusDelivery.DELIVERY_ASSIGNED.toString() || a.status.statusId == StatusDelivery.DELIVERY_ONWAY.toString() )
                 this.countPendingOrders ++
               else if( a.status.statusId == StatusDelivery.DELIVERY_COMPLETE.toString() || a.status.statusId == StatusDelivery.DELIVERY_FAIL.toString() )
                 this.countFinalyOrders ++;
             
-            this.countStatusService.sendCountStatus(String(this.countPendingOrders) + "," + String(this.countFinalyOrders));
+            this.countStatusService.sendCountStatus(String(this.countPendingOrders) + "," + String(this.countFinalyOrders) + "," + this.showStatusTitle);
           }
         }
       );

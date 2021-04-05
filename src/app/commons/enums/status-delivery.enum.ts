@@ -8,3 +8,4 @@ export enum StatusDelivery {
     , DELIVERY_COMPLETE     = <any> "f"
     , DELIVERY_FAIL         = <any> "f1"
 }
+
