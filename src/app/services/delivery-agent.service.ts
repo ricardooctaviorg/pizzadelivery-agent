@@ -5,7 +5,6 @@ import { HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { PizzaDelivery } from '../commons/interfaces/pizza-delivery';
 import { UserDelivery } from '../commons/interfaces/user-delivery';
-//import { Storage } from '@ionic/storage';
 import { NavController } from '@ionic/angular';
 import { StorageService } from './storage.service';
 import { InfoAgentService } from './info-agent.service';
@@ -61,7 +60,6 @@ export class DeliveryAgentService {
   };
 
   constructor(private httpClient: HttpClient
-    /*, private storage: Storage*/
     , private navController: NavController
     , private storageService: StorageService
     , private infoAgentService: InfoAgentService) { }
@@ -99,7 +97,6 @@ export class DeliveryAgentService {
             this.name = null;
             this.avatar = null;
             this.storageService.clearLocalStorage();
-            //this.storage.clear();
             resolve(false);
           }
         }
@@ -223,7 +220,6 @@ export class DeliveryAgentService {
     this.name = null;
     this.avatar = null;
     this.storageService.clearLocalStorage();
-    //this.storage.clear();
     this.navController.navigateRoot('/login', { animated: true });
   }
 
@@ -234,27 +230,22 @@ export class DeliveryAgentService {
   async saveToken(token: string) {
     this.token = token;
     this.storageService.setToken(token);
-    //await this.storage.set('token', this.token);
     await this.verifyToken();
   }
 
   async saveUserId(agentId: string) {
     this.userId = agentId;
-    //await this.storage.set('userId', this.userId);
   }
 
   async saveName(name: string) {
     this.name = name;
-    //await this.storage.set('name', this.name);
   }
 
   async saveAvatar(avatar: string) {
     this.avatar = avatar;
-    //await this.storage.set('avatar', this.avatar);
   }
 
   async loadToken() {
-    //this.token = await this.storage.get('token') || null;
     this.token = await this.storageService.getToken() || null;
   }
 

@@ -6,7 +6,6 @@ import { PizzaDelivery } from '../../../../commons/interfaces/pizza-delivery';
 import { StorageService } from '../../../../services/storage.service';
 import { StatusDelivery } from '../../../../commons/enums/status-delivery.enum';
 import { CountPendingService } from '../../../../services/count-pending.service';
-import { Storage } from '@ionic/storage';
 import { CountCompleteService } from '../../../../services/count-complete.service';
 
 const PAGE_SIZE = 10;
@@ -45,8 +44,7 @@ export class DeliveryListComponent implements OnInit {
     , private storageService        : StorageService
     , public toastController        : ToastController
     , private countPendingService   : CountPendingService
-    , private countCompleteService  : CountCompleteService
-    , private storage: Storage) { }
+    , private countCompleteService  : CountCompleteService) { }
 
   async ngOnInit() {
     await this.loadUserId();
@@ -61,7 +59,6 @@ export class DeliveryListComponent implements OnInit {
   }
 
   async loadUserId() {
-    //this.agentIdCurrent = await this.storage.get('userId') || null;
     this.agentIdCurrent = await this.storageService.getUserId() || null;
   }
 

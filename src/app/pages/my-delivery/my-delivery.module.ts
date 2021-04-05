@@ -11,7 +11,6 @@ import { DeliveryListComponent } from './componenets/delivery-list/delivery-list
 import { DeliveryAgentService } from 'src/app/services/delivery-agent.service';
 import { CountPendingService } from '../../services/count-pending.service';
 import { CommonsModule } from '../../commons/commons.module';
-import { IonicStorageModule } from '@ionic/storage';
 import { StorageService } from '../../services/storage.service';
 
 @NgModule({
@@ -22,7 +21,6 @@ import { StorageService } from '../../services/storage.service';
     , MyDeliveryPageRoutingModule
     , HttpClientModule
     , CommonsModule
-    , IonicStorageModule.forRoot()
   ],
   declarations: [
     MyDeliveryPage
