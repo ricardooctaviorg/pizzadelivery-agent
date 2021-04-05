@@ -3,8 +3,9 @@ import { NgForm } from '@angular/forms';
 import { IonSlides, NavController, ToastController, MenuController } from '@ionic/angular';
 import { UserDelivery } from 'src/app/commons/interfaces/user-delivery';
 import { AvatarCatalog } from 'src/app/commons/interfaces/avatar-catalog';
-import { DeliveryAgentService } from '../../services/delivery-agent.service';
 import { StorageService } from '../../services/storage.service';
+import { SecurityService } from '../../services/security.service';
+import { UtilService } from '../../commons/services/util.service';
 
 const AVATAR_DEFAULT = "https://www.gravatar.com/userimage/198148610/fbbfd805411147d5782a0a4afa972199?size=120";
 
@@ -49,7 +50,8 @@ export class LoginPage implements OnInit, AfterViewInit {
     , centeredSlides: true
   };
 
-  constructor(private deliveryAgentService: DeliveryAgentService
+  constructor(private securityService: SecurityService
+    , private utilService: UtilService
     , public toastController: ToastController
     , private storageService: StorageService
     , private navController: NavController
@@ -70,7 +72,7 @@ export class LoginPage implements OnInit, AfterViewInit {
   }
 
   consumeGetAvatarCatalog(): void {
-    this.deliveryAgentService.getAvatarCatalog().subscribe(
+    this.utilService.getAvatarCatalog().subscribe(
       data => {
         this.avatartCatalogList = data as AvatarCatalog[];
       }
@@ -81,7 +83,7 @@ export class LoginPage implements OnInit, AfterViewInit {
     if (formLogin.invalid)
       this.showAgentRegisterStatus(AGENTREGISTER_REQUIRED, SUCCESS_COLOR_FALSE);
 
-    const exist = await this.deliveryAgentService.login(this.loginAgentDelivery.userId, this.loginAgentDelivery.password);
+    const exist = await this.securityService.login(this.loginAgentDelivery.userId, this.loginAgentDelivery.password);
     if(exist)
       this.navController.navigateRoot('myDelivery', {
         animated:true
@@ -95,7 +97,7 @@ export class LoginPage implements OnInit, AfterViewInit {
     this.myAgentDelivery.createDate = new Date();
     if (formAgentRegister.valid)
       if (this.myAgentDelivery.password === this.passwordTmp)
-        this.deliveryAgentService.registerAgent(this.myAgentDelivery).subscribe(
+        this.securityService.registerAgent(this.myAgentDelivery).subscribe(
           data => {
             if (data.success) {
               this.showAgentRegisterStatus(AGENTREGISTER_SUCCESS, SUCCESS_COLOR_TRUE);

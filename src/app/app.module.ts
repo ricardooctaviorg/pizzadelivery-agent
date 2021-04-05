@@ -7,7 +7,7 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { UtilService } from './services/util.service';
+import { UtilService } from './commons/services/util.service';
 import { CommonsModule } from './commons/commons.module';
 
 @NgModule({

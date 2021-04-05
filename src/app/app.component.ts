@@ -1,14 +1,13 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-
+import { Component, OnInit } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
-import { UtilService } from './services/util.service';
+import { UtilService } from './commons/services/util.service';
 import { Observable } from 'rxjs';
 import { MenuOpt } from './commons/interfaces/menu-opt';
 import { InfoAgentService } from './services/info-agent.service';
-import { DeliveryAgentService } from './services/delivery-agent.service';
 import { StorageService } from './services/storage.service';
+import { SecurityService } from './services/security.service';
 
 @Component({
   selector: 'app-root',
@@ -31,7 +30,7 @@ export class AppComponent implements OnInit  {
     , private statusBar: StatusBar
     , private utilService:UtilService
     , private infoAgentService: InfoAgentService
-    , private deliveryAgentService: DeliveryAgentService
+    , private securityService: SecurityService
     , private storageService: StorageService
   ) {
     this.initializeApp();
@@ -64,6 +63,6 @@ export class AppComponent implements OnInit  {
   }
 
   logOut(){
-    this.deliveryAgentService.logOut();
+    this.securityService.logOut();
   }
 }

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { StorageService } from '../../services/storage.service';
 import { UserDelivery } from '../../commons/interfaces/user-delivery';
-import { DeliveryAgentService } from '../../services/delivery-agent.service';
 import { NgForm } from '@angular/forms';
 import { ToastController } from '@ionic/angular';
+import { SecurityService } from '../../services/security.service';
 
 const SUCCESS_COLOR_TRUE          = "success";
 const SUCCESS_COLOR_FALSE         = "danger";
@@ -30,11 +30,11 @@ export class MyConfigurationPage implements OnInit {
   }
 
   constructor(private storageService: StorageService
-    , private deliveryAgentService: DeliveryAgentService
+    , private securityService: SecurityService
     , public toastController: ToastController) { }
 
   ngOnInit() {
-    this.agentDeliveryCurrent = this.deliveryAgentService.getAgentDeliveryCurrent();
+    this.agentDeliveryCurrent = this.securityService.getAgentDeliveryCurrent();
     if(this.storageService.getDarkTheme()== 'F')
       this.darkMode = false;
     else if(this.storageService.getDarkTheme() == 'T')
@@ -62,7 +62,7 @@ export class MyConfigurationPage implements OnInit {
     if(formAgentUpdate.invalid)
       this.showAgentUpdateStatus(AGENTUPDATE_REQUIRED, SUCCESS_COLOR_FALSE);
 
-      const updateStatus = await this.deliveryAgentService.updateAgentDelivery(this.agentDeliveryCurrent);
+      const updateStatus = await this.securityService.updateAgentDelivery(this.agentDeliveryCurrent);
 
       if( updateStatus )
         this.showAgentUpdateStatus(AGENTUPDATE_SUCCESS, SUCCESS_COLOR_TRUE);
