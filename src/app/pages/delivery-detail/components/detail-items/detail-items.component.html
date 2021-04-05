@@ -2,7 +2,7 @@
   <ion-card>
     <ion-card-header>
       <ion-card-subtitle>Total a Pagar:</ion-card-subtitle>
-      <ion-card-title color="primary">
+      <ion-card-title color="tertiary">
         <span >
           {{amountCurrent | currency:'MXN'}}
         </span>
@@ -15,15 +15,15 @@
     </ion-card-header>
     <ion-item>
       <ion-label>Cantidad</ion-label>
-      <ion-badge color="primary">{{a.volume}}</ion-badge>
+      <ion-badge color="tertiary">{{a.volume}}</ion-badge>
     </ion-item>
     <ion-item>
       <ion-label>Tamaño</ion-label>
-      <ion-badge color="primary">{{a.size | titlecase}}</ion-badge>
+      <ion-badge color="tertiary">{{a.size | titlecase}}</ion-badge>
     </ion-item>
     <ion-item>
       <ion-label>Precio Unitario</ion-label>
-      <ion-badge color="primary">{{a.amount | currency:'MXN'}}</ion-badge>
+      <ion-badge color="tertiary">{{a.amount | currency:'MXN'}}</ion-badge>
     </ion-item>
   </ion-card>
 </ion-content>
