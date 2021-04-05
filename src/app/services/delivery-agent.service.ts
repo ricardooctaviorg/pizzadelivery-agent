@@ -4,7 +4,7 @@ import { HttpParams } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { PizzaDelivery } from '../commons/interfaces/pizza-delivery';
-import { StorageService } from './storage.service';
+import { StorageService } from '../commons/services/storage.service';
 import { environment } from '../../environments/environment';
 
 const GATEWAY_VALUE = environment.gateway;

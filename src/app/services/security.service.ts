@@ -3,9 +3,9 @@ import { HttpClient } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
 import { UserDelivery } from '../commons/interfaces/user-delivery';
 import { Observable } from 'rxjs';
-import { StorageService } from './storage.service';
+import { StorageService } from '../commons/services/storage.service';
 import { NavController } from '@ionic/angular';
-import { InfoAgentService } from './info-agent.service';
+import { InfoAgentService } from '../commons/services/info-agent.service';
 import { environment } from '../../environments/environment';
 
 const GATEWAY_VALUE = environment.gateway;

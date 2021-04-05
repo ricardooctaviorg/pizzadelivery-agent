@@ -6,8 +6,8 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { UtilService } from './commons/services/util.service';
 import { Observable } from 'rxjs';
 import { MenuOpt } from './commons/interfaces/menu-opt';
-import { InfoAgentService } from './services/info-agent.service';
-import { StorageService } from './services/storage.service';
+import { InfoAgentService } from './commons/services/info-agent.service';
+import { StorageService } from './commons/services/storage.service';
 import { SecurityService } from './services/security.service';
 
 @Component({

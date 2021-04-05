@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { CountPendingService } from '../../services/count-pending.service';
 import { Router } from '@angular/router';
 import { MenuController } from '@ionic/angular';
-import { CountCompleteService } from '../../services/count-complete.service';
+import { CountStatusService } from '../../commons/services/count-status.service';
 
 @Component({
   selector: 'app-my-delivery',
@@ -11,25 +10,22 @@ import { CountCompleteService } from '../../services/count-complete.service';
 })
 export class MyDeliveryPage implements OnInit {
 
-  public countPending : number;
-  public countComplete: number;
+  countPending      : number;
+  countFinish       : number;
+  countStatusArray  : string[];
 
-  constructor(private countPendingService: CountPendingService
-    , private countCompleteService: CountCompleteService
-    , private router: Router
-    , private menuController: MenuController ) { 
+  constructor(private countStatusService  : CountStatusService
+    , private router                      : Router
+    , private menuController              : MenuController ) { 
   }
 
   ngOnInit() {
     this.eneableMenu();
-    this.countPendingService.change.subscribe(
-      count => {
-        this.countPending = count;
-      }
-    );
-    this.countCompleteService.change.subscribe(
-      count => {
-        this.countComplete = count;
+    this.countStatusService.change.subscribe(
+      countStatus => {
+        this.countStatusArray = countStatus.split(",");
+        this.countPending     = Number(this.countStatusArray[0]);
+        this.countFinish      = Number(this.countStatusArray[1]);
       }
     );
     this.router.navigate(['myDelivery','deliveryList','d,e']);

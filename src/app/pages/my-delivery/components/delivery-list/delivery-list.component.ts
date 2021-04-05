@@ -1,13 +1,15 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
+import { OnInit } from '@angular/core';
+import { ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { IonInfiniteScroll, IonRefresher } from '@ionic/angular';
+import { IonInfiniteScroll } from '@ionic/angular';
+import { IonRefresher } from '@ionic/angular';
 import { DeliveryAgentService } from '../../../../services/delivery-agent.service';
 import { PizzaDelivery } from '../../../../commons/interfaces/pizza-delivery';
-import { StorageService } from '../../../../services/storage.service';
+import { StorageService } from '../../../../commons/services/storage.service';
 import { StatusDelivery } from '../../../../commons/enums/status-delivery.enum';
-import { CountPendingService } from '../../../../services/count-pending.service';
-import { CountCompleteService } from '../../../../services/count-complete.service';
 import { UtilService } from '../../../../commons/services/util.service';
+import { CountStatusService } from '../../../../commons/services/count-status.service';
 
 const PAGE_SIZE = 10;
 const ORDERDATE_DESC = "orderDate,-1";
@@ -19,16 +21,17 @@ const ORDERDATE_DESC = "orderDate,-1";
 })
 export class DeliveryListComponent implements OnInit {
 
-  pizzaDeliverysCurrent: PizzaDelivery[] = new Array();
-  pizzaDeliverys: PizzaDelivery[] = new Array();
-  pizzaDelivery : PizzaDelivery;
-  dataResponse  : any;
-  pageData      : any;
-  pageCurrent   : number = 0;
-  statusDelivery: string[];
-  countPending  : number = 0;
-  countComplete : number = 0;
-  agentIdCurrent: string;
+  pizzaDeliverysCurrent : PizzaDelivery[] = new Array();
+  pizzaDeliverys        : PizzaDelivery[] = new Array();
+  pizzaDelivery         : PizzaDelivery;
+  dataResponse          : any;
+  pageData              : any;
+  pageCurrent           : number = 0;
+  statusDelivery        : string[];
+  agentIdCurrent        : string;
+  countPendingOrders    : number = 0;
+  countFinalyOrders     : number = 0;
+
   today = new Date();
   dd = String(this.today.getDate()).padStart(2, '0');;
   mm = String(this.today.getMonth() + 1).padStart(2, '0');
@@ -37,15 +40,14 @@ export class DeliveryListComponent implements OnInit {
   todayStringInit: Date = new Date(Number(this.today.getFullYear()), Number(this.today.getMonth()), Number(this.today.getDate()), 0, 0, 0);
   todayStringEnd: Date = new Date(Number(this.today.getFullYear()), Number(this.today.getMonth()), Number(this.today.getDate()), 23, 59, 59);
 
-  @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
-  @ViewChild(IonRefresher) ionRefresher: IonRefresher;
+  @ViewChild(IonInfiniteScroll) infiniteScroll  : IonInfiniteScroll;
+  @ViewChild(IonRefresher) ionRefresher         : IonRefresher;
 
   constructor(private deliveryAgentService  : DeliveryAgentService
     , private utilService                   : UtilService
     , private route                         : ActivatedRoute
     , private storageService                : StorageService
-    , private countPendingService           : CountPendingService
-    , private countCompleteService          : CountCompleteService) { }
+    , private countStatusService            : CountStatusService) { }
 
   async ngOnInit() {
     await this.loadUserId();
@@ -78,20 +80,17 @@ export class DeliveryListComponent implements OnInit {
             this.pizzaDeliverys.push(... this.pizzaDeliverysCurrent);
             this.storageService.setPizzaDeliverys(this.pizzaDeliverys);
             this.pageData = data.page;
-            for (let c of statusId)
-              if (c == StatusDelivery.DELIVERY_ASSIGNED.toString() || c == StatusDelivery.DELIVERY_ONWAY.toString()) {
-                this.countPending   = 0;
-                for (let a of this.pizzaDeliverys)
-                  if (a.status.statusId == StatusDelivery.DELIVERY_ASSIGNED.toString() || a.status.statusId == StatusDelivery.DELIVERY_ONWAY.toString())
-                    this.countPending++;
-                this.countPendingService.sendCountPending(this.countPending);
-              }else if( c == StatusDelivery.DELIVERY_COMPLETE.toString() || c == StatusDelivery.DELIVERY_FAIL.toString()){
-                this.countComplete  = 0;
-                for (let a of this.pizzaDeliverys)
-                  if (c == StatusDelivery.DELIVERY_COMPLETE.toString() || c == StatusDelivery.DELIVERY_FAIL.toString() )
-                    this.countComplete++;
-                this.countCompleteService.sendCountComplete(this.countComplete);
-              }
+
+            this.countPendingOrders   = 0;
+            this.countFinalyOrders    = 0;
+
+            for (let a of this.pizzaDeliverys)
+              if( a.status.statusId == StatusDelivery.DELIVERY_ASSIGNED.toString() || a.status.statusId == StatusDelivery.DELIVERY_ONWAY.toString() )
+                this.countPendingOrders ++
+              else if( a.status.statusId == StatusDelivery.DELIVERY_COMPLETE.toString() || a.status.statusId == StatusDelivery.DELIVERY_FAIL.toString() )
+                this.countFinalyOrders ++;
+            
+            this.countStatusService.sendCountStatus(String(this.countPendingOrders) + "," + String(this.countFinalyOrders));
           }
         }
       );

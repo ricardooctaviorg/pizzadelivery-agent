@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { StorageService } from '../../../../services/storage.service';
+import { StorageService } from '../../../../commons/services/storage.service';
 import { PizzaDelivery } from '../../../../commons/interfaces/pizza-delivery';
 
 @Component({

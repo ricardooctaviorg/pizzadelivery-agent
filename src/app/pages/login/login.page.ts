@@ -3,9 +3,9 @@ import { NgForm } from '@angular/forms';
 import { IonSlides, NavController, ToastController, MenuController } from '@ionic/angular';
 import { UserDelivery } from 'src/app/commons/interfaces/user-delivery';
 import { AvatarCatalog } from 'src/app/commons/interfaces/avatar-catalog';
-import { StorageService } from '../../services/storage.service';
 import { SecurityService } from '../../services/security.service';
 import { UtilService } from '../../commons/services/util.service';
+import { StorageService } from '../../commons/services/storage.service';
 
 const AVATAR_DEFAULT                    = "https://www.gravatar.com/userimage/198148610/fbbfd805411147d5782a0a4afa972199?size=120";
 

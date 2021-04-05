@@ -1,11 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { StorageService } from '../../services/storage.service';
 import { UserDelivery } from '../../commons/interfaces/user-delivery';
 import { NgForm } from '@angular/forms';
 import { ToastController, IonSlides } from '@ionic/angular';
 import { SecurityService } from '../../services/security.service';
 import { AvatarCatalog } from '../../commons/interfaces/avatar-catalog';
 import { UtilService } from '../../commons/services/util.service';
+import { StorageService } from '../../commons/services/storage.service';
 
 const SUCCESS_COLOR_TRUE          = "success";
 const SUCCESS_COLOR_FALSE         = "danger";

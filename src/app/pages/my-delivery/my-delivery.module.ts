@@ -9,9 +9,8 @@ import { MyDeliveryPageRoutingModule } from './my-delivery-routing.module';
 import { MyDeliveryPage } from './my-delivery.page';
 import { DeliveryListComponent } from './components/delivery-list/delivery-list.component';
 import { DeliveryAgentService } from 'src/app/services/delivery-agent.service';
-import { CountPendingService } from '../../services/count-pending.service';
 import { CommonsModule } from '../../commons/commons.module';
-import { StorageService } from '../../services/storage.service';
+//import { StorageService } from '../../commons/services/storage.service';
 
 @NgModule({
   imports: [
@@ -28,8 +27,7 @@ import { StorageService } from '../../services/storage.service';
   ]
   , providers:[
     DeliveryAgentService
-    , CountPendingService
-    , StorageService
+    //, StorageService
   ]
 })
 export class MyDeliveryPageModule {}
