@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { UrlTree, CanLoad } from '@angular/router';
 import { Observable } from 'rxjs';
-import { DeliveryAgentService } from '../services/delivery-agent.service';
 import { SecurityService } from '../services/security.service';
 
 @Injectable({

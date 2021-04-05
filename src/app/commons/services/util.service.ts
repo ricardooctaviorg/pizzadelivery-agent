@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { MenuOpt } from '../interfaces/menu-opt';
 import { Observable } from 'rxjs';
+import { environment } from '../../../environments/environment.prod';
 
-//const GATEWAY_VALUE = 'http://localhost:' + '3000';
-const GATEWAY_VALUE = 'https://pizzadelivery-services.herokuapp.com';
+const GATEWAY_VALUE = environment.gateway;
 
 const GETAVATARS = GATEWAY_VALUE
   + '/AvatarCatalog'
