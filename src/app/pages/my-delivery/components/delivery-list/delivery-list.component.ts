@@ -1,12 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { IonInfiniteScroll, IonRefresher, ToastController } from '@ionic/angular';
+import { IonInfiniteScroll, IonRefresher } from '@ionic/angular';
 import { DeliveryAgentService } from '../../../../services/delivery-agent.service';
 import { PizzaDelivery } from '../../../../commons/interfaces/pizza-delivery';
 import { StorageService } from '../../../../services/storage.service';
 import { StatusDelivery } from '../../../../commons/enums/status-delivery.enum';
 import { CountPendingService } from '../../../../services/count-pending.service';
 import { CountCompleteService } from '../../../../services/count-complete.service';
+import { UtilService } from '../../../../commons/services/util.service';
 
 const PAGE_SIZE = 10;
 const ORDERDATE_DESC = "orderDate,-1";
@@ -39,12 +40,12 @@ export class DeliveryListComponent implements OnInit {
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
   @ViewChild(IonRefresher) ionRefresher: IonRefresher;
 
-  constructor(private deliveryAgentService: DeliveryAgentService
-    , private route                 : ActivatedRoute
-    , private storageService        : StorageService
-    , public toastController        : ToastController
-    , private countPendingService   : CountPendingService
-    , private countCompleteService  : CountCompleteService) { }
+  constructor(private deliveryAgentService  : DeliveryAgentService
+    , private utilService                   : UtilService
+    , private route                         : ActivatedRoute
+    , private storageService                : StorageService
+    , private countPendingService           : CountPendingService
+    , private countCompleteService          : CountCompleteService) { }
 
   async ngOnInit() {
     await this.loadUserId();
@@ -60,40 +61,6 @@ export class DeliveryListComponent implements OnInit {
 
   async loadUserId() {
     this.agentIdCurrent = await this.storageService.getUserId() || null;
-  }
-
-  async showStatus(status: string, success: number) {
-
-    var messageCurrent: string = "";
-    var typeAlert: string = "danger";
-
-    switch (status) {
-      case StatusDelivery.DELIVERY_ONWAY.toString():
-        if (success)
-          messageCurrent = "Se ha iniciado la entrega.";
-        else
-          messageCurrent = "No se pudo iniciar la entrega";
-        break;
-      case StatusDelivery.DELIVERY_COMPLETE.toString():
-        if (success)
-          messageCurrent = "Se ha completado la entrega.";
-        else
-          messageCurrent = "No se pudo completar la entrega";
-        break;
-    }
-
-    if (success)
-      typeAlert = "success";
-
-    const toast = await this.toastController.create({
-      message: messageCurrent
-      , duration: 3000
-      , color: typeAlert
-      , keyboardClose: true
-      , position: "top"
-      , translucent: false
-    });
-    toast.present();
   }
 
   private consumeData(agentId: string
@@ -118,10 +85,10 @@ export class DeliveryListComponent implements OnInit {
                   if (a.status.statusId == StatusDelivery.DELIVERY_ASSIGNED.toString() || a.status.statusId == StatusDelivery.DELIVERY_ONWAY.toString())
                     this.countPending++;
                 this.countPendingService.sendCountPending(this.countPending);
-              }else if( c == StatusDelivery.DELIVERY_COMPLETE.toString() ){
+              }else if( c == StatusDelivery.DELIVERY_COMPLETE.toString() || c == StatusDelivery.DELIVERY_FAIL.toString()){
                 this.countComplete  = 0;
                 for (let a of this.pizzaDeliverys)
-                  if (a.status.statusId == StatusDelivery.DELIVERY_COMPLETE.toString() )
+                  if (c == StatusDelivery.DELIVERY_COMPLETE.toString() || c == StatusDelivery.DELIVERY_FAIL.toString() )
                     this.countComplete++;
                 this.countCompleteService.sendCountComplete(this.countComplete);
               }
@@ -155,10 +122,10 @@ export class DeliveryListComponent implements OnInit {
       this.pizzaDelivery.deliveryDate = new Date();
     this.deliveryAgentService.updateDelivery(this.pizzaDelivery).subscribe(
       data => {
-        this.showStatus(status, 1);
+        this.utilService.showStatus(status, 1);
         this.doRefresh(null);
       }, err => {
-        this.showStatus(status, 0);
+        this.utilService.showStatus(status, 0);
       }
     )
   }

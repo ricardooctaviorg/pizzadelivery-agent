@@ -49,7 +49,6 @@ export class MyConfigurationPage implements OnInit {
     await this.consumeGetAvatarCatalog();
     this.agentDeliveryCurrent = this.securityService.getAgentDeliveryCurrent();
     this.selectAvatarBySource(this.agentDeliveryCurrent.avatar);
-    console.log(this.agentDeliveryCurrent);
     if(this.storageService.getDarkTheme()== 'F')
       this.darkMode = false;
     else if(this.storageService.getDarkTheme() == 'T')

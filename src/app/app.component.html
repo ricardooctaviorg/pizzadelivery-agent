@@ -5,7 +5,8 @@
         <ion-avatar class="ion-margin-end" slot="end">
           <img [src]="agentInfoCurrent.avatar">
         </ion-avatar>
-        <ion-title slot="start">{{agentInfoCurrent.name | uppercase }}
+        <ion-title class="ion-text-end" size="small">
+          <h6>{{agentInfoCurrent.name | uppercase }}</h6>
         </ion-title>
       </ion-toolbar>
     </ion-header>
@@ -19,7 +20,7 @@
         </ion-menu-toggle>
         <ion-menu-toggle>
           <ion-item button (click)="logOut()">
-            <ion-icon slot="start" name="walk" color="tertiary"></ion-icon>
+            <ion-icon slot="start" name="exit" color="tertiary"></ion-icon>
             <ion-label>Salir</ion-label>
           </ion-item>
         </ion-menu-toggle>

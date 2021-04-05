@@ -1,11 +1,11 @@
 <app-header-menu titleMain="MI CONFIGURACIÓN"></app-header-menu>
 <ion-content>
   <ion-list>
-    <ion-item>
+    <!-- <ion-item>
       <ion-icon slot="start" name="logo-android"></ion-icon>
       <ion-label>Modo Obscuro Android</ion-label>
       <ion-toggle disabled slot="end" [(ngModel)]="darkModeSystem"></ion-toggle>
-    </ion-item>
+    </ion-item> -->
     <ion-item>
       <ion-icon slot="start" name="moon"></ion-icon>
       <ion-label>Modo Obscuro </ion-label>
@@ -15,7 +15,7 @@
   <ion-grid fixed>
     <ion-card-header>
       <ion-card-subtitle>CAMBIA TU AVATAR</ion-card-subtitle>
-      <ion-card-title>{{avatarIdCurrent | uppercase}}</ion-card-title>
+      <ion-card-title color="tertiary">{{avatarIdCurrent | uppercase}}</ion-card-title>
     </ion-card-header>
     <ion-row class="ion-margin">
       <ion-col>
@@ -30,11 +30,15 @@
     <ion-row class="ion-align-items-center ion-justify-content-center">
       <ion-col size="12">
         <form (ngSubmit)="agentUpdate(formAgentUpdate)" #formAgentUpdate="ngForm">
-          <ion-item class="ion-padding">
-            <ion-label position="stacked"></ion-label>
+          <ion-label position="stacked"></ion-label>
+          <ion-item>
+            <ion-icon slot="start" color="success" name="person"></ion-icon>
             <ion-input [(ngModel)]="agentDeliveryCurrent.name" name="name" placeholder="Nombre" required></ion-input>
-            <ion-input [(ngModel)]="agentDeliveryCurrent.phone" name="phone" placeholder="Telefono" type="number" required>
-            </ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-icon slot="start" color="success" name="call"></ion-icon>
+            <ion-input [(ngModel)]="agentDeliveryCurrent.phone" name="phone" placeholder="Telefono" type="number"
+              required></ion-input>
           </ion-item>
           <ion-row class="ion-justify-content-center">
             <ion-button type="submit" color="tertiary" shape="round" class="ion-margin">
