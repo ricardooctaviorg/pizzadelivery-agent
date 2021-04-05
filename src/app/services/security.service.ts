@@ -64,10 +64,6 @@ export class SecurityService {
       this.httpClient.post<any>(`${LOGIN}`, data, httpOptions).subscribe(
         async (data) => {
           if (data.success) {
-            this.storageService.setToken(data.token);
-            this.storageService.setUserId(data.userId);
-            this.storageService.setName(data.name);
-            this.storageService.setAvatar(data.avatar);
             await this.saveToken(data.token);
             await this.saveUserId(data.userId);
             await this.saveName(data.name);
@@ -133,6 +129,7 @@ export class SecurityService {
           data => {
             if (data.success) {
               this.userDelivery = data.userDelivery;
+              this.storageService.updateBasicLocalStorage(this.userDelivery.avatar, this.userDelivery.name);
               this.infoAgentService.sendAgentInfo({ name: data.userDelivery.name, avatar: data.userDelivery.avatar });
               resolve(true);
             }
@@ -162,16 +159,19 @@ export class SecurityService {
     await this.verifyToken();
   }
 
-  async saveUserId(agentId: string) {
-    this.userId = agentId;
+  async saveUserId(userId: string) {
+    this.userId = userId;
+    this.storageService.setUserId(userId);
   }
 
   async saveName(name: string) {
     this.name = name;
+    this.storageService.setName(name);
   }
 
   async saveAvatar(avatar: string) {
     this.avatar = avatar;
+    this.storageService.setAvatar(avatar);
   }
 
   async loadToken() {

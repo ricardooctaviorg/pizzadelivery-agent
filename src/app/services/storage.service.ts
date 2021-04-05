@@ -26,6 +26,11 @@ export class StorageService {
     this.localStorageService.setItem('darkTheme', darkTheme);
   }
 
+  updateBasicLocalStorage(avatar: string, name: string){
+    this.setAvatar(avatar);
+    this.setName(name);
+  }
+
   setUserId(userId:string):void{
     this.localStorageService.setItem('userId', userId);
   }
