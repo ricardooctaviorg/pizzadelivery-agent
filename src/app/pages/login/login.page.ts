@@ -7,18 +7,22 @@ import { StorageService } from '../../services/storage.service';
 import { SecurityService } from '../../services/security.service';
 import { UtilService } from '../../commons/services/util.service';
 
-const AVATAR_DEFAULT = "https://www.gravatar.com/userimage/198148610/fbbfd805411147d5782a0a4afa972199?size=120";
+const AVATAR_DEFAULT                    = "https://www.gravatar.com/userimage/198148610/fbbfd805411147d5782a0a4afa972199?size=120";
 
-const AGENTREGISTER_SUCCESS       = "¡ Registro correcto !";
-const AGENTREGISTER_FAIL          = "No se pudo registrar";
-const AGENTREGISTER_REQUIRED      = "Favor de completar los datos solicitados";
-const AGENTREGISTER_SAMEPASS      = "Las contraseñas deben coincidir";
-const AGENTREGISTER_AGENTIDEXIST  = "Ya existe el nombre de usuaio";
+const AGENT_REGISTER_SUCCESS            = "¡ Registro correcto !";
+const AGENT_REGISTER_FAIL               = "No se pudo registrar";
+const AGENT_REGISTER_REQUIRED           = "Favor de completar los datos solicitados";
+const AGENT_REGISTER_SAMEPASS           = "Las contraseñas deben coincidir";
+const AGENT_REGISTER_AGENTIDEXIST       = "Ya existe el nombre de usuaio";
+const AGENT_REGISTER_REQUIRED_AVATAR    = "Favor de Seleccionar un avatar";
 
-const LOGIN_ERROR                 = "Usuario o contraseña invalidos";
+const LOGIN_ERROR                       = "Usuario o contraseña invalidos";
+const ROLE_AGENT                        = "agent"
 
-const SUCCESS_COLOR_TRUE          = "success";
-const SUCCESS_COLOR_FALSE         = "danger";
+const SUCCESS_COLOR_TRUE                = "success";
+const SUCCESS_COLOR_FALSE               = "danger";
+
+const DARK_THEME                        = "dark";
 
 @Component({
   selector: 'app-login',
@@ -31,7 +35,7 @@ export class LoginPage implements OnInit, AfterViewInit {
 
   myAgentDelivery: UserDelivery = {
     avatar: AVATAR_DEFAULT
-    , role: 'agent'
+    , role: ROLE_AGENT
   };
 
   loginAgentDelivery = {
@@ -39,11 +43,10 @@ export class LoginPage implements OnInit, AfterViewInit {
     , password: ''
   };
 
-  avatar: string = AVATAR_DEFAULT;
-  passwordTmp: string = "";
-  avatartCatalogList: AvatarCatalog[] = new Array();
-  avatarIdCurrent: string;
-  myAvatatDefaul: string = AVATAR_DEFAULT;
+  avatar              : string = AVATAR_DEFAULT;
+  passwordTmp         : string = "";
+  avatartCatalogList  : AvatarCatalog[] = new Array();
+  avatarIdCurrent     : string = "";
 
   avatarSlide = {
     slidesPerView: 3.5
@@ -62,9 +65,9 @@ export class LoginPage implements OnInit, AfterViewInit {
     this.consumeGetAvatarCatalog();
 
     if(this.storageService.getDarkTheme() == 'T')
-      document.body.classList.add('dark');
+      document.body.classList.add(DARK_THEME);
     else if(this.storageService.getDarkTheme() == 'F')
-      document.body.classList.remove('dark');
+      document.body.classList.remove(DARK_THEME);
   }
 
   ngAfterViewInit() {
@@ -81,7 +84,7 @@ export class LoginPage implements OnInit, AfterViewInit {
 
   async login(formLogin: NgForm) {
     if (formLogin.invalid)
-      this.showAgentRegisterStatus(AGENTREGISTER_REQUIRED, SUCCESS_COLOR_FALSE);
+      this.showAgentRegisterStatus(AGENT_REGISTER_REQUIRED, SUCCESS_COLOR_FALSE);
 
     const exist = await this.securityService.login(this.loginAgentDelivery.userId, this.loginAgentDelivery.password);
     if(exist)
@@ -96,23 +99,27 @@ export class LoginPage implements OnInit, AfterViewInit {
   agentRegister(formAgentRegister: NgForm) {
     this.myAgentDelivery.createDate = new Date();
     if (formAgentRegister.valid)
-      if (this.myAgentDelivery.password === this.passwordTmp)
-        this.securityService.registerAgent(this.myAgentDelivery).subscribe(
-          data => {
-            if (data.success) {
-              this.showAgentRegisterStatus(AGENTREGISTER_SUCCESS, SUCCESS_COLOR_TRUE);
+      if (this.avatarIdCurrent !== "")
+        if (this.myAgentDelivery.password === this.passwordTmp)
+          this.securityService.registerAgent(this.myAgentDelivery).subscribe(
+            data => {
+              if (data.success) {
+                this.showAgentRegisterStatus(AGENT_REGISTER_SUCCESS, SUCCESS_COLOR_TRUE);
+                formAgentRegister.reset();
+              }
+              else
+                this.showAgentRegisterStatus(AGENT_REGISTER_AGENTIDEXIST, SUCCESS_COLOR_FALSE);
+            }, err => {
+              console.log("err", err);
+              this.showAgentRegisterStatus(AGENT_REGISTER_FAIL, SUCCESS_COLOR_FALSE);
             }
-            else
-              this.showAgentRegisterStatus(AGENTREGISTER_AGENTIDEXIST, SUCCESS_COLOR_FALSE);
-          }, err => {
-            console.log("err",err);
-            this.showAgentRegisterStatus(AGENTREGISTER_FAIL, SUCCESS_COLOR_FALSE);
-          }
-        );
+          );
+        else
+          this.showAgentRegisterStatus(AGENT_REGISTER_SAMEPASS, SUCCESS_COLOR_FALSE);
       else
-        this.showAgentRegisterStatus(AGENTREGISTER_SAMEPASS, SUCCESS_COLOR_FALSE);
+        this.showAgentRegisterStatus(AGENT_REGISTER_REQUIRED_AVATAR, SUCCESS_COLOR_FALSE);
     else
-      this.showAgentRegisterStatus(AGENTREGISTER_REQUIRED, SUCCESS_COLOR_FALSE);
+      this.showAgentRegisterStatus(AGENT_REGISTER_REQUIRED, SUCCESS_COLOR_FALSE);
   }
 
   async showAgentRegisterStatus(notice: string, success: string) {

@@ -60,7 +60,8 @@ export class SecurityService {
       , password
     };
 
-    return new Promise(resolve => {
+    return new Promise(
+      resolve => {
       this.httpClient.post<any>(`${LOGIN}`, data, httpOptions).subscribe(
         async (data) => {
           if (data.success) {

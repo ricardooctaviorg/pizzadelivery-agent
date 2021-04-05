@@ -41,25 +41,24 @@
           <ion-card-subtitle>SELECCIONA UN AVATAR</ion-card-subtitle>
           <ion-card-title>{{avatarIdCurrent | uppercase}}</ion-card-title>
         </ion-card-header>
-        <ion-row class="ion-margin">
-          <ion-col>
-            <ion-slides [options]="avatarSlide" #aSlides>
-              <ion-slide *ngFor="let avatar of avatartCatalogList">
-                <ion-img class="pick-avatar" [src]="avatar.avatarUrl" [ngClass]="{'pick-avatar-seleccionado': avatar.selected
-                , 'animate__bounceIn':avatar.selected}" (click)="selectAvatar(avatar)"></ion-img>
-              </ion-slide>
-            </ion-slides>
-          </ion-col>
-        </ion-row>
         <form (ngSubmit)="agentRegister(formAgentRegister)" #formAgentRegister="ngForm">
+          <ion-row class="ion-margin">
+            <ion-col>
+              <ion-slides [options]="avatarSlide" #aSlides>
+                <ion-slide *ngFor="let avatar of avatartCatalogList">
+                  <ion-img class="pick-avatar" [src]="avatar.avatarUrl" [ngClass]="{'pick-avatar-seleccionado': avatar.selected
+                        , 'animate__bounceIn':avatar.selected}" (click)="selectAvatar(avatar)"></ion-img>
+                </ion-slide>
+              </ion-slides>
+            </ion-col>
+          </ion-row>
           <ion-item class="ion-padding">
             <ion-label position="stacked"></ion-label>
             <ion-input [(ngModel)]="myAgentDelivery.userId" name="userId" required placeholder="Usuario"></ion-input>
             <ion-input [(ngModel)]="myAgentDelivery.password" name="password" required placeholder="Constraseña"
               type="password">
             </ion-input>
-            <ion-input [(ngModel)]="passwordTmp" name="passwordTmp" required placeholder="Repetir Constraseña"
-              type="password">
+            <ion-input [(ngModel)]="passwordTmp" name="passwordTmp" required placeholder="Repetir Constraseña" type="password">
             </ion-input>
             <ion-input [(ngModel)]="myAgentDelivery.name" name="name" required placeholder="Nombre"></ion-input>
             <ion-input [(ngModel)]="myAgentDelivery.phone" name="phone" required placeholder="Telefono" type="number">
