@@ -9,9 +9,9 @@
       </ion-card-title>
     </ion-card-header>
   </ion-card>
-  <ion-card *ngFor="let a of itemsCurrent">
+  <ion-card *ngFor="let a of ordersCurrent">
     <ion-card-header>
-      <ion-card-title>{{a.product.productId | uppercase}}</ion-card-title>
+      <ion-card-title>{{a.order.orderId | uppercase}}</ion-card-title>
     </ion-card-header>
     <ion-item>
       <ion-label>Cantidad</ion-label>

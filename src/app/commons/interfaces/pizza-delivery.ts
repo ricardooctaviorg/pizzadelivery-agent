@@ -1,11 +1,24 @@
 export interface PizzaDelivery {
     _id: string;
     deliveryId: string;
-    items: any[];
+    orders: [ 
+        {
+            order:
+            {
+                orderId: string;
+                ingredients:string[];
+                extras: string[];
+                typeProduct: string;
+            };
+            volume: number;
+            size: string;
+            amount: number;
+        }   
+    ];
     customer: {
-        customerId: string
-        , name: string
-        , phone: string
+        customerId: string;
+        name: string;
+        phone: string;
     };
     address: {
         street: string;
@@ -16,13 +29,13 @@ export interface PizzaDelivery {
         lng: string;
     };
     status: {
-        statusId: string
-        , statusDelivery: string
+        statusId: string;
+        statusDelivery: string;
     };
     agent: {
-        agentId: string
-        , name: string
-        , phone: string
+        agentId: string;
+        name: string;
+        phone: string;
     };
     orderDate: Date;
     deliveryDate: Date;

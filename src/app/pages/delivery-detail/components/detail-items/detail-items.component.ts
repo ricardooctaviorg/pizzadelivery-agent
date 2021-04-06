@@ -13,9 +13,9 @@ const DELIVERY_INFO   = "delivery";
 })
 export class DetailItemsComponent implements OnInit {
 
-  pizzaDeliverys: PizzaDelivery[] = new Array();
-  itemsCurrent: any[]= new Array();
-  amountCurrent:string;
+  pizzaDeliverys  : PizzaDelivery[] = new Array();
+  ordersCurrent   : any[]= new Array();
+  amountCurrent   : string;
 
   constructor(private storageService  : StorageService
     , private route                   : ActivatedRoute
@@ -29,7 +29,7 @@ export class DetailItemsComponent implements OnInit {
         deliveryIdCurrent = deliveryIdCurrent.replace(',','');
         for(let a of this.pizzaDeliverys)
           if(a.deliveryId == deliveryIdCurrent){
-            this.itemsCurrent = a.items;
+            this.ordersCurrent = a.orders;
             this.amountCurrent = a.totalAmount;
           }
 
