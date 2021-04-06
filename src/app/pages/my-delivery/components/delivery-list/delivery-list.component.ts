@@ -83,8 +83,8 @@ export class DeliveryListComponent implements OnInit {
             this.storageService.setPizzaDeliverys(this.pizzaDeliverys);
             this.pageData = data.page;
 
-            this.countPendingOrders   = 0;
-            this.countFinalyOrders    = 0;
+            this.countPendingOrders = 0;
+            this.countFinalyOrders  = 0;
 
             if( statusId.includes(StatusDelivery.DELIVERY_ASSIGNED.toString()) || statusId.includes(StatusDelivery.DELIVERY_ONWAY.toString()) )
               this.showStatusTitle  = GroupStatusAgent.PENDING_ORDERS.toString();

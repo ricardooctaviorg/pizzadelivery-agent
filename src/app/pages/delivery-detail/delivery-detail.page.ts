@@ -15,6 +15,11 @@ export class DeliveryDetailPage implements OnInit {
   titleDetailType   : string;
   nameCustomer      : string;
   phoneCustomer     : string;
+  assignDateString  : string;
+  deliveryDateString: string;
+  assignDate        : Date    = null;
+  deliveryDate      : Date    = null;
+
 
   constructor(private router        : Router
     , private route                 : ActivatedRoute
@@ -23,14 +28,20 @@ export class DeliveryDetailPage implements OnInit {
   ngOnInit() {
     this.route.paramMap.subscribe(
       params => {
-        const deliveryId        : string = String(params.get("deliveryId"));
-        const statusId          : string = String(params.get("statusId"));
-        const nameCustomerB64   : string = String(params.get("nameCustomer"));
-        const phoneCustomerB64  : string = String(params.get("phoneCustomer"));
-        this.deliveryIdCurrent    = deliveryId;
-        this.statusIdCurrent      = statusId;
-        this.nameCustomer         = nameCustomerB64;
-        this.phoneCustomer        = phoneCustomerB64;
+        const deliveryId        : string  = String(params.get("deliveryId"));
+        const statusId          : string  = String(params.get("statusId"));
+        const nameCustomerB64   : string  = String(params.get("nameCustomer"));
+        const phoneCustomerB64  : string  = String(params.get("phoneCustomer"));
+        const assignDate        : string  = String(params.get("assignDate"));
+        const deliveryDate      : string  = String(params.get("deliveryDate"));
+        this.deliveryIdCurrent            = deliveryId;
+        this.statusIdCurrent              = statusId;
+        this.nameCustomer                 = nameCustomerB64;
+        this.phoneCustomer                = phoneCustomerB64;
+        this.assignDateString             = assignDate;
+        this.deliveryDateString           = deliveryDate;
+        this.assignDate                   = params.get("assignDate")!=='null'?new Date(params.get("assignDate")):null;
+        this.deliveryDate                 = params.get("deliveryDate")!=='null'?new Date(params.get("deliveryDate")):null;
         }
     );
     this.infoAgentService.detailTypeTitle.subscribe(
@@ -38,6 +49,6 @@ export class DeliveryDetailPage implements OnInit {
         this.titleDetailType = title;
       }
     );
-    this.router.navigate(['delivery-detail',this.deliveryIdCurrent,this.statusIdCurrent, this.nameCustomer, this.phoneCustomer ,'detailLocation',this.deliveryIdCurrent]);
+    this.router.navigate(['delivery-detail',this.deliveryIdCurrent,this.statusIdCurrent, this.nameCustomer, this.phoneCustomer, this.assignDateString, this.deliveryDateString ,'detailLocation',this.deliveryIdCurrent]);
   }
 }

@@ -38,6 +38,7 @@ export interface PizzaDelivery {
         phone: string;
     };
     orderDate: Date;
+    assignDate: Date;
     deliveryDate: Date;
     totalAmount: string;
 }
