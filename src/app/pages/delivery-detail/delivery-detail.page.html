@@ -1,9 +1,21 @@
 <app-header currentTitle="{{preTitle}}{{ titleDetailType | detailTypeTitle}}"></app-header>
+<ion-item>
+  <ion-label>
+    <ion-icon class="ion-margin-horizontal" slot="start" name="person" color="success"></ion-icon>
+    {{ nameCustomer }} 
+  </ion-label>
+</ion-item>
+<ion-item>
+  <ion-label>
+    <ion-icon class="ion-margin-horizontal" slot="start" name="call" color="success"></ion-icon>
+    {{ phoneCustomer }} 
+  </ion-label>
+</ion-item>
 <ion-item [ngSwitch]="statusIdCurrent">
   <ion-label>
     <ion-icon class="ion-margin-horizontal" slot="start" name="bag" color="success">
     </ion-icon>
-    {{deliveryIdCurrent }}
+    {{ deliveryIdCurrent }}
   </ion-label>
   <ion-label>
     <ion-icon class="ion-margin-end" *ngSwitchCase="'d'" slot="start" name="{{statusIdCurrent | statusDeliveryIcon}}" color="success">

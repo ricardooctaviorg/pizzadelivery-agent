@@ -9,7 +9,7 @@
   </ion-refresher>
   <ion-list>
     <ion-item-sliding *ngFor="let a of pizzaDeliverys" [ngSwitch]="a.status.statusId">
-      <ion-item class="" [ngSwitch]="a.status.statusId" [routerLink]="['/delivery-detail',a.deliveryId, a.status.statusId ]">
+      <ion-item class="" [ngSwitch]="a.status.statusId" [routerLink]="['/delivery-detail',a.deliveryId, a.status.statusId, a.customer.name, a.customer.phone ]">
         <ion-icon *ngSwitchCase="'d'" slot="start" name="bag-add" color="success"></ion-icon>
         <ion-icon *ngSwitchCase="'e'" slot="start" name="rocket" color="success"></ion-icon>
         <ion-icon *ngSwitchCase="'f'" slot="start" name="bag-check" color="success"></ion-icon>
