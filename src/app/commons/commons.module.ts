@@ -4,6 +4,8 @@ import { IonicModule } from '@ionic/angular';
 import { HeaderComponent } from './components/header/header.component';
 import { HeaderMenuComponent } from './components/header-menu/header-menu.component';
 import { StatusGroupTitlePipe } from './pipes/status-group-title.pipe';
+import { StatusDeliveryIcon } from './pipes/status-delivery-icon.pipe';
+import { StatusDeliveryTitlePipe } from './pipes/status-delivery-title.pipe';
 
 
 @NgModule({
@@ -11,6 +13,8 @@ import { StatusGroupTitlePipe } from './pipes/status-group-title.pipe';
     HeaderComponent
     , HeaderMenuComponent
     , StatusGroupTitlePipe
+    , StatusDeliveryIcon
+    , StatusDeliveryTitlePipe
   ],
   imports: [
     CommonModule
@@ -20,6 +24,8 @@ import { StatusGroupTitlePipe } from './pipes/status-group-title.pipe';
     HeaderComponent
     , HeaderMenuComponent
     , StatusGroupTitlePipe
+    , StatusDeliveryIcon
+    , StatusDeliveryTitlePipe
   ]
 })
 export class CommonsModule { }

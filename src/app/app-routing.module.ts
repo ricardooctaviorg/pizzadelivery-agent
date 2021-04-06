@@ -11,7 +11,7 @@ const routes: Routes = [
     ]
   },
   {
-    path: 'delivery-detail/:deliveryId',
+    path: 'delivery-detail/:deliveryId/:statusId',
     loadChildren: () => import('./pages/delivery-detail/delivery-detail.module').then( m => m.DeliveryDetailPageModule)
     , canLoad: [
       AgentDeliveryGuard

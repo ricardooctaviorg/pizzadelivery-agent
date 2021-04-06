@@ -1,4 +1,22 @@
 <app-header currentTitle="INFORMACIÓN"></app-header>
+<ion-item [ngSwitch]="statusIdCurrent">
+  <ion-label>
+    <ion-icon class="ion-margin-horizontal" slot="start" name="bag" color="success">
+    </ion-icon>
+    {{deliveryIdCurrent }}
+  </ion-label>
+  <ion-label>
+    <ion-icon class="ion-margin-end" *ngSwitchCase="'d'" slot="start" name="{{statusIdCurrent | statusDeliveryIcon}}" color="success">
+    </ion-icon>
+    <ion-icon class="ion-margin-end" *ngSwitchCase="'e'" slot="start" name="{{statusIdCurrent | statusDeliveryIcon}}" color="success">
+    </ion-icon>
+    <ion-icon class="ion-margin-end" *ngSwitchCase="'f'" slot="start" name="{{statusIdCurrent | statusDeliveryIcon}}" color="success">
+    </ion-icon>
+    <ion-icon class="ion-margin-end" *ngSwitchCase="'f1'" slot="start" name="{{statusIdCurrent | statusDeliveryIcon}}" color="danger">
+    </ion-icon>
+    {{statusIdCurrent | statusDeliveryTitle }}
+  </ion-label>
+</ion-item>
 <ion-content>
   <ion-tabs>
     <ion-tab-bar slot="bottom">
@@ -7,7 +25,7 @@
         <ion-label>Ubicación</ion-label>
       </ion-tab-button>
       <ion-tab-button [tab]="['detailItems/',deliveryIdCurrent]">
-        <ion-icon name="restaurant"></ion-icon>
+        <ion-icon name="bag"></ion-icon>
         <ion-label>Pedido</ion-label>
       </ion-tab-button>
     </ion-tab-bar>

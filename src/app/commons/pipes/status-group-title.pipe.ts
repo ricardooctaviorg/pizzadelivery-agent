@@ -21,3 +21,4 @@ export class StatusGroupTitlePipe implements PipeTransform {
   }
 
 }
+

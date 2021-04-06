@@ -10,7 +10,7 @@ import { CountStatusService } from '../../commons/services/count-status.service'
 })
 export class MyDeliveryPage implements OnInit {
 
-  titleMain           : string = " MIS ORDENES ";
+  titleMain           : string = " MIS ENTREGAS ";
   countPending        : number;
   countFinish         : number;
   statusTitleCurrent  : string;

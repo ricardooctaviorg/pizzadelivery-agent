@@ -8,7 +8,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class DeliveryDetailPage implements OnInit {
 
-  deliveryIdCurrent:string;
+  deliveryIdCurrent : string;
+  statusIdCurrent   : string;
 
   constructor(private router: Router
     , private route: ActivatedRoute) { }
@@ -17,9 +18,11 @@ export class DeliveryDetailPage implements OnInit {
     this.route.paramMap.subscribe(
       params => {
         const deliveryId: string = String(params.get("deliveryId"));
-        this.deliveryIdCurrent  = deliveryId;
+        const statusId  : string = String(params.get("statusId"));
+        this.deliveryIdCurrent    = deliveryId;
+        this.statusIdCurrent      = statusId;
         }
     );
-    this.router.navigate(['delivery-detail',this.deliveryIdCurrent,'detailLocation',this.deliveryIdCurrent]);
+    this.router.navigate(['delivery-detail',this.deliveryIdCurrent,this.statusIdCurrent,'detailLocation',this.deliveryIdCurrent]);
   }
 }

@@ -9,14 +9,14 @@
   </ion-refresher>
   <ion-list>
     <ion-item-sliding *ngFor="let a of pizzaDeliverys" [ngSwitch]="a.status.statusId">
-      <ion-item class="" [ngSwitch]="a.status.statusId" [routerLink]="['/delivery-detail',a.deliveryId]" color="">
+      <ion-item class="" [ngSwitch]="a.status.statusId" [routerLink]="['/delivery-detail',a.deliveryId, a.status.statusId ]" color="">
         <ion-note color="primary" slot="end">
           <strong>{{a.totalAmount | currency:'MXN' }}</strong>
         </ion-note>
         <ion-icon *ngSwitchCase="'d'" slot="start" name="bag-handle" color="success"></ion-icon>
         <ion-icon *ngSwitchCase="'e'" slot="start" name="rocket" color="success"></ion-icon>
         <ion-icon *ngSwitchCase="'f'" slot="start" name="bag-check" color="success"></ion-icon>
-        <ion-icon *ngSwitchCase="'f1'" slot="start" name="bag-remove" color="danger"></ion-icon>
+        <ion-icon *ngSwitchCase="'f1'" slot="start" name="thumbs-down" color="danger"></ion-icon>
         <ion-label>
           <h1>{{a.deliveryId| uppercase}}</h1>
           <h2>{{a.customer.name | titlecase}}</h2>
