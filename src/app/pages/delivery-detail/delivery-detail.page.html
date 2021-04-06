@@ -1,4 +1,4 @@
-<app-header currentTitle="INFORMACIÓN"></app-header>
+<app-header currentTitle="{{preTitle}}{{ titleDetailType | detailTypeTitle}}"></app-header>
 <ion-item [ngSwitch]="statusIdCurrent">
   <ion-label>
     <ion-icon class="ion-margin-horizontal" slot="start" name="bag" color="success">
@@ -26,7 +26,7 @@
       </ion-tab-button>
       <ion-tab-button [tab]="['detailItems/',deliveryIdCurrent]">
         <ion-icon name="bag"></ion-icon>
-        <ion-label>ENTREGA</ion-label>
+        <ion-label>PEDIDO</ion-label>
       </ion-tab-button>
     </ion-tab-bar>
   </ion-tabs>

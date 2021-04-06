@@ -3,6 +3,9 @@ import { ActivatedRoute } from '@angular/router';
 import { ActionSheetController } from '@ionic/angular';
 import { PizzaDelivery } from '../../../../commons/interfaces/pizza-delivery';
 import { StorageService } from '../../../../commons/services/storage.service';
+import { InfoAgentService } from '../../../../commons/services/info-agent.service';
+
+const DELIVERY_LOCATION   = "location";
 
 @Component({
   selector: 'app-detail-location',
@@ -17,9 +20,10 @@ export class DetailLocationComponent implements OnInit {
   toLat         : string;
   toLng         : string;
 
-  constructor(private storageService: StorageService
-    , private route: ActivatedRoute
-    , public actionSheetController: ActionSheetController) { }
+  constructor(private storageService  : StorageService
+    , private route                   : ActivatedRoute
+    , public actionSheetController    : ActionSheetController
+    , private infoAgentService        : InfoAgentService) { }
 
   ngOnInit() {
     this.pizzaDeliverys =  this.storageService.getPizzaDeliverys() as PizzaDelivery[];
@@ -32,7 +36,8 @@ export class DetailLocationComponent implements OnInit {
             this.addressCurrent = a.address;
         this.toLat = this.addressCurrent.lat;
         this.toLng = this.addressCurrent.lng;
-        this.destination = this.toLat + ',' + this.toLng; 
+        this.destination = this.toLat + ',' + this.toLng;
+        this.infoAgentService.sendDetailTypeTltle(DELIVERY_LOCATION);
       }
     );
   }

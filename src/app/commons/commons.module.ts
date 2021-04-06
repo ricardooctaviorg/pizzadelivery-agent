@@ -6,6 +6,7 @@ import { HeaderMenuComponent } from './components/header-menu/header-menu.compon
 import { StatusGroupTitlePipe } from './pipes/status-group-title.pipe';
 import { StatusDeliveryIcon } from './pipes/status-delivery-icon.pipe';
 import { StatusDeliveryTitlePipe } from './pipes/status-delivery-title.pipe';
+import { DetailTypeTitlePipe } from './pipes/detail-type-title.pipe';
 
 
 @NgModule({
@@ -15,6 +16,7 @@ import { StatusDeliveryTitlePipe } from './pipes/status-delivery-title.pipe';
     , StatusGroupTitlePipe
     , StatusDeliveryIcon
     , StatusDeliveryTitlePipe
+    , DetailTypeTitlePipe
   ],
   imports: [
     CommonModule
@@ -26,6 +28,7 @@ import { StatusDeliveryTitlePipe } from './pipes/status-delivery-title.pipe';
     , StatusGroupTitlePipe
     , StatusDeliveryIcon
     , StatusDeliveryTitlePipe
+    , DetailTypeTitlePipe
   ]
 })
 export class CommonsModule { }

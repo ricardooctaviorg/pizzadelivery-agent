@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { StorageService } from '../../../../commons/services/storage.service';
 import { PizzaDelivery } from '../../../../commons/interfaces/pizza-delivery';
+import { InfoAgentService } from '../../../../commons/services/info-agent.service';
+
+const DELIVERY_INFO   = "delivery";
 
 @Component({
   selector: 'app-detail-items',
@@ -14,8 +17,9 @@ export class DetailItemsComponent implements OnInit {
   itemsCurrent: any[]= new Array();
   amountCurrent:string;
 
-  constructor(private storageService: StorageService
-    , private route: ActivatedRoute) { }
+  constructor(private storageService  : StorageService
+    , private route                   : ActivatedRoute
+    , private infoAgentService        : InfoAgentService) { }
 
   ngOnInit() {
     this.pizzaDeliverys =  this.storageService.getPizzaDeliverys() as PizzaDelivery[];
@@ -28,8 +32,12 @@ export class DetailItemsComponent implements OnInit {
             this.itemsCurrent = a.items;
             this.amountCurrent = a.totalAmount;
           }
+
+          this.infoAgentService.sendDetailTypeTltle(DELIVERY_INFO);
       }
     );
+
+    
 
   }
 

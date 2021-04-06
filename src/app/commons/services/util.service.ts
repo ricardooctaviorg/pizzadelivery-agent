@@ -6,6 +6,8 @@ import { environment } from '../../../environments/environment.prod';
 import { StatusDelivery } from '../enums/status-delivery.enum';
 import { ToastController } from '@ionic/angular';
 
+const PATH_MAINMENU_OPTIONS = "/assets/json/mainMenu.json";
+
 const GATEWAY_VALUE = environment.gateway;
 
 const GETAVATARS = GATEWAY_VALUE
@@ -21,7 +23,7 @@ export class UtilService {
     , public toastController        : ToastController) { }
 
   public getMainMunuOptions(){
-    return this.httpClient.get<MenuOpt[]>('/assets/json/mainMenu.json');
+    return this.httpClient.get<MenuOpt[]>(PATH_MAINMENU_OPTIONS);
   }
 
   public getAvatarCatalog(): Observable<any> {
