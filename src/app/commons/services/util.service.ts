@@ -16,6 +16,7 @@ const TOAST_KEYBOARD_CLOSE        = false;
 const TOAST_ICON_ONWAY            = "rocket"
 const TOAST_ICON_COMPLETE         = "bag-check"
 const TOAST_ICON_FAIL             = "thumbs-down"
+const TOAST_ICON_SUCCESS_TRUE     = "happy";
 const TOAST_ICON_SUCCESS_FALSE    = "alert";
 
 const GATEWAY_VALUE         = environment.gateway;
@@ -56,6 +57,41 @@ export class UtilService {
     return this.httpClient.get<any>(`${GETTYPEFAILS}`);
   }
 
+  async showAgentRegisterStatus(notice: string, success: boolean) {
+
+    var typeAlert       : string = TOAST_COLOR_SUCCESS_FALSE;
+    var iconToast       : string = TOAST_ICON_SUCCESS_FALSE;
+
+    if (success){
+      typeAlert = TOAST_COLOR_SUCCESS_TRUE;
+      iconToast = TOAST_ICON_SUCCESS_TRUE;
+    }
+      
+
+    const toast = await this.toastController.create({
+      message           : notice
+      , duration        : TOAST_DURATION
+      , color           : typeAlert
+      , keyboardClose   : TOAST_KEYBOARD_CLOSE
+      , position        : TOAST_POSITION
+      , translucent     : TOAST_TRANSLUCENT
+      , buttons         : [
+        {
+          side: 'start',
+          icon: iconToast,
+        },{
+          side: 'end',
+          text: 'CERRAR',
+          role: 'cancel',
+          handler: () => {
+            console.log('Close clicked');
+          }
+        }
+      ]
+    });
+    toast.present();
+  }
+
   async showStatus(status: string, success: number) {
 
     var messageCurrent  : string = "";
@@ -92,13 +128,13 @@ export class UtilService {
         break;
     }
     const toast = await this.toastController.create({
-      message: messageCurrent
-      , duration: TOAST_DURATION
-      , color: typeAlert
-      , keyboardClose: TOAST_KEYBOARD_CLOSE
-      , position: TOAST_POSITION
-      , translucent: TOAST_TRANSLUCENT
-      , buttons: [
+      message         : messageCurrent
+      , duration      : TOAST_DURATION
+      , color         : typeAlert
+      , keyboardClose : TOAST_KEYBOARD_CLOSE
+      , position      : TOAST_POSITION
+      , translucent   : TOAST_TRANSLUCENT
+      , buttons       : [
         {
           side: 'start',
           icon: iconToast,

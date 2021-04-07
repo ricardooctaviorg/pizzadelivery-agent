@@ -19,10 +19,10 @@ const AGENT_REGISTER_REQUIRED_AVATAR    = "Favor de Seleccionar un avatar";
 const LOGIN_ERROR                       = "Usuario o contraseña invalidos";
 const ROLE_AGENT                        = "agent"
 
-const SUCCESS_COLOR_TRUE                = "success";
-const SUCCESS_COLOR_FALSE               = "danger";
-
 const DARK_THEME                        = "dark";
+
+const SUCCESS_TRUE                      = true;
+const SUCCESS_FALSE                     = false;
 
 @Component({
   selector: 'app-login',
@@ -84,7 +84,7 @@ export class LoginPage implements OnInit, AfterViewInit {
 
   async login(formLogin: NgForm) {
     if (formLogin.invalid)
-      this.showAgentRegisterStatus(AGENT_REGISTER_REQUIRED, SUCCESS_COLOR_FALSE);
+      this.utilService.showAgentRegisterStatus(AGENT_REGISTER_REQUIRED, SUCCESS_FALSE);
 
     const exist = await this.securityService.login(this.loginAgentDelivery.userId, this.loginAgentDelivery.password);
     if(exist)
@@ -92,43 +92,35 @@ export class LoginPage implements OnInit, AfterViewInit {
         animated:true
       });
     else
-      this.showAgentRegisterStatus(LOGIN_ERROR, SUCCESS_COLOR_FALSE);
+      this.utilService.showAgentRegisterStatus(LOGIN_ERROR, SUCCESS_FALSE);
 
   }
 
-  agentRegister(formAgentRegister: NgForm) {
+  async agentRegister(formAgentRegister: NgForm) {
     this.myAgentDelivery.createDate = new Date();
     if (formAgentRegister.valid)
       if (this.avatarIdCurrent !== "")
-        if (this.myAgentDelivery.password === this.passwordTmp)
-          this.securityService.registerAgent(this.myAgentDelivery).subscribe(
-            data => {
-              if (data.success) {
-                this.showAgentRegisterStatus(AGENT_REGISTER_SUCCESS, SUCCESS_COLOR_TRUE);
-                formAgentRegister.reset();
-              }
-              else
-                this.showAgentRegisterStatus(AGENT_REGISTER_AGENTIDEXIST, SUCCESS_COLOR_FALSE);
-            }, err => {
-              console.log("err", err);
-              this.showAgentRegisterStatus(AGENT_REGISTER_FAIL, SUCCESS_COLOR_FALSE);
-            }
-          );
-        else
-          this.showAgentRegisterStatus(AGENT_REGISTER_SAMEPASS, SUCCESS_COLOR_FALSE);
-      else
-        this.showAgentRegisterStatus(AGENT_REGISTER_REQUIRED_AVATAR, SUCCESS_COLOR_FALSE);
-    else
-      this.showAgentRegisterStatus(AGENT_REGISTER_REQUIRED, SUCCESS_COLOR_FALSE);
-  }
+        if (this.myAgentDelivery.password === this.passwordTmp){
+          const exist = await this.securityService.registerAgent(this.myAgentDelivery);
+          if ( exist == 1 ) {
+            this.utilService.showAgentRegisterStatus(AGENT_REGISTER_SUCCESS, SUCCESS_TRUE);
+            formAgentRegister.reset();
 
-  async showAgentRegisterStatus(notice: string, success: string) {
-    const toast = await this.toastController.create({
-      message: notice,
-      duration: 3000
-      , color: success
-    });
-    toast.present();
+            this.navController.navigateRoot('myDelivery', {
+              animated:true
+            });
+          }
+          else if( exist == 0 )
+            this.utilService.showAgentRegisterStatus(AGENT_REGISTER_AGENTIDEXIST, SUCCESS_FALSE);
+          else if( exist == -1 )
+            this.utilService.showAgentRegisterStatus(AGENT_REGISTER_FAIL, SUCCESS_FALSE);
+        } 
+        else
+          this.utilService.showAgentRegisterStatus(AGENT_REGISTER_SAMEPASS, SUCCESS_FALSE);
+      else
+        this.utilService.showAgentRegisterStatus(AGENT_REGISTER_REQUIRED_AVATAR, SUCCESS_FALSE);
+    else
+      this.utilService.showAgentRegisterStatus(AGENT_REGISTER_REQUIRED, SUCCESS_FALSE);
   }
 
   selectAvatar(avatar: AvatarCatalog) {

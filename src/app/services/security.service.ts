@@ -49,8 +49,34 @@ export class SecurityService {
     , private navController       : NavController
     , private infoAgentService    : InfoAgentService) { }
 
-  public registerAgent(userDelivery: UserDelivery): Observable<any> {
-    return this.httpClient.post<UserDelivery>(`${USERREGISTER}`, userDelivery, httpOptions);
+  public registerAgent(userDelivery: UserDelivery): Promise<number> {
+    return new Promise(
+      resolve => {
+        this.httpClient.post<any>(`${USERREGISTER}`, userDelivery, httpOptions).subscribe(
+          async (data) => {
+            if (data.success) {
+              await this.saveToken(data.token);
+              await this.saveUserId(data.userDelivery.userId);
+              await this.saveName(data.userDelivery.name);
+              await this.saveAvatar(data.userDelivery.avatar);
+              this.infoAgentService.sendAgentInfo({ name: this.storageService.getName(), avatar: this.storageService.getAvatar() });
+              resolve(1);
+            }
+            else {
+              this.token = null;
+              this.userId = null;
+              this.name = null;
+              this.avatar = null;
+              this.storageService.clearLocalStorage();
+              resolve(0);
+            }
+          }, err => {
+            console.log("err", err);
+            resolve(-1);
+          }
+        );
+      }
+    );
   }
 
   public login(userId: string, password: string) {
@@ -61,28 +87,30 @@ export class SecurityService {
     };
 
     return new Promise(
-      resolve => {
-      this.httpClient.post<any>(`${LOGIN}`, data, httpOptions).subscribe(
-        async (data) => {
-          if (data.success) {
-            await this.saveToken(data.token);
-            await this.saveUserId(data.userId);
-            await this.saveName(data.name);
-            await this.saveAvatar(data.avatar);
-            this.infoAgentService.sendAgentInfo({ name: this.storageService.getName(), avatar: this.storageService.getAvatar() });
-            resolve(true);
+      resolve => 
+        {
+        this.httpClient.post<any>(`${LOGIN}`, data, httpOptions).subscribe(
+          async (data) => {
+            if (data.success) {
+              await this.saveToken(data.token);
+              await this.saveUserId(data.userId);
+              await this.saveName(data.name);
+              await this.saveAvatar(data.avatar);
+              this.infoAgentService.sendAgentInfo({ name: this.storageService.getName(), avatar: this.storageService.getAvatar() });
+              resolve(true);
+            }
+            else {
+              this.token = null;
+              this.userId = null;
+              this.name = null;
+              this.avatar = null;
+              this.storageService.clearLocalStorage();
+              resolve(false);
+            }
           }
-          else {
-            this.token = null;
-            this.userId = null;
-            this.name = null;
-            this.avatar = null;
-            this.storageService.clearLocalStorage();
-            resolve(false);
-          }
-        }
-      );
-    });
+        );
+      }
+    );
   }
 
   public updateAgentDelivery(userDelivery: UserDelivery) {
