@@ -7,6 +7,7 @@ import { StatusGroupTitlePipe } from './pipes/status-group-title.pipe';
 import { StatusDeliveryIcon } from './pipes/status-delivery-icon.pipe';
 import { StatusDeliveryTitlePipe } from './pipes/status-delivery-title.pipe';
 import { DetailTypeTitlePipe } from './pipes/detail-type-title.pipe';
+import { TypeFailTitlePipe } from './pipes/type-fail-title.pipe';
 
 
 @NgModule({
@@ -17,6 +18,7 @@ import { DetailTypeTitlePipe } from './pipes/detail-type-title.pipe';
     , StatusDeliveryIcon
     , StatusDeliveryTitlePipe
     , DetailTypeTitlePipe
+    , TypeFailTitlePipe
   ],
   imports: [
     CommonModule
@@ -29,6 +31,7 @@ import { DetailTypeTitlePipe } from './pipes/detail-type-title.pipe';
     , StatusDeliveryIcon
     , StatusDeliveryTitlePipe
     , DetailTypeTitlePipe
+    , TypeFailTitlePipe
   ]
 })
 export class CommonsModule { }

@@ -10,11 +10,9 @@
   <ion-list>
     <ion-item-sliding *ngFor="let a of typesFailslDelivery">
       <ion-item>
-        <ion-avatar slot="start">
-          <img [src]="">
-        </ion-avatar>
+        <ion-icon slot="start" name="alert-circle" color="danger"></ion-icon>
         <ion-label>
-          <h1>{{a.typeFailId}}</h1>
+          {{a.typeFailId | typeFailTitle}}
         </ion-label>
       </ion-item>
       <ion-item-options side="end">
