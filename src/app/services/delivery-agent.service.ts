@@ -7,14 +7,16 @@ import { PizzaDelivery } from '../commons/interfaces/pizza-delivery';
 import { StorageService } from '../commons/services/storage.service';
 import { environment } from '../../environments/environment';
 
-const GATEWAY_VALUE = environment.gateway;
+const GATEWAY_VALUE       = environment.gateway;
+const DELIVERY_RESOURCE   = environment.deliveryResource;
+
 
 const FINDBYAGENTID = GATEWAY_VALUE
-  + '/Pizzadelivery'
+  + DELIVERY_RESOURCE
   + '/findByAgentId';
 
 const UPDATEDELIVERY = GATEWAY_VALUE
-  + '/Pizzadelivery';
+  + DELIVERY_RESOURCE;
 
 @Injectable({
   providedIn: 'root'

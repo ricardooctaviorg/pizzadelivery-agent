@@ -3,11 +3,13 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
-  , gateway: "https://pizzadelivery-services.herokuapp.com"
-  //, gateway: "http://localhost:3000"
+  production          : false
+  , gateway           : "https://pizzadelivery-services.herokuapp.com"
+  , securityResource  : "/UserDelivery"
+  , deliveryResource  : "/Delivery"
+  , avatarResource    : "/AvatarCatalog"
+  , typeFailResource  : "/TypeFailCatalog"
 };
-
 
 
 /*

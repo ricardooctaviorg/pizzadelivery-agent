@@ -8,11 +8,16 @@ import { ToastController } from '@ionic/angular';
 
 const PATH_MAINMENU_OPTIONS = "/assets/json/mainMenu.json";
 
-const GATEWAY_VALUE = environment.gateway;
+const GATEWAY_VALUE         = environment.gateway;
+const AVATAR_RESOURCE       = environment.avatarResource;
+const TYPEFAIL_RESOURCE     = environment.typeFailResource;
 
 const GETAVATARS = GATEWAY_VALUE
-  + '/AvatarCatalog'
+  + AVATAR_RESOURCE
   + "/getByType";
+
+const GETTYPEFAILS = GATEWAY_VALUE
+  + TYPEFAIL_RESOURCE;
 
 @Injectable({
   providedIn: 'root'
@@ -35,6 +40,10 @@ export class UtilService {
       params
     };
     return this.httpClient.get<any>(`${GETAVATARS}`, httpOptionsX);
+  }
+
+  public getTypeFailsDelivery(): Observable<any> {
+    return this.httpClient.get<any>(`${GETTYPEFAILS}`);
   }
 
   async showStatus(status: string, success: number) {
@@ -75,6 +84,27 @@ export class UtilService {
       , translucent: false
     });
     toast.present();
+  }
+
+  async showAssignTypeFail(success: number) {
+
+    var messageCurrent  : string = "No se ha podido emitir una razón de no entrega";
+    var typeAlert       : string = "danger";
+
+        if (success){
+          typeAlert       = "success";
+          messageCurrent  = "Se ha emitido una razón de no entrega";
+        }
+        
+        const toast = await this.toastController.create({
+          message: messageCurrent
+          , duration: 3000
+          , color: typeAlert
+          , keyboardClose: true
+          , position: "top"
+          , translucent: false
+        });
+        toast.present();
   }
 
 

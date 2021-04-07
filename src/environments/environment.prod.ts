@@ -1,5 +1,8 @@
 export const environment = {
-  production: true
-  , gateway: "https://pizzadelivery-services.herokuapp.com"
-  //, gateway: "http://localhost:3000"
+  production          : true
+  , gateway           : "https://pizzadelivery-services.herokuapp.com"
+  , securityResource  : "/UserDelivery"
+  , deliveryResource  : "/Delivery"
+  , avatarResource    : "/AvatarCatalog"
+  , typeFailResource  : "/TypeFailCatalog"
 };

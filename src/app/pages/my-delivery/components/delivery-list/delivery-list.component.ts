@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { OnInit } from '@angular/core';
 import { ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { IonInfiniteScroll } from '@ionic/angular';
+import { IonInfiniteScroll, ModalController } from '@ionic/angular';
 import { IonRefresher } from '@ionic/angular';
 import { DeliveryAgentService } from '../../../../services/delivery-agent.service';
 import { PizzaDelivery } from '../../../../commons/interfaces/pizza-delivery';
@@ -11,6 +11,7 @@ import { StatusDelivery } from '../../../../commons/enums/status-delivery.enum';
 import { UtilService } from '../../../../commons/services/util.service';
 import { CountStatusService } from '../../../../commons/services/count-status.service';
 import { GroupStatusAgent } from '../../../../commons/enums/group-status-agent.enum';
+import { ModalTypingFailPage } from '../../../modal-typing-fail/modal-typing-fail.page';
 
 const PAGE_SIZE = 10;
 const ORDERDATE_DESC = "orderDate,-1";
@@ -49,7 +50,8 @@ export class DeliveryListComponent implements OnInit {
     , private utilService                   : UtilService
     , private route                         : ActivatedRoute
     , private storageService                : StorageService
-    , private countStatusService            : CountStatusService) { }
+    , private countStatusService            : CountStatusService
+    , public modalController                : ModalController) { }
 
   async ngOnInit() {
     await this.loadUserId();
@@ -78,7 +80,7 @@ export class DeliveryListComponent implements OnInit {
       .subscribe(
         data => {
           if (data.success) {
-            this.pizzaDeliverysCurrent = data.pizzaDeliveries as PizzaDelivery[];
+            this.pizzaDeliverysCurrent = data.deliveries as PizzaDelivery[];
             this.pizzaDeliverys.push(... this.pizzaDeliverysCurrent);
             this.storageService.setPizzaDeliverys(this.pizzaDeliverys);
             this.pageData = data.page;
@@ -120,20 +122,58 @@ export class DeliveryListComponent implements OnInit {
     }, 1000);
   }
 
-  changeDeliveryStatus(deliveryId: string, status: string) {
-    this.pizzaDelivery = this.storageService.getPizzaDeliveryByDeliveryId(deliveryId);
-    this.pizzaDelivery.status.statusId = status;
-    this.pizzaDelivery.status.statusDelivery = StatusDelivery[status];
-    if(status == StatusDelivery.DELIVERY_COMPLETE.toString() )
-      this.pizzaDelivery.deliveryDate = new Date();
-    this.deliveryAgentService.updateDelivery(this.pizzaDelivery).subscribe(
-      data => {
-        this.utilService.showStatus(status, 1);
-        this.doRefresh(null);
-      }, err => {
-        this.utilService.showStatus(status, 0);
+  async changeDeliveryStatus(deliveryId: string, status: string) {
+
+    if(status == StatusDelivery.DELIVERY_FAIL.toString() ){
+      
+      const dataOfModal = await this.presentModal(deliveryId);
+
+      if (dataOfModal.data.success) {
+        dataOfModal.data.pizzaDeliveryUpdated.status.statusId       = status;
+        dataOfModal.data.pizzaDeliveryUpdated.status.statusDelivery = StatusDelivery[status];
+        this.deliveryAgentService.updateDelivery(dataOfModal.data.pizzaDeliveryUpdated).subscribe(
+          data => {
+            this.utilService.showStatus(status, 1);
+            this.doRefresh(null);
+          }, err => {
+            this.utilService.showStatus(status, 0);
+          }
+        );
       }
-    )
+    }
+    else{
+      this.pizzaDelivery = this.storageService.getPizzaDeliveryByDeliveryId(deliveryId);
+      this.pizzaDelivery.status.statusId = status;
+      this.pizzaDelivery.status.statusDelivery = StatusDelivery[status];
+      if(status == StatusDelivery.DELIVERY_COMPLETE.toString() )
+        this.pizzaDelivery.deliveryDate = new Date();
+      
+      this.deliveryAgentService.updateDelivery(this.pizzaDelivery).subscribe(
+        data => {
+          this.utilService.showStatus(status, 1);
+          this.doRefresh(null);
+        }, err => {
+          this.utilService.showStatus(status, 0);
+        }
+      );
+    }
+  }
+
+  async presentModal(deliveryId: string): Promise<any> {
+    return new Promise<any>(
+      async resolve => {
+        const modal = await this.modalController.create({
+          component: ModalTypingFailPage
+          , cssClass: 'my-custom-class'
+          , swipeToClose: true
+          , componentProps: {
+            'deliveryId': deliveryId
+          }
+        });
+        await modal.present();
+        resolve(await modal.onDidDismiss());
+      }
+    );
   }
 
   async claanPizzaDeliver() {

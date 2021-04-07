@@ -28,7 +28,14 @@ const routes: Routes = [
     path: 'login',
     loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
   }
-  ,{
+  ,
+  {
+    path: 'modal-typing-fail',
+    loadChildren: () => import('./pages/modal-typing-fail/modal-typing-fail.module').then( m => m.ModalTypingFailPageModule)
+    /*, canLoad: [
+      AgentDeliveryGuard
+    ]*/
+  },{
     path: ''
     , pathMatch: 'full'
     , redirectTo: 'login'

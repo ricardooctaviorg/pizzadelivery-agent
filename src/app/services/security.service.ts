@@ -8,23 +8,23 @@ import { NavController } from '@ionic/angular';
 import { InfoAgentService } from '../commons/services/info-agent.service';
 import { environment } from '../../environments/environment';
 
-const GATEWAY_VALUE = environment.gateway;
+const GATEWAY_VALUE     = environment.gateway;
+const SECURITY_RESOURCE = environment.securityResource;
 
 const USERREGISTER = GATEWAY_VALUE
-  + '/UserDelivery'
+  + SECURITY_RESOURCE
   + '/userRegister';
 
 const LOGIN = GATEWAY_VALUE
-  + '/UserDelivery'
+  + SECURITY_RESOURCE
   + '/login';
 
 const USERUPDATE = GATEWAY_VALUE
-  + '/UserDelivery'
+  + SECURITY_RESOURCE
   + '/updateUserDelivery';
 
 const VERIFYTOKEN = GATEWAY_VALUE
-  + '/UserDelivery'
-  + '/';
+  + SECURITY_RESOURCE;
 
 const headers = new HttpHeaders()
   .set('Contet-Type', 'application/json');

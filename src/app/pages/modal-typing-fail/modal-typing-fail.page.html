@@ -1,0 +1,27 @@
+<ion-header translucent>
+  <ion-toolbar color="tertiary">
+    <ion-title size="small">Seleccione el motivo</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismissModalFail()" expand="block" fill="outline">CERRAR</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content fullscreen>
+  <ion-list>
+    <ion-item-sliding *ngFor="let a of typesFailslDelivery">
+      <ion-item>
+        <ion-avatar slot="start">
+          <img [src]="">
+        </ion-avatar>
+        <ion-label>
+          <h1>{{a.typeFailId}}</h1>
+        </ion-label>
+      </ion-item>
+      <ion-item-options side="end">
+        <ion-item-option color="success">
+          <ion-icon slot="icon-only" name="arrow-forward-outline" (click)="typingFailDelivery(a,deliveryId)"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+</ion-content>
