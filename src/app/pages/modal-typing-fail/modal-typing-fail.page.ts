@@ -47,11 +47,8 @@ export class ModalTypingFailPage implements OnInit {
       data => {
         this.success = true;
         this.pizzaDeliveryUpdated = data.delivery as PizzaDelivery;
-        console.log("this.pizzaDeliveryUpdated",this.pizzaDeliveryUpdated);
-        this.utilService.showAssignTypeFail(1);
         this.dismissModalFail();
       }, err => {
-        this.utilService.showAssignTypeFail(0);
       }
     );
 

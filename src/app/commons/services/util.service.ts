@@ -6,7 +6,17 @@ import { environment } from '../../../environments/environment.prod';
 import { StatusDelivery } from '../enums/status-delivery.enum';
 import { ToastController } from '@ionic/angular';
 
-const PATH_MAINMENU_OPTIONS = "/assets/json/mainMenu.json";
+const PATH_MAINMENU_OPTIONS       = "/assets/json/mainMenu.json";
+const TOAST_DURATION              = 5000;
+const TOAST_TRANSLUCENT           = true;
+const TOAST_POSITION              = "bottom";
+const TOAST_COLOR_SUCCESS_TRUE    = "tertiary";
+const TOAST_COLOR_SUCCESS_FALSE   = "danger";
+const TOAST_KEYBOARD_CLOSE        = false;
+const TOAST_ICON_ONWAY            = "rocket"
+const TOAST_ICON_COMPLETE         = "bag-check"
+const TOAST_ICON_FAIL             = "thumbs-down"
+const TOAST_ICON_SUCCESS_FALSE    = "alert";
 
 const GATEWAY_VALUE         = environment.gateway;
 const AVATAR_RESOURCE       = environment.avatarResource;
@@ -48,64 +58,60 @@ export class UtilService {
 
   async showStatus(status: string, success: number) {
 
-    var messageCurrent: string = "";
-    var typeAlert: string = "danger";
+    var messageCurrent  : string = "";
+    var typeAlert       : string = TOAST_COLOR_SUCCESS_FALSE;
+    var iconToast       : string = TOAST_ICON_SUCCESS_FALSE;
+
+    if (success)
+      typeAlert = TOAST_COLOR_SUCCESS_TRUE;
 
     switch (status) {
       case StatusDelivery.DELIVERY_ONWAY.toString():
-        if (success)
-          messageCurrent = "HAZ INICIADO LA ENTREGA.";
+        if (success){
+          messageCurrent  = "Haz iniciado la entrega.";
+          iconToast       = TOAST_ICON_ONWAY;
+        }
         else
-          messageCurrent = "ERROR: NO SE PUEDE ACTULIZAR ESTA ENTREGA.";
+          messageCurrent = "Error de actualización";
         break;
       case StatusDelivery.DELIVERY_COMPLETE.toString():
-        if (success)
-          messageCurrent = "HAZ COMPLETADO LA ENTREGA.";
+        if (success){
+          messageCurrent  = "Haz completado la entrega.";
+          iconToast       = TOAST_ICON_COMPLETE;
+        }  
         else
-          messageCurrent = "ERROR: NO SE PUEDE ACTULIZAR ESTA ENTREGA";
+          messageCurrent = "Error de actualización";
         break;
       case StatusDelivery.DELIVERY_FAIL.toString():
-        if (success)
-          messageCurrent = "LA ENTREGA SE HA MARCADO COMO INCOMPLETA.";
+        if (success){
+          messageCurrent  = "No se realizo la entrega.";
+          iconToast       = TOAST_ICON_FAIL;
+        }
         else
-          messageCurrent = "ERROR: NO SE PUEDE ACTULIZAR ESTA ENTREGA.";
+          messageCurrent = "Error de actualización";
         break;
     }
-
-    if (success)
-      typeAlert = "success";
-
     const toast = await this.toastController.create({
       message: messageCurrent
-      , duration: 3000
+      , duration: TOAST_DURATION
       , color: typeAlert
-      , keyboardClose: true
-      , position: "top"
-      , translucent: false
-    });
-    toast.present();
-  }
-
-  async showAssignTypeFail(success: number) {
-
-    var messageCurrent  : string = "No se ha podido emitir una razón de no entrega";
-    var typeAlert       : string = "danger";
-
-        if (success){
-          typeAlert       = "success";
-          messageCurrent  = "Se ha emitido una razón de no entrega";
+      , keyboardClose: TOAST_KEYBOARD_CLOSE
+      , position: TOAST_POSITION
+      , translucent: TOAST_TRANSLUCENT
+      , buttons: [
+        {
+          side: 'start',
+          icon: iconToast,
+        },{
+          side: 'end',
+          text: 'CERRAR',
+          role: 'cancel',
+          handler: () => {
+            console.log('Close clicked');
+          }
         }
-        
-        const toast = await this.toastController.create({
-          message: messageCurrent
-          , duration: 3000
-          , color: typeAlert
-          , keyboardClose: true
-          , position: "top"
-          , translucent: false
-        });
-        toast.present();
+      ]
+    });
+    await toast.present();
   }
-
-
 }
