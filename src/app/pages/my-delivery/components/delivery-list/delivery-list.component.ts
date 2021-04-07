@@ -23,22 +23,23 @@ const ORDERDATE_DESC = "orderDate,-1";
 })
 export class DeliveryListComponent implements OnInit {
 
-  pizzaDeliverysCurrent : PizzaDelivery[] = new Array();
-  pizzaDeliverys        : PizzaDelivery[] = new Array();
-  pizzaDelivery         : PizzaDelivery;
-  dataResponse          : any;
-  pageData              : any;
-  pageCurrent           : number  = 0;
-  statusDelivery        : string[];
-  agentIdCurrent        : string;
-  countPendingOrders    : number  = 0;
-  countFinalyOrders     : number  = 0;
-  showStatusTitle       : string  = "";
+  pizzaDeliveriesCurrent  : PizzaDelivery[] = new Array();
+  pizzaDeliveries         : PizzaDelivery[] = new Array();
+  pizzaDelivery           : PizzaDelivery;
+  dataResponse            : any;
+  pageData                : any;
+  pageCurrent             : number  = 1;
+  statusDelivery          : string[];
+  agentIdCurrent          : string;
+  countPendingOrders      : number  = 0;
+  countFinalyOrders       : number  = 0;
+  showStatusTitle         : string  = "";
+  emptyGroup              : string  = "";
 
-  today = new Date();
-  dd = String(this.today.getDate()).padStart(2, '0');;
-  mm = String(this.today.getMonth() + 1).padStart(2, '0');
-  yyyy = String(this.today.getFullYear());
+  today   = new Date();
+  dd      = String(this.today.getDate()).padStart(2, '0');;
+  mm      = String(this.today.getMonth() + 1).padStart(2, '0');
+  yyyy    = String(this.today.getFullYear());
 
   todayStringInit: Date = new Date(Number(this.today.getFullYear()), Number(this.today.getMonth()), Number(this.today.getDate()), 0, 0, 0);
   todayStringEnd: Date = new Date(Number(this.today.getFullYear()), Number(this.today.getMonth()), Number(this.today.getDate()), 23, 59, 59);
@@ -59,7 +60,7 @@ export class DeliveryListComponent implements OnInit {
       params => {
         const statusDelivery: string = String(params.get("statusDelivery"));
         this.statusDelivery = statusDelivery.split(",");
-        this.pizzaDeliverys = [];
+        this.cleanDeliveries();
         this.consumeData(this.agentIdCurrent, this.statusDelivery, this.todayStringInit, this.todayStringEnd, String(this.pageCurrent), String(PAGE_SIZE), ORDERDATE_DESC);
       }
     );
@@ -78,22 +79,29 @@ export class DeliveryListComponent implements OnInit {
     , sort: string): void {
     this.deliveryAgentService.findByAgentId(agentId, statusId, startDate, endDate, page, size, sort)
       .subscribe(
-        data => {
+        data => 
+        {
           if (data.success) {
-            this.pizzaDeliverysCurrent = data.deliveries as PizzaDelivery[];
-            this.pizzaDeliverys.push(... this.pizzaDeliverysCurrent);
-            this.storageService.setPizzaDeliverys(this.pizzaDeliverys);
+            this.pizzaDeliveriesCurrent = data.deliveries as PizzaDelivery[];
+            this.pizzaDeliveries.push(... this.pizzaDeliveriesCurrent);
+            this.storageService.setPizzaDeliverys(this.pizzaDeliveries);
             this.pageData = data.page;
+
+            if( statusId.includes(StatusDelivery.DELIVERY_ASSIGNED.toString()) || statusId.includes(StatusDelivery.DELIVERY_ONWAY.toString()) ){
+              this.showStatusTitle  = GroupStatusAgent.PENDING_ORDERS.toString();
+              if( this.pizzaDeliveries.length == 0 )
+                this.emptyGroup = 'a';
+            }  
+            else if( statusId.includes(StatusDelivery.DELIVERY_COMPLETE.toString()) || statusId.includes(StatusDelivery.DELIVERY_FAIL.toString()) ){
+              this.showStatusTitle  = GroupStatusAgent.FINISH_ORDERS.toString();
+              if( this.pizzaDeliveries.length == 0 )
+                this.emptyGroup = 'b';
+            }
 
             this.countPendingOrders = 0;
             this.countFinalyOrders  = 0;
 
-            if( statusId.includes(StatusDelivery.DELIVERY_ASSIGNED.toString()) || statusId.includes(StatusDelivery.DELIVERY_ONWAY.toString()) )
-              this.showStatusTitle  = GroupStatusAgent.PENDING_ORDERS.toString();
-            else if( statusId.includes(StatusDelivery.DELIVERY_COMPLETE.toString()) || statusId.includes(StatusDelivery.DELIVERY_FAIL.toString()) )
-              this.showStatusTitle  = GroupStatusAgent.FINISH_ORDERS.toString();
-
-            for (let a of this.pizzaDeliverys)
+            for (let a of this.pizzaDeliveries)
               if( a.status.statusId == StatusDelivery.DELIVERY_ASSIGNED.toString() || a.status.statusId == StatusDelivery.DELIVERY_ONWAY.toString() )
                 this.countPendingOrders ++
               else if( a.status.statusId == StatusDelivery.DELIVERY_COMPLETE.toString() || a.status.statusId == StatusDelivery.DELIVERY_FAIL.toString() )
@@ -111,11 +119,11 @@ export class DeliveryListComponent implements OnInit {
       this.consumeData(this.agentIdCurrent, this.statusDelivery, this.todayStringInit, this.todayStringEnd, String(this.pageCurrent), String(PAGE_SIZE), ORDERDATE_DESC);
       this.infiniteScroll.complete();
     }, 500);
+    
   }
 
-  doRefresh(event) {
-    this.pizzaDeliverys = [];
-    this.pageCurrent = 0;
+  async doRefresh(event) {
+    await this.cleanDeliveries();    
     setTimeout(() => {
       this.consumeData(this.agentIdCurrent, this.statusDelivery, this.todayStringInit, this.todayStringEnd, String(this.pageCurrent), String(PAGE_SIZE), ORDERDATE_DESC);
       this.ionRefresher.complete();
@@ -176,9 +184,12 @@ export class DeliveryListComponent implements OnInit {
     );
   }
 
-  async claanPizzaDeliver() {
-    this.pizzaDeliverys = [];
-    return null;
+  async cleanDeliveries() {
+    this.pizzaDeliveries      = [];
+    this.countPendingOrders   = 0;
+    this.countFinalyOrders    = 0;
+    this.pageCurrent          = 1;
+    await this.storageService.setPizzaDeliverys(this.pizzaDeliveries);
   }
 
 }

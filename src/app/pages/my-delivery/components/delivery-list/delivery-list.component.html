@@ -2,14 +2,24 @@
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content 
       pullingIcon="chevron-down-circle-outline" 
-      pullingText="ACTUALIZAR LISTA"
-      refreshingSpinner="bubbles"
-      efreshingText="OBTENIENDO LISTA">
+      pullingText="Actualizar Pedidos"
+      refreshingSpinner="circular"
+      refreshingText="Actualizando Pedidos">
     </ion-refresher-content>
   </ion-refresher>
-  <ion-list>
-    <ion-item-sliding *ngFor="let a of pizzaDeliverys" [ngSwitch]="a.status.statusId">
-      <ion-item class="" [ngSwitch]="a.status.statusId" [routerLink]="['/delivery-detail', a.deliveryId, a.status.statusId, a.customer.name, a.customer.phone, a.assignDate, a.deliveryDate ]">
+  <ion-list [ngSwitch]="emptyGroup">
+    <ion-item *ngSwitchCase="'a'" lines="none">
+      <ion-text color="medium" class="ion-text-center">
+        <h3>NO HAY PEDIDOS PENDIENTES</h3>
+      </ion-text>
+    </ion-item>
+    <ion-item *ngSwitchCase="'b'" lines="none">
+      <ion-text color="medium" class="ion-text-center">
+        <h3>AUN NO HAY PEDIDOS FINALIZADOS</h3>
+      </ion-text>
+    </ion-item>
+    <ion-item-sliding *ngFor="let a of pizzaDeliveries" [ngSwitch]="a.status.statusId">
+      <ion-item [ngSwitch]="a.status.statusId" [routerLink]="['/delivery-detail', a.deliveryId, a.status.statusId, a.customer.name, a.customer.phone, a.assignDate, a.deliveryDate ]">
         <ion-icon *ngSwitchCase="'d'" slot="start" name="bag-add" color="success"></ion-icon>
         <ion-icon *ngSwitchCase="'e'" slot="start" name="rocket" color="success"></ion-icon>
         <ion-icon *ngSwitchCase="'f'" slot="start" name="bag-check" color="success"></ion-icon>
@@ -50,8 +60,8 @@
       </ion-item-options>
     </ion-item-sliding>
   </ion-list>
-  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
-    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="CONSULTADO LISTA">
+  <ion-infinite-scroll threshold="1px" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content loadingSpinner="circular" loadingText="Consultando Mas Pedidos">
     </ion-infinite-scroll-content>
   </ion-infinite-scroll>
 </ion-content>
