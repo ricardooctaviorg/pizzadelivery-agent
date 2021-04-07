@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { UtilService } from '../../commons/services/util.service';
 import { TypeFailCatalog } from '../../commons/interfaces/type-fail-catalog';
 import { ModalController } from '@ionic/angular';
@@ -17,6 +17,8 @@ export class ModalTypingFailPage implements OnInit {
   success               : boolean = false;
   pizzaDelivery         : PizzaDelivery;
   pizzaDeliveryUpdated  : PizzaDelivery;
+
+  @Input() deliveryId   : string;
 
   constructor(private utilService       : UtilService
     , private deliveryAgentService      : DeliveryAgentService
