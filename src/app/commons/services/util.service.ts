@@ -66,7 +66,6 @@ export class UtilService {
       typeAlert = TOAST_COLOR_SUCCESS_TRUE;
       iconToast = TOAST_ICON_SUCCESS_TRUE;
     }
-      
 
     const toast = await this.toastController.create({
       message           : notice
@@ -90,6 +89,41 @@ export class UtilService {
       ]
     });
     toast.present();
+  }
+
+  async showAgentUpdateStatus(notice: string, success: boolean) {
+    
+    var typeAlert       : string = TOAST_COLOR_SUCCESS_FALSE;
+    var iconToast       : string = TOAST_ICON_SUCCESS_FALSE;
+
+    if (success){
+      typeAlert = TOAST_COLOR_SUCCESS_TRUE;
+      iconToast = TOAST_ICON_SUCCESS_TRUE;
+    }
+
+    const toast = await this.toastController.create({
+      message           : notice
+      , duration        : TOAST_DURATION
+      , color           : typeAlert
+      , keyboardClose   : TOAST_KEYBOARD_CLOSE
+      , position        : TOAST_POSITION
+      , translucent     : TOAST_TRANSLUCENT
+      , buttons         : [
+        {
+          side: 'start',
+          icon: iconToast,
+        },{
+          side: 'end',
+          text: 'CERRAR',
+          role: 'cancel',
+          handler: () => {
+            console.log('Close clicked');
+          }
+        }
+      ]
+    });
+    toast.present();
+
   }
 
   async showStatus(status: string, success: number) {

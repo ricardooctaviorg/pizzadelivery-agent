@@ -7,8 +7,8 @@ import { AvatarCatalog } from '../../commons/interfaces/avatar-catalog';
 import { UtilService } from '../../commons/services/util.service';
 import { StorageService } from '../../commons/services/storage.service';
 
-const SUCCESS_COLOR_TRUE          = "success";
-const SUCCESS_COLOR_FALSE         = "danger";
+const SUCCESS_TRUE                = true;
+const SUCCESS_FALSE               = false;
 
 const AGENTUPDATE_SUCCESS         = "¡ Actualización correcta !";
 const AGENTUPDATE_FAIL            = "No se puedo actulizar";
@@ -84,26 +84,17 @@ export class MyConfigurationPage implements OnInit {
 
   }
 
-  async agentUpdate(formAgentUpdate: NgForm){
+  async agentUpdate(formAgentUpdate: NgForm) {
 
-    if(formAgentUpdate.invalid)
-      this.showAgentUpdateStatus(AGENTUPDATE_REQUIRED, SUCCESS_COLOR_FALSE);
-
+    if (formAgentUpdate.invalid)
+      this.utilService.showAgentUpdateStatus(AGENTUPDATE_REQUIRED, SUCCESS_FALSE);
+    else {
       const updateStatus = await this.securityService.updateAgentDelivery(this.agentDeliveryCurrent);
-
-      if( updateStatus )
-        this.showAgentUpdateStatus(AGENTUPDATE_SUCCESS, SUCCESS_COLOR_TRUE);
+      if (updateStatus)
+        this.utilService.showAgentUpdateStatus(AGENTUPDATE_SUCCESS, SUCCESS_TRUE);
       else
-        this.showAgentUpdateStatus(AGENTUPDATE_FAIL, SUCCESS_COLOR_FALSE);       
-  }
-
-  async showAgentUpdateStatus(notice: string, success: string) {
-    const toast = await this.toastController.create({
-      message: notice
-      , duration: 3000
-      , color: success
-    });
-    toast.present();
+        this.utilService.showAgentUpdateStatus(AGENTUPDATE_FAIL, SUCCESS_FALSE);
+    }
   }
 
   selectAvatar(avatar: AvatarCatalog) {
