@@ -14,8 +14,9 @@ export class StorageService {
   }
 
   clearLocalStorage(){
+    const darkThemeCurrent = this.getDarkTheme();
     this.localStorageService.clear();
-    this.updateDarkTheme('T');
+    this.updateDarkTheme(darkThemeCurrent);
   }
 
   setPizzaDeliverys(pizzaDeliverys:PizzaDelivery[]):void{

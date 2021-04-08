@@ -21,8 +21,8 @@ const AGENTUPDATE_REQUIRED        = "Favor de completar los datos solicitados";
 })
 export class MyConfigurationPage implements OnInit {
 
-  darkModeSystem      : boolean = true;
-  darkMode            : boolean = true;
+  //darkModeSystem      : boolean = true;
+  darkMode            : boolean;
   avatartCatalogList  : AvatarCatalog[] = new Array();
   avatarIdCurrent     : string = "";
 
@@ -49,14 +49,17 @@ export class MyConfigurationPage implements OnInit {
     await this.consumeGetAvatarCatalog();
     this.agentDeliveryCurrent = this.securityService.getAgentDeliveryCurrent();
     this.selectAvatarBySource(this.agentDeliveryCurrent.avatar);
-    if(this.storageService.getDarkTheme()== 'F')
+    if(this.storageService.getDarkTheme()== 'F'){
       this.darkMode = false;
-    else if(this.storageService.getDarkTheme() == 'T')
+      document.body.classList.remove('dark');
+    }else if(this.storageService.getDarkTheme() == 'T'){
       this.darkMode = true;
-      
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+      document.body.classList.add('dark');
+    }
+   
+    /*const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
     if(!prefersDark.matches)
-      this.darkModeSystem = false;
+      this.darkModeSystem = false;*/
   }
 
   consumeGetAvatarCatalog() {

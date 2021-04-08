@@ -43,9 +43,10 @@ export class AppComponent implements OnInit  {
       this.splashScreen.hide();
     });
      this.menuOpts = this.utilService.getMainMunuOptions();
-      if(this.storageService.getDarkTheme() == 'T' 
-      || this.storageService.getDarkTheme() == null
-      || this.storageService.getDarkTheme() == undefined){
+      if(this.storageService.getDarkTheme() === 'T' 
+      || this.storageService.getDarkTheme() === ''
+      || this.storageService.getDarkTheme() === null
+      || this.storageService.getDarkTheme() === undefined){
         document.body.classList.add('dark');
         this.storageService.updateDarkTheme('T');
       }
