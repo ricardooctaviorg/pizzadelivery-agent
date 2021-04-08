@@ -1,11 +1,10 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="light">
     <ion-buttons slot="start">
-      <ion-back-button 
-      defaultHref="/"
-      text="Regresar"
-      color="tertiary"></ion-back-button>
+      <ion-back-button defaultHref="/" text="Regresar" color="tertiary"></ion-back-button>
     </ion-buttons>
-    <ion-title size="small">{{currentTitle | uppercase}}</ion-title>
+    <ion-title class="ion-text-center" size="small">
+      <strong>{{currentTitle | uppercase}}</strong>
+    </ion-title>
   </ion-toolbar>
 </ion-header>
