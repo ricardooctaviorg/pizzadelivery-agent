@@ -26,7 +26,7 @@
           </ion-row>
           <ion-row>
             <ion-col>
-              <ion-button type="submit" color="tertiary" shape="round">
+              <ion-button expand="block" size="large" type="submit" color="tertiary">
                 <ion-icon slot="start" name="finger-print"></ion-icon>
                 <span>Ingresar</span>
               </ion-button>
@@ -64,9 +64,9 @@
             <ion-input [(ngModel)]="myAgentDelivery.phone" name="phone" required placeholder="Telefono" type="number">
             </ion-input>
           </ion-item>
-          <ion-button type="submit" color="tertiary" shape="round" class="ion-margin">
+          <ion-button expand="block" size="large"type="submit" color="tertiary" class="ion-margin">
             <ion-icon slot="start" name="person-add"></ion-icon>
-            <span>Registrar</span>
+            <span>Registrarme</span>
           </ion-button>
         </form>
       </ion-grid>
@@ -77,12 +77,12 @@
   <ion-toolbar>
     <ion-row>
       <ion-col>
-        <ion-button shape="round" expand="full" size="small" color="tertiary" (click)="showLogin()">
+        <ion-button expand="block" size="large" color="light" (click)="showLogin()">
           Ingresar
         </ion-button>
       </ion-col>
       <ion-col>
-        <ion-button shape="round" expand="full" size="small" color="tertiary" (click)="showReg()">
+        <ion-button expand="block" size="large" color="light" (click)="showReg()">
           Registrarme
         </ion-button>
       </ion-col>
