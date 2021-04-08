@@ -5,12 +5,12 @@
       <ion-tab-button [tab]="['deliveryList/d,e']">
         <ion-icon name="receipt"></ion-icon>
         <ion-label>PENDIENTES</ion-label>
-        <ion-badge *ngIf="countPending > 0" color="tertiary">{{countPending}}</ion-badge>
+        <ion-badge class="fontSizeNew" *ngIf="countPending > 0" color="tertiary">{{countPending}}</ion-badge>
       </ion-tab-button>
       <ion-tab-button [tab]="['deliveryList/f,f1']">
         <ion-icon name="reader"></ion-icon>
         <ion-label>FINALIZADAS</ion-label>
-        <ion-badge *ngIf="countFinish > 0" color="tertiary">{{countFinish}}</ion-badge>
+        <ion-badge class="fontSizeNew" *ngIf="countFinish > 0" color="tertiary">{{countFinish}}</ion-badge>
       </ion-tab-button>
     </ion-tab-bar>
   </ion-tabs>
