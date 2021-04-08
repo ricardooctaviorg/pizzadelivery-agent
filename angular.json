@@ -69,6 +69,14 @@
                 }
               ]
             },
+            "local": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.local.ts"
+                }
+              ]
+            },
             "ci": {
               "progress": false
             }
@@ -82,6 +90,8 @@
           "configurations": {
             "production": {
               "browserTarget": "app:build:production"
+            },"local": {
+              "browserTarget": "app:build:local"
             },
             "ci": {
               "progress": false
@@ -131,7 +141,9 @@
               "tsconfig.spec.json",
               "e2e/tsconfig.json"
             ],
-            "exclude": ["**/node_modules/**"]
+            "exclude": [
+              "**/node_modules/**"
+            ]
           }
         },
         "e2e": {

@@ -88,25 +88,17 @@ export class DeliveryListComponent implements OnInit {
             this.pageData = data.page;
 
             if( statusId.includes(StatusDelivery.DELIVERY_ASSIGNED.toString()) || statusId.includes(StatusDelivery.DELIVERY_ONWAY.toString()) ){
-              this.showStatusTitle  = GroupStatusAgent.PENDING_ORDERS.toString();
+              this.showStatusTitle    = GroupStatusAgent.PENDING_ORDERS.toString();
+              this.countPendingOrders = data.count;
               if( this.pizzaDeliveries.length == 0 )
                 this.emptyGroup = 'a';
             }  
             else if( statusId.includes(StatusDelivery.DELIVERY_COMPLETE.toString()) || statusId.includes(StatusDelivery.DELIVERY_FAIL.toString()) ){
-              this.showStatusTitle  = GroupStatusAgent.FINISH_ORDERS.toString();
+              this.showStatusTitle    = GroupStatusAgent.FINISH_ORDERS.toString();
+              this.countFinalyOrders  = data.count
               if( this.pizzaDeliveries.length == 0 )
                 this.emptyGroup = 'b';
-            }
-
-            this.countPendingOrders = 0;
-            this.countFinalyOrders  = 0;
-
-            for (let a of this.pizzaDeliveries)
-              if( a.status.statusId == StatusDelivery.DELIVERY_ASSIGNED.toString() || a.status.statusId == StatusDelivery.DELIVERY_ONWAY.toString() )
-                this.countPendingOrders ++
-              else if( a.status.statusId == StatusDelivery.DELIVERY_COMPLETE.toString() || a.status.statusId == StatusDelivery.DELIVERY_FAIL.toString() )
-                this.countFinalyOrders ++;
-            
+            }           
             this.countStatusService.sendCountStatus(String(this.countPendingOrders) + "," + String(this.countFinalyOrders) + "," + this.showStatusTitle);
           }
         }
