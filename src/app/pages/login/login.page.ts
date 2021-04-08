@@ -7,7 +7,7 @@ import { SecurityService } from '../../services/security.service';
 import { UtilService } from '../../commons/services/util.service';
 import { StorageService } from '../../commons/services/storage.service';
 
-const AVATAR_DEFAULT                    = "https://www.gravatar.com/userimage/198148610/fbbfd805411147d5782a0a4afa972199?size=120";
+const AVATAR_DEFAULT                    = "https://www.gravatar.com/userimage/198148610/3764815d46c1285fd8f2cc6a174e7061?size=120";
 
 const AGENT_REGISTER_SUCCESS            = "¡ Registro correcto !";
 const AGENT_REGISTER_FAIL               = "No se pudo registrar";
