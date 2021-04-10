@@ -17,8 +17,8 @@ import { SecurityService } from './services/security.service';
 })
 export class AppComponent implements OnInit  {
 
-  menuOpts:Observable<MenuOpt[]>;
-  nameAgent: string = "";
+  menuOpts  :Observable<MenuOpt[]>;
+  nameAgent : string = "";
 
   agentInfoCurrent = {
     name: ""
@@ -57,7 +57,7 @@ export class AppComponent implements OnInit  {
   }
 
   ngOnInit() {
-    this.infoAgentService.change.subscribe(
+    this.infoAgentService.infoMenu.subscribe(
       agentInfo => {
         this.agentInfoCurrent = agentInfo;
       }

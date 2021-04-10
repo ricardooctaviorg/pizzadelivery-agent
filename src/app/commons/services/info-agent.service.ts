@@ -12,14 +12,14 @@ export class InfoAgentService {
 
   detailTitleType: string = "";
 
-  @Output() change            : EventEmitter<any> = new EventEmitter();
+  @Output() infoMenu            : EventEmitter<any> = new EventEmitter();
   @Output() detailTypeTitle   : EventEmitter<any> = new EventEmitter();
 
   constructor() { }
 
   sendAgentInfo(agnetInfo: any) {
     this.agentInfo = agnetInfo;
-    this.change.emit(this.agentInfo);
+    this.infoMenu.emit(this.agentInfo);
   }
 
   sendDetailTypeTltle(title: string) {

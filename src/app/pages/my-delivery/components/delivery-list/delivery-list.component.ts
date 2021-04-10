@@ -89,17 +89,23 @@ export class DeliveryListComponent implements OnInit {
 
             if( statusId.includes(StatusDelivery.DELIVERY_ASSIGNED.toString()) || statusId.includes(StatusDelivery.DELIVERY_ONWAY.toString()) ){
               this.showStatusTitle    = GroupStatusAgent.PENDING_ORDERS.toString();
-              this.countPendingOrders = data.count;
               if( this.pizzaDeliveries.length == 0 )
                 this.emptyGroup = 'a';
             }  
             else if( statusId.includes(StatusDelivery.DELIVERY_COMPLETE.toString()) || statusId.includes(StatusDelivery.DELIVERY_FAIL.toString()) ){
               this.showStatusTitle    = GroupStatusAgent.FINISH_ORDERS.toString();
-              this.countFinalyOrders  = data.count
               if( this.pizzaDeliveries.length == 0 )
                 this.emptyGroup = 'b';
-            }           
-            this.countStatusService.sendCountStatus(String(this.countPendingOrders) + "," + String(this.countFinalyOrders) + "," + this.showStatusTitle);
+            }
+            
+            this.deliveryAgentService.countGroupsStatus(agentId, startDate, endDate).subscribe(
+              data => {
+                this.countPendingOrders = data.countPending;
+                this.countFinalyOrders  = data.countFinished;
+                this.countStatusService.sendCountStatus(String(this.countPendingOrders) + "," + String(this.countFinalyOrders) + "," + this.showStatusTitle);
+              }
+            );
+            
           }
         }
       );

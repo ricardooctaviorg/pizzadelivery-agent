@@ -11,11 +11,15 @@ const GATEWAY_VALUE       = environment.gateway;
 const DELIVERY_RESOURCE   = environment.deliveryResource;
 
 
-const FINDBYAGENTID = GATEWAY_VALUE
+const FINDBYAGENTID     = GATEWAY_VALUE
   + DELIVERY_RESOURCE
   + '/findByAgentId';
 
-const UPDATEDELIVERY = GATEWAY_VALUE
+const COUNTGROUPSSTATUS = GATEWAY_VALUE
+  + DELIVERY_RESOURCE
+  + '/countGroupsStatus';
+
+const UPDATEDELIVERY    = GATEWAY_VALUE
   + DELIVERY_RESOURCE;
 
 @Injectable({
@@ -52,6 +56,26 @@ export class DeliveryAgentService {
       , params
     };
     return this.httpClient.get<any>(`${FINDBYAGENTID}`, httpOptionsX);
+  }
+
+  public countGroupsStatus(agentId: string
+    , startDate: Date
+    , endDate: Date): Observable<any> {
+
+    const headers = new HttpHeaders()
+      .set('x-token', this.storageService.getToken());
+
+    const params = new HttpParams()
+      .set('agentId', agentId)
+      .set('startDate', startDate.toISOString())
+      .set('endDate', endDate.toISOString());
+
+    const httpOptionsX =
+    {
+      headers
+      , params
+    };
+    return this.httpClient.get<any>(`${COUNTGROUPSSTATUS}`, httpOptionsX);
   }
 
   public updateDelivery(delivery: PizzaDelivery): Observable<any> {
