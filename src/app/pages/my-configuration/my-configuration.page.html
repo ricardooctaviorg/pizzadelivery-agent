@@ -32,13 +32,14 @@
         <form (ngSubmit)="agentUpdate(formAgentUpdate)" #formAgentUpdate="ngForm">
           <ion-label position="stacked"></ion-label>
           <ion-item>
-            <ion-icon slot="start" color="success" name="person"></ion-icon>
-            <ion-input [(ngModel)]="agentDeliveryCurrent.name" name="name" placeholder="Nombre" required></ion-input>
+            <ion-icon slot="start" color="success" name="pencil"></ion-icon>
+            <ion-input [(ngModel)]="agentDeliveryCurrent.name" name="name" type="text" placeholder="Nombre" autocapitalize="words"
+              autocomplete="name" inputmode="text" required></ion-input>
           </ion-item>
           <ion-item>
             <ion-icon slot="start" color="success" name="call"></ion-icon>
-            <ion-input [(ngModel)]="agentDeliveryCurrent.phone" name="phone" placeholder="Telefono" type="number"
-              required></ion-input>
+            <ion-input [(ngModel)]="agentDeliveryCurrent.phone" name="phone" type="tel" placeholder="Telefono" autocomplete="tel"
+              inputmode="tel" maxlength="10" minlength="10" required></ion-input>
           </ion-item>
           <ion-row class="ion-justify-content-center">
             <ion-button type="submit" color="tertiary" expand="block" size="large" class="ion-margin">

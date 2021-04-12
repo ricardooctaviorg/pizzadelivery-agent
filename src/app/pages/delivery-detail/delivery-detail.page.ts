@@ -19,6 +19,7 @@ export class DeliveryDetailPage implements OnInit {
   deliveryDateString: string;
   assignDate        : Date    = null;
   deliveryDate      : Date    = null;
+  totalAmount       : string;
 
 
   constructor(private router        : Router
@@ -34,12 +35,14 @@ export class DeliveryDetailPage implements OnInit {
         const phoneCustomerB64  : string  = String(params.get("phoneCustomer"));
         const assignDate        : string  = String(params.get("assignDate"));
         const deliveryDate      : string  = String(params.get("deliveryDate"));
+        const totalAmountS      : string  = String(params.get("totalAmount"));
         this.deliveryIdCurrent            = deliveryId;
         this.statusIdCurrent              = statusId;
         this.nameCustomer                 = nameCustomerB64;
         this.phoneCustomer                = phoneCustomerB64;
         this.assignDateString             = assignDate;
         this.deliveryDateString           = deliveryDate;
+        this.totalAmount                  = totalAmountS;
         this.assignDate                   = params.get("assignDate")!=='null'?new Date(params.get("assignDate")):null;
         this.deliveryDate                 = params.get("deliveryDate")!=='null'?new Date(params.get("deliveryDate")):null;
         }
@@ -49,6 +52,6 @@ export class DeliveryDetailPage implements OnInit {
         this.titleDetailType = title;
       }
     );
-    this.router.navigate(['delivery-detail',this.deliveryIdCurrent,this.statusIdCurrent, this.nameCustomer, this.phoneCustomer, this.assignDateString, this.deliveryDateString ,'detailLocation',this.deliveryIdCurrent]);
+    this.router.navigate(['delivery-detail',this.deliveryIdCurrent,this.statusIdCurrent, this.nameCustomer, this.phoneCustomer, this.assignDateString, this.deliveryDateString, this.totalAmount ,'detailLocation',this.deliveryIdCurrent]);
   }
 }

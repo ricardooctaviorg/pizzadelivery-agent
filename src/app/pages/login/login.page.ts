@@ -98,6 +98,7 @@ export class LoginPage implements OnInit, AfterViewInit {
 
   async agentRegister(formAgentRegister: NgForm) {
     this.myAgentDelivery.createDate = new Date();
+    console.log(formAgentRegister);
     if (formAgentRegister.valid)
       if (this.avatarIdCurrent !== "")
         if (this.myAgentDelivery.password === this.passwordTmp){
