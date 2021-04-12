@@ -13,8 +13,11 @@ import { CountStatusService } from '../../../../commons/services/count-status.se
 import { GroupStatusAgent } from '../../../../commons/enums/group-status-agent.enum';
 import { ModalTypingFailPage } from '../../../modal-typing-fail/modal-typing-fail.page';
 
-const PAGE_SIZE = 10;
-const ORDERDATE_DESC = "orderDate,-1";
+const PAGE_SIZE         = 10;
+const ORDERDATE_DESC    = "orderDate,-1";
+
+const SUCCESS_TRUE      = true;
+const SUCCESS_FALSE     = false;
 
 @Component({
   selector: 'app-delivery-list',
@@ -139,10 +142,10 @@ export class DeliveryListComponent implements OnInit {
         dataOfModal.data.pizzaDeliveryUpdated.status.statusDelivery = StatusDelivery[status];
         this.deliveryAgentService.updateDelivery(dataOfModal.data.pizzaDeliveryUpdated).subscribe(
           data => {
-            this.utilService.showStatus(status, 1);
+            this.utilService.showStatus(status, SUCCESS_TRUE);
             this.doRefresh(null);
           }, err => {
-            this.utilService.showStatus(status, 0);
+            this.utilService.showStatus(status, SUCCESS_FALSE);
           }
         );
       }
@@ -156,10 +159,10 @@ export class DeliveryListComponent implements OnInit {
       
       this.deliveryAgentService.updateDelivery(this.pizzaDelivery).subscribe(
         data => {
-          this.utilService.showStatus(status, 1);
+          this.utilService.showStatus(status, SUCCESS_TRUE);
           this.doRefresh(null);
         }, err => {
-          this.utilService.showStatus(status, 0);
+          this.utilService.showStatus(status, SUCCESS_FALSE);
         }
       );
     }

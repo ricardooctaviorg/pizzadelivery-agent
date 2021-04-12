@@ -8,7 +8,7 @@ import { ToastController } from '@ionic/angular';
 
 const PATH_MAINMENU_OPTIONS       = "/assets/json/mainMenu.json";
 const TOAST_DURATION              = 5000;
-const TOAST_TRANSLUCENT           = true;
+const TOAST_TRANSLUCENT           = false;
 const TOAST_POSITION              = "bottom";
 const TOAST_COLOR_SUCCESS_TRUE    = "tertiary";
 const TOAST_COLOR_SUCCESS_FALSE   = "danger";
@@ -126,7 +126,7 @@ export class UtilService {
 
   }
 
-  async showStatus(status: string, success: number) {
+  async showStatus(status: string, success: boolean) {
 
     var messageCurrent  : string = "";
     var typeAlert       : string = TOAST_COLOR_SUCCESS_FALSE;
