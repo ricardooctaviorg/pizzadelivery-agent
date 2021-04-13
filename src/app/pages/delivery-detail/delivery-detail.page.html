@@ -29,12 +29,13 @@
     </ion-label>
   </ion-item>
   <ion-item>
-    <ion-label>
-      <ion-icon class="ion-margin-horizontal" slot="start" name="call" color="success"></ion-icon>
-      {{ phoneCustomer | prettyPhone}}
-    </ion-label>
+    <a  href="tel:{{phoneCustomer}}">
+      <ion-label>
+        <ion-icon class="ion-margin-horizontal" slot="start" name="call" color="success"></ion-icon>
+        {{ phoneCustomer | prettyPhone}}
+      </ion-label>
+    </a>
   </ion-item>
-
   <ion-item>
     <ion-label>
       <ion-icon class="ion-margin-horizontal" slot="start" name="time" color="success"></ion-icon>
