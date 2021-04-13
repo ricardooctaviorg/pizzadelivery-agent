@@ -15,7 +15,7 @@ export class DetailItemsComponent implements OnInit {
 
   pizzaDeliverys  : PizzaDelivery[] = new Array();
   ordersCurrent   : any[]= new Array();
-  amountCurrent   : string;
+  amountCurrent   : number;
 
   constructor(private storageService  : StorageService
     , private route                   : ActivatedRoute

@@ -154,6 +154,9 @@ export class DeliveryListComponent implements OnInit {
       this.pizzaDelivery = this.storageService.getPizzaDeliveryByDeliveryId(deliveryId);
       this.pizzaDelivery.status.statusId = status;
       this.pizzaDelivery.status.statusDelivery = StatusDelivery[status];
+      if(status == StatusDelivery.DELIVERY_ONWAY.toString() )
+        this.pizzaDelivery.onWayDate = new Date();
+
       if(status == StatusDelivery.DELIVERY_COMPLETE.toString() )
         this.pizzaDelivery.deliveryDate = new Date();
       

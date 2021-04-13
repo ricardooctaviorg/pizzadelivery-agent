@@ -37,9 +37,12 @@ export interface PizzaDelivery {
         name: string;
         phone: string;
     };
-    typeFailId: string;
-    orderDate: Date;
-    assignDate: Date;
-    deliveryDate: Date;
-    totalAmount: string;
+    typeFailId      : string;
+    orderDate       : Date;
+    confirmDate     : Date;
+    preparingDate   : Date
+    assignDate      : Date;
+    onWayDate       : Date;
+    deliveryDate    : Date;
+    totalAmount     : number;
 }
