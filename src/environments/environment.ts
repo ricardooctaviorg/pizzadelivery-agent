@@ -4,7 +4,7 @@
 
 export const environment = {
   production          : false
-  , gateway           : "https://delivery-services.herokuapp.com/"
+  , gateway           : "https://delivery-services.herokuapp.com"
   , securityResource  : "/UserDelivery"
   , deliveryResource  : "/Delivery"
   , avatarResource    : "/AvatarCatalog"
