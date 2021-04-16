@@ -13,7 +13,7 @@ export class StatusDeliveryIcon implements PipeTransform {
         response = 'storefront';
       break;
       case StatusDelivery.DELIVERY_CANCELED.toString():
-        response = 'alert-circle';
+        response = 'thumbs-down';
       break;
       case StatusDelivery.DELIVERY_CONFIRMED.toString():
         response = 'thumbs-up';
@@ -31,7 +31,7 @@ export class StatusDeliveryIcon implements PipeTransform {
         response = 'bag-check';
       break;
       case StatusDelivery.DELIVERY_FAIL.toString():
-        response = 'thumbs-down';
+        response = 'alert-circle';
       break;
 
     }

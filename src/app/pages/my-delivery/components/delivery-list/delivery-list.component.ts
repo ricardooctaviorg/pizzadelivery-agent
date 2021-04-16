@@ -26,6 +26,11 @@ const SUCCESS_FALSE     = false;
 })
 export class DeliveryListComponent implements OnInit {
 
+  iconAssignedStatus      : string = StatusDelivery.DELIVERY_ASSIGNED.toString();
+  iconOnWayStatus         : string = StatusDelivery.DELIVERY_ONWAY.toString();
+  iconCompleteStatus      : string = StatusDelivery.DELIVERY_COMPLETE.toString();
+  iconFailtStatus         : string = StatusDelivery.DELIVERY_FAIL.toString();
+
   pizzaDeliveriesCurrent  : PizzaDelivery[] = new Array();
   pizzaDeliveries         : PizzaDelivery[] = new Array();
   pizzaDelivery           : PizzaDelivery;
