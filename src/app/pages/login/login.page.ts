@@ -15,6 +15,7 @@ const AGENT_REGISTER_REQUIRED           = "Favor de completar los datos solicita
 const AGENT_REGISTER_SAMEPASS           = "Las contraseñas deben coincidir";
 const AGENT_REGISTER_AGENTIDEXIST       = "Ya existe el nombre de usuaio";
 const AGENT_REGISTER_REQUIRED_AVATAR    = "Favor de Seleccionar un avatar";
+const AGENT_INVALID                     = "Usuario invalido";
 
 const LOGIN_ERROR                       = "Usuario o contraseña invalidos";
 const ROLE_AGENT                        = "agent"
@@ -86,13 +87,18 @@ export class LoginPage implements OnInit, AfterViewInit {
     if (formLogin.invalid)
       this.utilService.showAgentRegisterStatus(AGENT_REGISTER_REQUIRED, SUCCESS_FALSE);
 
-    const exist = await this.securityService.login(this.loginAgentDelivery.userId, this.loginAgentDelivery.password);
-    if(exist)
-      this.navController.navigateRoot('myDelivery', {
-        animated:true
-      });
-    else
-      this.utilService.showAgentRegisterStatus(LOGIN_ERROR, SUCCESS_FALSE);
+    const existUser = await this.securityService.existUserByRole(ROLE_AGENT, this.loginAgentDelivery.userId);
+
+    if (existUser) {
+      const exist = await this.securityService.login(this.loginAgentDelivery.userId, this.loginAgentDelivery.password);
+      if (exist)
+        this.navController.navigateRoot('myDelivery', {
+          animated: true
+        });
+      else
+        this.utilService.showAgentRegisterStatus(LOGIN_ERROR, SUCCESS_FALSE);
+    }else
+      this.utilService.showAgentRegisterStatus(AGENT_INVALID, SUCCESS_FALSE);
 
   }
 

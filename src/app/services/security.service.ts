@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
 import { UserDelivery } from '../commons/interfaces/user-delivery';
 import { Observable } from 'rxjs';
@@ -25,6 +25,10 @@ const USERUPDATE = GATEWAY_VALUE
 
 const VERIFYTOKEN = GATEWAY_VALUE
   + SECURITY_RESOURCE;
+
+const EXISTUSERBYROLE = GATEWAY_VALUE
+  + SECURITY_RESOURCE
+  + '/existUserbyRole';
 
 const headers = new HttpHeaders()
   .set('Contet-Type', 'application/json');
@@ -171,6 +175,32 @@ export class SecurityService {
         );
       }
     );
+  }
+
+  public existUserByRole(role: string, userId: string): Promise<boolean>{
+    const params = new HttpParams()
+      .set('role', role )
+      .set('userId', userId );
+    const httpOptionsX =
+    {
+      params
+    };
+
+    return new Promise<boolean>(
+      resolve =>{
+        this.httpClient.get<any>(`${EXISTUSERBYROLE}`, httpOptionsX).subscribe(
+          data =>
+          {
+            if(data.length == 0)
+              resolve(false);
+            else
+              resolve(true);
+          }
+        );
+      }
+    );
+
+
   }
 
   logOut() {
