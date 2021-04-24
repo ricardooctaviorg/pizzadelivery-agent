@@ -36,9 +36,9 @@
       </form>
     </ion-slide>
     <ion-slide>
-      <ion-grid fixed>
-        <ion-card-header>
-          <ion-card-subtitle>SELECCIONA UN AVATAR</ion-card-subtitle>
+      <ion-grid fixed class="ion-margin-top">
+        <ion-card-header class="ion-margin-top">
+          <ion-card-subtitle class="ion-margin-top">SELECCIONA UN AVATAR</ion-card-subtitle>
           <ion-card-title color="tertiary">{{avatarIdCurrent | uppercase}}</ion-card-title>
         </ion-card-header>
         <form (ngSubmit)="agentRegister(formAgentRegister)" #formAgentRegister="ngForm">
