@@ -36,55 +36,63 @@
       </form>
     </ion-slide>
     <ion-slide>
-      <ion-grid fixed class="ion-padding-top">
-        <ion-card-header class="paddingt_100 ion-padding-top">
-          <ion-card-subtitle class="ion-padding-top">SELECCIONA UN AVATAR</ion-card-subtitle>
-          <ion-card-title color="tertiary">{{avatarIdCurrent | uppercase}}</ion-card-title>
-        </ion-card-header>
-        <form (ngSubmit)="agentRegister(formAgentRegister)" #formAgentRegister="ngForm">
-          <ion-row class="ion-margin">
-            <ion-col>
-              <ion-slides [options]="avatarSlide" #aSlides>
-                <ion-slide *ngFor="let avatar of avatartCatalogList">
-                  <ion-img class="pick-avatar" [src]="avatar.avatarUrl" [ngClass]="{'pick-avatar-seleccionado': avatar.selected
-                        , 'animate__bounceIn':avatar.selected}" (click)="selectAvatar(avatar)"></ion-img>
-                </ion-slide>
-              </ion-slides>
-            </ion-col>
-          </ion-row>
-          <div class="ion-padding">
-            <ion-item>
-              <ion-icon slot="start" color="success" name="person-circle"></ion-icon>
-              <ion-input [(ngModel)]="myAgentDelivery.userId" name="userId" type="text" placeholder="Usuario"
-                autocomplete="username" inputmode="text" required></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-icon slot="start" color="success" name="key"></ion-icon>
-              <ion-input [(ngModel)]="myAgentDelivery.password" name="password" placeholder="Constraseña" type="password"
-                autocomplete="new-password" required></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-icon slot="start" color="success" name="key"></ion-icon>
-              <ion-input [(ngModel)]="passwordTmp" name="passwordTmp" placeholder="Repetir Constraseña" type="password"
-                autocomplete="new-password" required></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-icon slot="start" color="success" name="pencil"></ion-icon>
-              <ion-input [(ngModel)]="myAgentDelivery.name" name="name" type="text" placeholder="Nombre" autocapitalize="words"
-                autocomplete="name" inputmode="text" required></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-icon slot="start" color="success" name="call"></ion-icon>
-              <ion-input [(ngModel)]="myAgentDelivery.phone" name="phone" type="tel" placeholder="Telefono" autocomplete="tel"
-                inputmode="tel" maxlength="10" minlength="10" required>
-              </ion-input>
-            </ion-item>
-          </div>
-          <ion-button expand="block" size="large"type="submit" color="tertiary" class="ion-margin">
-            <ion-icon slot="start" name="person-add"></ion-icon>
-            <span>Registrarme</span>
-          </ion-button>
-        </form>
+      <ion-grid fixed>
+        <ion-row class="ion-padding-top ion-margin-top">
+          <ion-col class="ion-padding-top ion-margin-top" size="12">
+            <ion-card-header>
+              <ion-card-subtitle>SELECCIONA UN AVATAR</ion-card-subtitle>
+              <ion-card-title color="tertiary">{{avatarIdCurrent | uppercase}}</ion-card-title>
+            </ion-card-header>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="12">
+            <form (ngSubmit)="agentRegister(formAgentRegister)" #formAgentRegister="ngForm">
+              <ion-row class="ion-margin">
+                <ion-col>
+                  <ion-slides [options]="avatarSlide" #aSlides>
+                    <ion-slide *ngFor="let avatar of avatartCatalogList">
+                      <ion-img class="pick-avatar" [src]="avatar.avatarUrl" [ngClass]="{'pick-avatar-seleccionado': avatar.selected
+                                    , 'animate__bounceIn':avatar.selected}" (click)="selectAvatar(avatar)"></ion-img>
+                    </ion-slide>
+                  </ion-slides>
+                </ion-col>
+              </ion-row>
+              <div class="ion-padding">
+                <ion-item>
+                  <ion-icon slot="start" color="success" name="person-circle"></ion-icon>
+                  <ion-input [(ngModel)]="myAgentDelivery.userId" name="userId" type="text" placeholder="Usuario"
+                    autocomplete="username" inputmode="text" required></ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-icon slot="start" color="success" name="key"></ion-icon>
+                  <ion-input [(ngModel)]="myAgentDelivery.password" name="password" placeholder="Constraseña" type="password"
+                    autocomplete="new-password" required></ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-icon slot="start" color="success" name="key"></ion-icon>
+                  <ion-input [(ngModel)]="passwordTmp" name="passwordTmp" placeholder="Repetir Constraseña" type="password"
+                    autocomplete="new-password" required></ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-icon slot="start" color="success" name="pencil"></ion-icon>
+                  <ion-input [(ngModel)]="myAgentDelivery.name" name="name" type="text" placeholder="Nombre"
+                    autocapitalize="words" autocomplete="name" inputmode="text" required></ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-icon slot="start" color="success" name="call"></ion-icon>
+                  <ion-input [(ngModel)]="myAgentDelivery.phone" name="phone" type="tel" placeholder="Telefono"
+                    autocomplete="tel" inputmode="tel" maxlength="10" minlength="10" required>
+                  </ion-input>
+                </ion-item>
+              </div>
+              <ion-button expand="block" size="large" type="submit" color="tertiary" class="ion-margin">
+                <ion-icon slot="start" name="person-add"></ion-icon>
+                <span>Registrarme</span>
+              </ion-button>
+            </form>
+          </ion-col>
+        </ion-row>
       </ion-grid>
     </ion-slide>
   </ion-slides>
