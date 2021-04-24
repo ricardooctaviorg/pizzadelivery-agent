@@ -1,5 +1,5 @@
 {
-  "name": "pizzadelivery-agent",
+  "name": "delivery-agent",
   "integrations": {
     "capacitor": {},
     "cordova": {}

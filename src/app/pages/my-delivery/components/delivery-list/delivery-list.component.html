@@ -23,7 +23,7 @@
       </ion-label>
     </ion-item>
     <div *ngSwitchDefault>
-      <ion-item-sliding *ngFor="let a of pizzaDeliveries" [ngSwitch]="a.status.statusId">
+      <ion-item-sliding *ngFor="let a of deliveries" [ngSwitch]="a.status.statusId">
         <ion-item [ngSwitch]="a.status.statusId"
           [routerLink]="['/delivery-detail', a.deliveryId, a.status.statusId, a.customer.name, a.customer.phone, a.assignDate, a.deliveryDate, a.totalAmount ]">
           <ion-icon *ngSwitchCase="'d'" slot="start" name="{{iconAssignedStatus | statusDeliveryIcon}}" color="success"></ion-icon>

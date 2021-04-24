@@ -5,7 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { IonInfiniteScroll, ModalController } from '@ionic/angular';
 import { IonRefresher } from '@ionic/angular';
 import { DeliveryAgentService } from '../../../../services/delivery-agent.service';
-import { PizzaDelivery } from '../../../../commons/interfaces/pizza-delivery';
+import { Delivery } from '../../../../commons/interfaces/delivery';
 import { StorageService } from '../../../../commons/services/storage.service';
 import { StatusDelivery } from '../../../../commons/enums/status-delivery.enum';
 import { UtilService } from '../../../../commons/services/util.service';
@@ -31,9 +31,9 @@ export class DeliveryListComponent implements OnInit {
   iconCompleteStatus      : string = StatusDelivery.DELIVERY_COMPLETE.toString();
   iconFailtStatus         : string = StatusDelivery.DELIVERY_FAIL.toString();
 
-  pizzaDeliveriesCurrent  : PizzaDelivery[] = new Array();
-  pizzaDeliveries         : PizzaDelivery[] = new Array();
-  pizzaDelivery           : PizzaDelivery;
+  deliveriesCurrent       : Delivery[] = new Array();
+  deliveries              : Delivery[] = new Array();
+  delivery                : Delivery;
   dataResponse            : any;
   pageData                : any;
   pageCurrent             : number  = 1;
@@ -90,19 +90,19 @@ export class DeliveryListComponent implements OnInit {
         data => 
         {
           if (data.success) {
-            this.pizzaDeliveriesCurrent = data.deliveries as PizzaDelivery[];
-            this.pizzaDeliveries.push(... this.pizzaDeliveriesCurrent);
-            this.storageService.setPizzaDeliverys(this.pizzaDeliveries);
+            this.deliveriesCurrent = data.deliveries as Delivery[];
+            this.deliveries.push(... this.deliveriesCurrent);
+            this.storageService.setDeliveries(this.deliveries);
             this.pageData = data.page;
 
             if( statusId.includes(StatusDelivery.DELIVERY_ASSIGNED.toString()) || statusId.includes(StatusDelivery.DELIVERY_ONWAY.toString()) ){
               this.showStatusTitle    = GroupStatusAgent.PENDING_ORDERS.toString();
-              if( this.pizzaDeliveries.length == 0 )
+              if( this.deliveries.length == 0 )
                 this.emptyGroup = 'a';
             }  
             else if( statusId.includes(StatusDelivery.DELIVERY_COMPLETE.toString()) || statusId.includes(StatusDelivery.DELIVERY_FAIL.toString()) ){
               this.showStatusTitle    = GroupStatusAgent.FINISH_ORDERS.toString();
-              if( this.pizzaDeliveries.length == 0 )
+              if( this.deliveries.length == 0 )
                 this.emptyGroup = 'b';
             }
             
@@ -143,9 +143,9 @@ export class DeliveryListComponent implements OnInit {
       const dataOfModal = await this.presentModal(deliveryId);
 
       if (dataOfModal.data.success) {
-        dataOfModal.data.pizzaDeliveryUpdated.status.statusId       = status;
-        dataOfModal.data.pizzaDeliveryUpdated.status.statusDelivery = StatusDelivery[status];
-        this.deliveryAgentService.updateDelivery(dataOfModal.data.pizzaDeliveryUpdated).subscribe(
+        dataOfModal.data.deliveryUpdated.status.statusId       = status;
+        dataOfModal.data.deliveryUpdated.status.statusDelivery = StatusDelivery[status];
+        this.deliveryAgentService.updateDelivery(dataOfModal.data.deliveryUpdated).subscribe(
           data => {
             this.utilService.showStatus(status, SUCCESS_TRUE);
             this.doRefresh(null);
@@ -156,16 +156,16 @@ export class DeliveryListComponent implements OnInit {
       }
     }
     else{
-      this.pizzaDelivery = this.storageService.getPizzaDeliveryByDeliveryId(deliveryId);
-      this.pizzaDelivery.status.statusId = status;
-      this.pizzaDelivery.status.statusDelivery = StatusDelivery[status];
+      this.delivery = this.storageService.getDeliveryByDeliveryId(deliveryId);
+      this.delivery.status.statusId = status;
+      this.delivery.status.statusDelivery = StatusDelivery[status];
       if(status == StatusDelivery.DELIVERY_ONWAY.toString() )
-        this.pizzaDelivery.onWayDate = new Date();
+        this.delivery.onWayDate = new Date();
 
       if(status == StatusDelivery.DELIVERY_COMPLETE.toString() )
-        this.pizzaDelivery.deliveryDate = new Date();
+        this.delivery.deliveryDate = new Date();
       
-      this.deliveryAgentService.updateDelivery(this.pizzaDelivery).subscribe(
+      this.deliveryAgentService.updateDelivery(this.delivery).subscribe(
         data => {
           this.utilService.showStatus(status, SUCCESS_TRUE);
           this.doRefresh(null);
@@ -194,11 +194,11 @@ export class DeliveryListComponent implements OnInit {
   }
 
   async cleanDeliveries() {
-    this.pizzaDeliveries      = [];
+    this.deliveries      = [];
     this.countPendingOrders   = 0;
     this.countFinalyOrders    = 0;
     this.pageCurrent          = 1;
-    await this.storageService.setPizzaDeliverys(this.pizzaDeliveries);
+    await this.storageService.setDeliveries(this.deliveries);
   }
 
 }

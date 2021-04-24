@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { PizzaDelivery } from '../interfaces/pizza-delivery';
+import { Delivery } from '../interfaces/delivery';
 
 @Injectable({
   providedIn: 'root'
@@ -7,7 +7,7 @@ import { PizzaDelivery } from '../interfaces/pizza-delivery';
 export class StorageService {
 
   private localStorageService;
-  private pizzaDeliverys:PizzaDelivery[] = new Array();
+  private deliveries            :Delivery[] = new Array();
 
   constructor() { 
     this.localStorageService = localStorage;
@@ -19,8 +19,8 @@ export class StorageService {
     this.updateDarkTheme(darkThemeCurrent);
   }
 
-  setPizzaDeliverys(pizzaDeliverys:PizzaDelivery[]):void{
-    this.localStorageService.setItem('pizzaDeliverys', JSON.stringify(pizzaDeliverys));
+  setDeliveries(deliveries : Delivery[]):void{
+    this.localStorageService.setItem('deliveries', JSON.stringify(deliveries));
   }
 
   updateDarkTheme(darkTheme:string):void{
@@ -68,13 +68,13 @@ export class StorageService {
     return this.localStorageService.getItem('darkTheme');
   }
 
-  getPizzaDeliverys():any{
-    return JSON.parse(this.localStorageService.getItem('pizzaDeliverys'));
+  getDeliveries():any{
+    return JSON.parse(this.localStorageService.getItem('deliveries'));
   }
 
-  getPizzaDeliveryByDeliveryId(deliveryId:string):PizzaDelivery{
-    this.pizzaDeliverys = JSON.parse(this.localStorageService.getItem('pizzaDeliverys')) as PizzaDelivery[];
-    for(let a of this.pizzaDeliverys)
+  getDeliveryByDeliveryId(deliveryId:string):Delivery{
+    this.deliveries = JSON.parse(this.localStorageService.getItem('deliveries')) as Delivery[];
+    for(let a of this.deliveries)
       if(a.deliveryId == deliveryId)
         return a;
   }

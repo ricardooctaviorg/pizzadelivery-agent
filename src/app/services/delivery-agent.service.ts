@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { HttpParams } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { PizzaDelivery } from '../commons/interfaces/pizza-delivery';
+import { Delivery } from '../commons/interfaces/delivery';
 import { StorageService } from '../commons/services/storage.service';
 import { environment } from '../../environments/environment';
 
@@ -78,7 +78,7 @@ export class DeliveryAgentService {
     return this.httpClient.get<any>(`${COUNTGROUPSSTATUS}`, httpOptionsX);
   }
 
-  public updateDelivery(delivery: PizzaDelivery): Observable<any> {
+  public updateDelivery(delivery: Delivery): Observable<any> {
 
     const headers = new HttpHeaders()
       .set('x-token', this.storageService.getToken());

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { StorageService } from '../../../../commons/services/storage.service';
-import { PizzaDelivery } from '../../../../commons/interfaces/pizza-delivery';
+import { Delivery } from '../../../../commons/interfaces/delivery';
 import { InfoAgentService } from '../../../../commons/services/info-agent.service';
 
 const DELIVERY_INFO   = "delivery";
@@ -13,7 +13,7 @@ const DELIVERY_INFO   = "delivery";
 })
 export class DetailItemsComponent implements OnInit {
 
-  pizzaDeliverys  : PizzaDelivery[] = new Array();
+  deliveries      : Delivery[] = new Array();
   ordersCurrent   : any[]= new Array();
   amountCurrent   : number;
 
@@ -22,12 +22,12 @@ export class DetailItemsComponent implements OnInit {
     , private infoAgentService        : InfoAgentService) { }
 
   ngOnInit() {
-    this.pizzaDeliverys =  this.storageService.getPizzaDeliverys() as PizzaDelivery[];
+    this.deliveries =  this.storageService.getDeliveries() as Delivery[];
     this.route.paramMap.subscribe(
       params => {
         let deliveryIdCurrent: string = String(params.get("deliveryId"));
         deliveryIdCurrent = deliveryIdCurrent.replace(',','');
-        for(let a of this.pizzaDeliverys)
+        for(let a of this.deliveries)
           if(a.deliveryId == deliveryIdCurrent){
             this.ordersCurrent = a.orders;
             this.amountCurrent = a.totalAmount;

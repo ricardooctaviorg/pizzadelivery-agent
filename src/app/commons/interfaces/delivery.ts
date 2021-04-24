@@ -1,4 +1,4 @@
-export interface PizzaDelivery {
+export interface Delivery {
     _id: string;
     deliveryId: string;
     orders: [ 

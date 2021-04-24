@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { UtilService } from '../../commons/services/util.service';
 import { TypeFailCatalog } from '../../commons/interfaces/type-fail-catalog';
 import { ModalController } from '@ionic/angular';
-import { PizzaDelivery } from '../../commons/interfaces/pizza-delivery';
+import { Delivery } from '../../commons/interfaces/delivery';
 import { StorageService } from '../../commons/services/storage.service';
 import { DeliveryAgentService } from '../../services/delivery-agent.service';
 
@@ -15,8 +15,8 @@ export class ModalTypingFailPage implements OnInit {
 
   typesFailslDelivery   : TypeFailCatalog[] = new Array();
   success               : boolean = false;
-  pizzaDelivery         : PizzaDelivery;
-  pizzaDeliveryUpdated  : PizzaDelivery;
+  delivery              : Delivery;
+  deliveryUpdated       : Delivery;
 
   @Input() deliveryId   : string;
 
@@ -36,17 +36,17 @@ export class ModalTypingFailPage implements OnInit {
     this.modalController.dismiss({
       'dismissed'               : true
       , 'success'               : this.success
-      , 'pizzaDeliveryUpdated'  : this.pizzaDeliveryUpdated
+      , 'deliveryUpdated'  : this.deliveryUpdated
     });
   }
 
   typingFailDelivery(typefail: TypeFailCatalog, deliveryId: string) {
-    this.pizzaDelivery = this.storageService.getPizzaDeliveryByDeliveryId(deliveryId);
-    this.pizzaDelivery.typeFailId = typefail.typeFailId;
-    this.deliveryAgentService.updateDelivery(this.pizzaDelivery).subscribe(
+    this.delivery = this.storageService.getDeliveryByDeliveryId(deliveryId);
+    this.delivery.typeFailId = typefail.typeFailId;
+    this.deliveryAgentService.updateDelivery(this.delivery).subscribe(
       data => {
         this.success = true;
-        this.pizzaDeliveryUpdated = data.delivery as PizzaDelivery;
+        this.deliveryUpdated = data.delivery as Delivery;
         this.dismissModalFail();
       }, err => {
       }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ActionSheetController } from '@ionic/angular';
-import { PizzaDelivery } from '../../../../commons/interfaces/pizza-delivery';
+import { Delivery } from '../../../../commons/interfaces/delivery';
 import { StorageService } from '../../../../commons/services/storage.service';
 import { InfoAgentService } from '../../../../commons/services/info-agent.service';
 
@@ -14,11 +14,11 @@ const DELIVERY_LOCATION   = "location";
 })
 export class DetailLocationComponent implements OnInit {
 
-  pizzaDeliverys: PizzaDelivery[] = new Array();
-  addressCurrent: any;
-  destination   : string;
-  toLat         : string;
-  toLng         : string;
+  deliveries        : Delivery[] = new Array();
+  addressCurrent    : any;
+  destination       : string;
+  toLat             : string;
+  toLng             : string;
 
   constructor(private storageService  : StorageService
     , private route                   : ActivatedRoute
@@ -26,12 +26,12 @@ export class DetailLocationComponent implements OnInit {
     , private infoAgentService        : InfoAgentService) { }
 
   ngOnInit() {
-    this.pizzaDeliverys =  this.storageService.getPizzaDeliverys() as PizzaDelivery[];
+    this.deliveries =  this.storageService.getDeliveries() as Delivery[];
     this.route.paramMap.subscribe(
       params => {
         let deliveryIdCurrent: string = String(params.get("deliveryId"));
         deliveryIdCurrent = deliveryIdCurrent.replace(',','');
-        for(let a of this.pizzaDeliverys)
+        for(let a of this.deliveries)
           if(a.deliveryId == deliveryIdCurrent)
             this.addressCurrent = a.address;
         this.toLat = this.addressCurrent.lat;

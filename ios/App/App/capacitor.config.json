@@ -1,6 +1,6 @@
 {
   "appId": "io.ionic.starter",
-  "appName": "pizzadelivery-agent",
+  "appName": "delivery-agent",
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "www",
