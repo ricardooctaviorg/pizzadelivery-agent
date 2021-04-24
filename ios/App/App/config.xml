@@ -3,7 +3,7 @@
   <access origin="*" />
   
   <feature name="OneSignalPush">
-    <param name="android-package" value="com.plugin.gcm.OneSignalPush"/>
+    <param name="ios-package" value="OneSignalPush"/>
   </feature>
 
   

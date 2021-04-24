@@ -9,6 +9,7 @@ import { MenuOpt } from './commons/interfaces/menu-opt';
 import { InfoAgentService } from './commons/services/info-agent.service';
 import { StorageService } from './commons/services/storage.service';
 import { SecurityService } from './services/security.service';
+import { PushService } from './services/push.service';
 
 @Component({
   selector: 'app-root',
@@ -26,13 +27,14 @@ export class AppComponent implements OnInit  {
   }
 
   constructor(
-    private platform: Platform
-    , private splashScreen: SplashScreen
-    , private statusBar: StatusBar
-    , private utilService:UtilService
-    , private infoAgentService: InfoAgentService
-    , private securityService: SecurityService
-    , private storageService: StorageService
+    private platform            : Platform
+    , private splashScreen      : SplashScreen
+    , private statusBar         : StatusBar
+    , private utilService       : UtilService
+    , private infoAgentService  : InfoAgentService
+    , private securityService   : SecurityService
+    , private storageService    : StorageService
+    , private pushService       : PushService
   ) {
     this.initializeApp();
   }
@@ -41,6 +43,7 @@ export class AppComponent implements OnInit  {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+      this.pushService.initConfiguration();
     });
      this.menuOpts = this.utilService.getMainMunuOptions();
       if(this.storageService.getDarkTheme() === 'T' 

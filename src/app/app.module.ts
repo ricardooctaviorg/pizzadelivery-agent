@@ -9,6 +9,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { UtilService } from './commons/services/util.service';
 import { CommonsModule } from './commons/commons.module';
+import { OneSignal } from '@ionic-native/onesignal/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -19,10 +20,11 @@ import { CommonsModule } from './commons/commons.module';
     , HttpClientModule
     , CommonsModule],
   providers: [
-    StatusBar,
-    SplashScreen,
-    UtilService,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    StatusBar
+    , SplashScreen
+    , UtilService
+    , OneSignal
+    , { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]
 })
