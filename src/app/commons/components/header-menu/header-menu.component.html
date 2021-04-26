@@ -6,5 +6,11 @@
     <ion-title class="ion-text-center" size="small">
       <strong>{{ titleMain | uppercase }}</strong>
     </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="onClick()">
+        <ion-icon class="myNotification" color ="tertiary" slot="start" name="notifications"></ion-icon>
+        <ion-badge color="danger">1</ion-badge>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
