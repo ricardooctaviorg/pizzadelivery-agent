@@ -39,6 +39,10 @@ const routes: Routes = [
     path: ''
     , pathMatch: 'full'
     , redirectTo: 'login'
+  },
+  {
+    path: 'my-notifications',
+    loadChildren: () => import('./pages/my-notifications/my-notifications.module').then( m => m.MyNotificationsPageModule)
   }
 
 ];
